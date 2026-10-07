@@ -49,7 +49,7 @@ These files are stored separately in `raw/historical_optional`.
 - `download_data.py`: download again using the Python standard library. A new download may retrieve updated data; use this snapshot for exact reproducibility.
 - `prepare_data.py`: JSON/Excel conversion, requiring `openpyxl` (available in the environment used to prepare this pack).
 
-## Generate processed data after creating your repository
+## Generate processed data after creating your repository (python version)
 
 Run these commands from the directory containing `prepare_data.py` and `raw/`:
 
@@ -74,6 +74,43 @@ The script reads source files without modifying them. These CSVs are initial con
 The candidate-count assertions are specific to this October 7, 2026 snapshot. Review them if you refresh the downloads and the official list changes.
 
 Git does not track empty directories; `processed/.gitkeep` preserves this folder when you create the repository. You can remove it once CSVs have been generated.
+
+
+## Generate processed data after creating your repository (R version)
+
+Copy `prepare_data.R` and `download_data.R` into the project directory containing `raw/`, `processed/`, and `sources.json`. Open your RStudio project so the working directory is that directory.
+
+Install dependencies once in the R console:
+
+```r
+install.packages(c("jsonlite", "readxl", "digest"))
+```
+
+The raw data are already downloaded. Generate the initial processed tables with:
+
+```r
+source("prepare_data.R")
+```
+
+Outputs: `processed/candidates_2026.csv`, `processed/wards.csv`, `processed/census_2021_one_variable.csv`, `processed/census_2021_two_variable.csv`, and `validation.json`.
+
+Only to deliberately refresh the raw data, run:
+
+```r
+source("download_data.R")
+source("prepare_data.R")
+```
+
+Refreshing requires internet access and overwrites source files and the source manifest. The download script retrieves the same resource types as the Python version; manually saved source-page HTML files are not refreshed.
+
+The preparation script does not modify raw data. It uses explicit 2021 worksheet names and exports mixed Excel cells as text to preserve labels. The generated CSVs serve the same purposes as the Python outputs, but quoting, boolean spelling, numeric formatting, and leading/trailing blank worksheet margins may differ. They are initial conversions, not final cleaned modelling data.
+
+Incumbent matches use lowercase exact names and require manual review. The validation counts are specific to the supplied October 7, 2026 snapshot.
+
+These scripts replace the two Python scripts; you do not need to run both language versions. No processed files are included in this archive.
+
+Validation limitation: the delivery environment did not provide an R runtime, so the scripts were reviewed against the supplied JSON structures and Excel worksheet names but were not executed in R.
+
 
 ## Work required after repository creation
 
