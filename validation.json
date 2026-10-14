@@ -1,0 +1,8 @@
+{
+  "mayor_candidates": 53,
+  "councillor_candidates": 190,
+  "councillor_wards": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25],
+  "map_features": 25,
+  "census_sheets": ["2021 One Variable", "2021 Two Variable", "2016 Census One Variable", "2016 Census Two Variable", "2011 Census"],
+  "note": "Incumbent matches are exact-name matches only and require manual review."
+}
