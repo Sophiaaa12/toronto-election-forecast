@@ -1,48 +1,30 @@
 # prepare_data.R
-#
-# Convert raw Toronto election data into simple processed tables
-# and perform basic validation checks.
-#
-# Run from the project root:
-#
-#   source("prepare_data.R")
-#
-# Required packages:
-#   install.packages(c("jsonlite", "readxl"))
+# Prepare shared project data and run basic validation checks.
 
 library(jsonlite)
 library(readxl)
 
-
-# 1. Create processed directory
-
+# Create processed directory
 dir.create(
   "processed",
   recursive = TRUE,
   showWarnings = FALSE
 )
 
-
-
-# 2. Check that required raw files exist
-
+# Check required raw files
 required_files <- c(
   "raw/census/ward_profiles_2021.xlsx",
-  
   "raw/candidates/mayor_candidates_2026.json",
   "raw/candidates/councillor_candidates_2026.json",
   "raw/candidates/withdrawn_candidates_2026.json",
-  
   "raw/elections/election_results_2022.zip",
   "raw/elections/turnout_2022.xlsx",
   "raw/elections/mayor_by_election_2023.xlsx",
   "raw/elections/ward20_by_election_2023.xlsx",
   "raw/elections/ward15_by_election_2024.xlsx",
   "raw/elections/ward25_by_election_2025.xlsx",
-  
   "raw/geography/wards.geojson",
   "raw/geography/ward_names.xlsx",
-  
   "raw/incumbency/elected_officials_2022_2026.json"
 )
 
@@ -59,9 +41,7 @@ if (length(missing_files) > 0) {
 
 message("All required raw files found.")
 
-
-# 3. Helper functions
-
+# Helper for reading JSON files
 read_json_raw <- function(path) {
   jsonlite::fromJSON(
     path,
@@ -69,34 +49,7 @@ read_json_raw <- function(path) {
   )
 }
 
-
-export_excel_sheet <- function(path, sheet, output_file) {
-  
-  x <- readxl::read_excel(
-    path,
-    sheet = sheet,
-    col_names = FALSE,
-    col_types = "text",
-    .name_repair = "minimal"
-  )
-  
-  utils::write.table(
-    x,
-    output_file,
-    sep = ",",
-    row.names = FALSE,
-    col.names = FALSE,
-    na = "",
-    qmethod = "double",
-    fileEncoding = "UTF-8"
-  )
-  
-  message("Created: ", output_file)
-}
-
-
-# 4. Current incumbents
-
+# Read current elected officials
 officials <- read_json_raw(
   "raw/incumbency/elected_officials_2022_2026.json"
 )
@@ -139,19 +92,13 @@ for (person in officials) {
   incumbents[[paste(office, ward, sep = ":")]] <- full_name
 }
 
-
-# 5. 2026 candidate lists
-
+# Prepare 2026 candidate lists
 candidate_files <- c(
-  mayor =
-    "raw/candidates/mayor_candidates_2026.json",
-  
-  councillor =
-    "raw/candidates/councillor_candidates_2026.json"
+  mayor = "raw/candidates/mayor_candidates_2026.json",
+  councillor = "raw/candidates/councillor_candidates_2026.json"
 )
 
 candidate_rows <- list()
-
 
 for (office in names(candidate_files)) {
   
@@ -160,25 +107,19 @@ for (office in names(candidate_files)) {
   )
   
   groups <- if (office == "mayor") {
-    
     list(
       list(
         num = 0L,
         candidate = candidate_data$candidates
       )
     )
-    
   } else {
-    
     candidate_data$ward
-    
   }
-  
   
   for (group in groups) {
     
     ward <- as.integer(group$num)
-    
     
     for (candidate in group$candidate) {
       
@@ -191,12 +132,9 @@ for (office in names(candidate_files)) {
       
       incumbent_name <- incumbents[[paste(office, ward, sep = ":")]]
       
-      
-      # Candidate website, when supplied
       websites <- character(0)
       
       if (!is.null(candidate$socialMedias)) {
-        
         websites <- vapply(
           Filter(
             function(x) identical(x$name, "web"),
@@ -205,9 +143,7 @@ for (office in names(candidate_files)) {
           function(x) x$url,
           character(1)
         )
-        
       }
-      
       
       candidate_rows[[length(candidate_rows) + 1]] <-
         data.frame(
@@ -216,33 +152,28 @@ for (office in names(candidate_files)) {
           ballot_name = candidate$name,
           display_name = display_name,
           status = candidate$status,
-          
           incumbent_name_match =
             !is.null(incumbent_name) &&
             identical(
               tolower(display_name),
               incumbent_name
             ),
-          
           website = paste(
             websites,
             collapse = " | "
           ),
-          
           stringsAsFactors = FALSE
         )
     }
   }
 }
 
-
 candidates <- do.call(
   rbind,
   candidate_rows
 )
 
-
-utils::write.csv(
+write.csv(
   candidates,
   "processed/candidates_2026.csv",
   row.names = FALSE,
@@ -250,32 +181,26 @@ utils::write.csv(
   fileEncoding = "UTF-8"
 )
 
-message(
-  "Created: processed/candidates_2026.csv"
+message("Created: processed/candidates_2026.csv")
+
+# Prepare ward lookup
+wards <- read_excel(
+  "raw/geography/ward_names.xlsx"
 )
 
-
-# 6. Ward lookup
-
-export_excel_sheet(
-  path =
-    "raw/geography/ward_names.xlsx",
-  
-  sheet = 1,
-  
-  output_file =
-    "processed/wards_raw.csv"
+write.csv(
+  wards,
+  "processed/wards.csv",
+  row.names = FALSE,
+  na = "",
+  fileEncoding = "UTF-8"
 )
 
+message("Created: processed/wards.csv")
 
-# 7. Census worksheets
-
-census_file <-
-  "raw/census/ward_profiles_2021.xlsx"
-
-
+# Check Census worksheets
 census_sheets <- excel_sheets(
-  census_file
+  "raw/census/ward_profiles_2021.xlsx"
 )
 
 required_census_sheets <- c(
@@ -283,58 +208,29 @@ required_census_sheets <- c(
   "2021 Two Variable"
 )
 
-if (!all(
-  required_census_sheets %in%
-  census_sheets
-)) {
-  
+if (!all(required_census_sheets %in% census_sheets)) {
   stop(
     "Required 2021 Census worksheets were not found."
   )
 }
 
-
-export_excel_sheet(
-  path = census_file,
-  sheet = "2021 One Variable",
-  output_file =
-    "processed/census_2021_one_variable_raw.csv"
-)
-
-
-export_excel_sheet(
-  path = census_file,
-  sheet = "2021 Two Variable",
-  output_file =
-    "processed/census_2021_two_variable_raw.csv"
-)
-
-
-# 8. Basic validation
-
+# Validate candidates and geography
 map_data <- read_json_raw(
   "raw/geography/wards.geojson"
 )
 
-
 validation <- list(
-  
   mayor_candidates =
-    sum(
-      candidates$office == "mayor"
-    ),
+    sum(candidates$office == "mayor"),
   
   councillor_candidates =
-    sum(
-      candidates$office == "councillor"
-    ),
+    sum(candidates$office == "councillor"),
   
   councillor_wards =
     sort(
       unique(
         candidates$ward[
-          candidates$office ==
-            "councillor"
+          candidates$office == "councillor"
         ]
       )
     ),
@@ -351,7 +247,6 @@ validation <- list(
   )
 )
 
-
 jsonlite::write_json(
   validation,
   "validation.json",
@@ -359,9 +254,7 @@ jsonlite::write_json(
   auto_unbox = TRUE
 )
 
-
-# 9. Snapshot checks
-
+# Run basic checks
 stopifnot(
   validation$mayor_candidates == 53L,
   validation$councillor_candidates == 190L,
@@ -372,9 +265,7 @@ stopifnot(
   validation$map_features == 25L
 )
 
-
-# 10. Summary
-
+# Print summary
 message("")
 message("Preparation complete.")
 message("")
@@ -382,29 +273,15 @@ message(
   "Mayor candidates: ",
   validation$mayor_candidates
 )
-
 message(
   "Councillor candidates: ",
   validation$councillor_candidates
 )
-
 message(
   "Councillor wards: ",
-  length(
-    validation$councillor_wards
-  )
+  length(validation$councillor_wards)
 )
-
 message(
   "Map features: ",
   validation$map_features
-)
-
-message("")
-message(
-  "Important: Census outputs are raw worksheet conversions."
-)
-
-message(
-  "They are NOT yet cleaned modelling data."
 )
