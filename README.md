@@ -2,12 +2,12 @@
 
 This project develops a synthetic-voter forecast for the 2026 Toronto municipal election.
 
-The goal is to forecast:
+The project will forecast:
 
-- the citywide mayoral election; and
+- the citywide mayoral election;
 - councillor elections in all 25 Toronto wards.
 
-The project combines Toronto Census data, official candidate lists, historical election results, turnout information, and synthetic voter responses generated using large language models (LLMs).
+The analysis combines official City of Toronto data with synthetic voter responses generated using large language models (LLMs).
 
 ## Project Structure
 
@@ -19,143 +19,147 @@ toronto-election-forecast/
 │   ├── elections/
 │   ├── geography/
 │   └── incumbency/
-│
 ├── processed/
-│
 ├── R/
-│
+│   ├── 01_inspect_census.R
+│   ├── 02_clean_census.R
+│   ├── 03_inspect_elections.R
+│   ├── 04_clean_historical_results.R
+│   ├── 05_clean_turnout.R
+│   └── 06_build_population_frame.R
 ├── download_data.R
 ├── prepare_data.R
 ├── sources.json
+├── validation.json
 └── toronto-election-forecast.Rproj
 ```
 
 ## Data
 
-The project uses official City of Toronto data.
+All core datasets come from official City of Toronto sources.
+
+The project currently uses:
+
+- 2021 Census ward profiles;
+- official 2026 mayoral and councillor candidate lists;
+- withdrawn candidate records;
+- 2022 mayoral and councillor election results;
+- 2023 mayoral by-election results;
+- 2023 Ward 20 councillor by-election results;
+- 2024 Ward 15 councillor by-election results;
+- 2025 Ward 25 councillor by-election results;
+- 2022 voter turnout statistics;
+- Toronto ward boundaries and ward names;
+- current elected officials for incumbent identification.
+
+Source URLs and download metadata are recorded in `sources.json`.
+
+## Processed Data
+
+The current processed datasets are:
+
+```text
+processed/
+├── candidates_2026.csv
+├── wards.csv
+├── census_age.csv
+├── census_education.csv
+├── ward_population.csv
+├── historical_results.csv
+├── turnout_by_ward.csv
+└── population_frame.csv
+```
 
 ### Census
 
-`raw/census/ward_profiles_2021.xlsx`
+The population frame currently uses four age groups:
 
-Contains 2021 Census information for Toronto's 25 wards. These data will be used to construct the population frame and post-stratification weights.
+- `20-29`
+- `30-44`
+- `45-64`
+- `65+`
 
-Source: City of Toronto Ward Profiles.
+and three education groups:
 
-### 2026 Candidates
+- `High school or less`
+- `Postsecondary below bachelor's`
+- `Bachelor's degree or higher`
 
-`raw/candidates/`
+The Census does not provide the required age-by-education joint distribution. The current population frame therefore approximates the joint distribution within each ward using:
 
-Contains official candidate lists for:
+\[
+P(Age, Education \mid Ward)
+\approx
+P(Age \mid Ward)P(Education \mid Ward)
+\]
 
-- Mayor
-- Councillor
-- Withdrawn candidates
+This produces 12 demographic cells per ward and 300 cells across the 25 wards.
 
-These files define the valid candidate choices used in the synthetic voter experiment.
+### Historical Elections
 
-Source: City of Toronto Elections.
+`historical_results.csv` contains cleaned candidate-level vote counts and vote shares for the 2022 general election and the more recent Toronto by-elections.
 
-### Historical Election Results
+### Turnout
 
-`raw/elections/`
+`turnout_by_ward.csv` contains ward-level eligible electors, ballots cast, and turnout from the 2022 municipal election.
 
-Contains:
+## Reproduction
 
-- 2022 Toronto municipal election results
-- 2022 voter turnout statistics
-- 2023 mayoral by-election results
-- 2023 Ward 20 councillor by-election results
-- 2024 Ward 15 councillor by-election results
-- 2025 Ward 25 councillor by-election results
+Open `toronto-election-forecast.Rproj` in RStudio.
 
-These data provide historical election context and turnout information for the forecast.
-
-### Geography
-
-`raw/geography/`
-
-Contains the official Toronto ward lookup table and geographic boundaries for all 25 wards. These files are used for geographic joins, validation, and maps.
-
-### Incumbency
-
-`raw/incumbency/elected_officials_2022_2026.json`
-
-Contains information about current elected officials and is used to identify incumbent candidates.
-
-## Reproducing the Data
-
-Open the project using `toronto-election-forecast.Rproj` in RStudio.
-
-Install the required R packages:
+Install the required packages:
 
 ```r
 install.packages(c(
   "jsonlite",
+  "digest",
   "readxl",
-  "digest"
+  "dplyr",
+  "tidyr",
+  "stringr",
+  "readr",
+  "purrr"
 ))
 ```
 
-### Download Raw Data
-
-Run:
+Download the raw data:
 
 ```r
 source("download_data.R")
 ```
 
-This downloads the raw data used in the project and stores them under `raw/`.
-
-The script also creates `sources.json`, which records information about the downloaded data sources.
-
-### Prepare Data
-
-Run:
+Prepare the candidate and ward data:
 
 ```r
 source("prepare_data.R")
 ```
 
-This performs initial data conversion and validation and creates:
+Run the analysis scripts in order:
 
-```text
-processed/
-├── candidates_2026.csv
-├── wards_raw.csv
-├── census_2021_one_variable_raw.csv
-└── census_2021_two_variable_raw.csv
+```r
+source("R/01_inspect_census.R")
+source("R/02_clean_census.R")
+source("R/03_inspect_elections.R")
+source("R/04_clean_historical_results.R")
+source("R/05_clean_turnout.R")
+source("R/06_build_population_frame.R")
 ```
 
-The script also creates `validation.json`, which checks:
+The `raw/` directory contains downloaded source data, while `processed/` contains datasets generated by the analysis pipeline.
 
-- the number of mayoral candidates;
-- the number of councillor candidates;
-- coverage of all 25 councillor wards; and
-- coverage of all 25 geographic ward features.
+## Next Steps
 
-The Census CSV files produced at this stage are direct worksheet conversions. They are not yet cleaned modelling data.
+The remaining workflow will:
 
-## Planned Analysis
-
-The analysis will include:
-
-1. Census data cleaning
-2. Historical election result cleaning
-3. Construction of a ward-level population frame
-4. Synthetic voter persona generation
-5. LLM-based vote simulation
-6. Post-stratification
-7. Forecast distributions
-8. Uncertainty analysis
-9. Forecast visualization and communication through a Quarto website
+1. generate synthetic voter personas from the population frame;
+2. collect synthetic vote responses from two LLM providers;
+3. post-stratify responses using demographic cell weights;
+4. produce mayoral and councillor forecast distributions;
+5. quantify forecast uncertainty;
+6. publish the final results through a reproducible Quarto website.
 
 ## Reproducibility
 
-Raw and processed data are stored separately.
+The repository separates raw source data from generated data and keeps the data preparation and analysis steps in reproducible R scripts.
 
-The `raw/` directory contains source data used in the project, while the `processed/` directory contains data generated by the analysis scripts.
-
-`sources.json` records the source and download information for the raw-data snapshot.
-
-The final repository will contain the code required to reproduce the data preparation, synthetic voter analysis, post-stratification, forecasts, and website.
+Validation checks are included throughout the pipeline to verify ward coverage, demographic weights, candidate data, election results, and turnout calculations.
