@@ -49,6 +49,24 @@ clean_election_sheet <- function(
     col_names = FALSE
   )
   
+  # Identify aggregate "Total" columns in the header row (row 2).
+  # Every poll-by-poll workbook repeats the ward total as a trailing
+  # column after the subdivision columns. Summing it together with
+  # the poll columns doubles every candidate's votes.
+  header_row <- trimws(
+    as.character(
+      unlist(
+        data[2, ],
+        use.names = FALSE
+      )
+    )
+  )
+  
+  total_columns <- which(
+    !is.na(header_row) &
+      header_row == "Total"
+  )
+  
   first_column <- trimws(
     as.character(data[[1]])
   )
@@ -81,9 +99,14 @@ clean_election_sheet <- function(
     as.character(candidate_data[[1]])
   )
   
+  # Drop the name column and any aggregate Total columns, keeping
+  # only genuine poll/subdivision columns.
   vote_columns <- candidate_data[
     ,
-    -1,
+    setdiff(
+      seq_len(ncol(candidate_data)),
+      c(1L, total_columns)
+    ),
     drop = FALSE
   ]
   

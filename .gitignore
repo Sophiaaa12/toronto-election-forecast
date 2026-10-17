@@ -2,3 +2,18 @@
 .Rhistory
 .RData
 .Ruserdata
+
+# API keys and local secrets
+.env
+.env.*
+!.env.example
+*.key
+
+# Python artifacts (LLM sampling helpers, if added later)
+__pycache__/
+.venv/
+
+# Quarto website build output
+.quarto/
+_site/
+
