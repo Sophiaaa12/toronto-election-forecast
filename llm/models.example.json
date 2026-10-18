@@ -1,0 +1,27 @@
+{
+  "_comment": "TEMPLATE ONLY. The model_id values below are PLACEHOLDERS ('example-org/example-model'), not real OpenRouter model IDs. The assignment forbids hardcoding unverified model IDs, so you must copy this file to llm/models.json and fill in verified IDs from https://openrouter.ai/models before any real (paid) run. Execution mode (any run without --dry-run) refuses placeholder IDs by design; dry-run mode permits them so the whole pipeline can be exercised without an account or an API key.",
+  "_requirements": "Provide at least TWO entries with DISTINCT providers (the 'provider' field, or distinct vendor prefixes in model_id). The forecast design compares provider arms, so a single-provider config is rejected with a warning.",
+  "_pricing_note": "Prices are NOT hardcoded anywhere. Actual billed cost is taken from the API response when OpenRouter reports it (usage.cost). For pre-run estimates only, pass --price-input-per-mtok / --price-output-per-mtok using the current prices shown on the OpenRouter model page (they change; check them at run time).",
+  "models": [
+    {
+      "model_id": "example-org-a/example-model",
+      "provider": "example-provider-a",
+      "model_version": null,
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "prompt_version": "v1",
+      "timeout_seconds": 60,
+      "max_retries": 5
+    },
+    {
+      "model_id": "example-org-b/example-model",
+      "provider": "example-provider-b",
+      "model_version": null,
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "prompt_version": "v1",
+      "timeout_seconds": 60,
+      "max_retries": 5
+    }
+  ]
+}

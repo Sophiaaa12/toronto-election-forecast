@@ -13,6 +13,17 @@
 __pycache__/
 .venv/
 
+# LLM sampling local state: response cache, cost log, raw API responses
+# (regenerable / user-specific; never commit)
+processed/llm_cache/
+processed/llm/raw_requests/
+processed/llm/cost_log.jsonl
+processed/llm_responses_dryrun_preview.parquet
+
+# User-local model configuration (contains the analyst's verified model
+# IDs and pricing choices; llm/models.example.json is the committed template)
+llm/models.json
+
 # Quarto website build output
 .quarto/
 _site/

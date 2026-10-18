@@ -343,7 +343,17 @@ simulate_llm_responses <- function(personas,
 #   n_eff = (sum w)^2 / sum(w^2)
 # per race x provider x repeat cell, used later as the Dirichlet
 # concentration scale for response sampling variability.
-poststratify_responses <- function(responses, personas, crosswalk) {
+#
+# `model_ids` and `n_repeats` default to the simulated pipeline's own
+# settings (PROVIDER_MODELS / N_REPEATS). They are parameters only so
+# that REAL LLM responses (R/10_llm_poststratify.R), which carry their
+# own model IDs and repeat counts, can flow through this exact same
+# function unchanged. No methodology is altered by the parameterization.
+poststratify_responses <- function(responses,
+                                   personas,
+                                   crosswalk,
+                                   model_ids = PROVIDER_MODELS$model_id,
+                                   n_repeats = N_REPEATS) {
   valid <- responses |>
     filter(response_status == "valid_choice") |>
     left_join(
@@ -374,8 +384,8 @@ poststratify_responses <- function(responses, personas, crosswalk) {
     select(race_id, candidate_id) |>
     distinct() |>
     tidyr::expand_grid(
-      model_id  = PROVIDER_MODELS$model_id,
-      repeat_id = seq_len(N_REPEATS)
+      model_id  = model_ids,
+      repeat_id = seq_len(n_repeats)
     )
 
   cells <- grid |>
