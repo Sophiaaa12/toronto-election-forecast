@@ -20,6 +20,14 @@ processed/llm/raw_requests/
 processed/llm/cost_log.jsonl
 processed/llm_responses_dryrun_preview.parquet
 
+# Mutable run summary: overwritten by every runner invocation. The immutable
+# pilot archive (run_summary_pilot40.json) and the per-condition summaries in
+# processed/diagnostic/ are committed explicitly instead.
+processed/llm/run_summary.json
+
+# Diagnostic dry-run previews (contain no API data; regenerable)
+processed/diagnostic/*/llm_responses_dryrun_preview.parquet
+
 # User-local model configuration (contains the analyst's verified model
 # IDs and pricing choices; llm/models.example.json is the committed template)
 llm/models.json
