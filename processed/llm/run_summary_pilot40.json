@@ -1,0 +1,67 @@
+{
+  "cache": {
+    "failures": 0,
+    "successes": 40
+  },
+  "candidate_order": "ballot",
+  "config_path": "llm/models.json",
+  "cost": {
+    "actual_reported_usd": 0.0034062,
+    "budget_usd": 0.5,
+    "estimated_on_unreported_usd": 0,
+    "estimated_total_usd": 0.0041532,
+    "n_requests_logged": 40,
+    "note": "actual_reported_usd is billed cost reported by the API; estimated_total_usd uses the analyst price table and is reported separately, never added to actual.",
+    "price_table_source": "cli flags",
+    "remaining_budget_usd": 0.4965938,
+    "spent_for_budget_usd": 0.0034062
+  },
+  "dry_run": false,
+  "generated_at_utc": "2026-10-18T01:44:54Z",
+  "models": [
+    {
+      "max_retries": 5,
+      "max_tokens": 256,
+      "model_id": "openai/gpt-4o-mini",
+      "model_version": null,
+      "prompt_version": "v1",
+      "provider": "openai",
+      "temperature": 0.7,
+      "timeout_seconds": 60.0
+    },
+    {
+      "max_retries": 5,
+      "max_tokens": 256,
+      "model_id": "google/gemini-2.5-flash-lite",
+      "model_version": null,
+      "prompt_version": "v1",
+      "provider": "google",
+      "temperature": 0.7,
+      "timeout_seconds": 60.0
+    }
+  ],
+  "output_path": "/Users/zhongjingwen/Desktop/MScAC/STA2453/toronto-election-forecast/processed/llm_responses.parquet",
+  "personas_available": 3042,
+  "personas_selected": 5,
+  "planned_requests": 40,
+  "repeats": 2,
+  "seed": 20261026,
+  "selected_persona_ids": [
+    "P001034",
+    "P000129",
+    "P001287",
+    "P002092",
+    "P000807"
+  ],
+  "selection_mode": "stratified",
+  "selection_seed": 20261026,
+  "stats": {
+    "budget_stopped": false,
+    "dry_run": false,
+    "failed": 0,
+    "from_cache": 0,
+    "planned": 40,
+    "submitted": 40,
+    "succeeded": 40
+  }
+}
