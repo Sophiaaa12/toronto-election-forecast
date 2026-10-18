@@ -30,10 +30,22 @@ toronto-election-forecast/
 │   ├── 07_simulate_personas.R
 │   ├── 08_simulate_llm_responses.R
 │   ├── 09_poststratify_forecast.R
+│   ├── 10_llm_poststratify.R
 │   ├── run_pipeline.R
 │   └── simulation_helpers.R
+├── llm/
+│   ├── __init__.py
+│   ├── cache.py            # SHA-256 disk response cache
+│   ├── client.py           # OpenRouter client (retries, backoff)
+│   ├── config.py           # model config + API key handling
+│   ├── cost.py             # cost log + budget enforcement
+│   ├── models.example.json # template (placeholder model IDs)
+│   ├── prompts.py          # persona prompt construction
+│   ├── runner.py           # CLI: python3 -m llm.runner
+│   └── schema.py           # strict JSON response validation
 ├── tests/
 │   ├── run_tests.R
+│   ├── python/             # mocked-HTTP unittest suite
 │   └── testthat/
 ├── download_data.R
 ├── prepare_data.R
@@ -164,6 +176,180 @@ These intervals are **illustrative simulation output, not calibrated election un
 
 All randomness uses the fixed seeds in `R/simulation_helpers.R`; repeated runs produce identical outputs. The automated test suite (`Rscript tests/run_tests.R`) validates ward/race/cell coverage, weight properties, candidate–race consistency, response-status handling, share properties, and forecast reproducibility.
 
+## Real LLM Sampling (infrastructure only)
+
+> **Status: infrastructure implemented and tested; NO real LLM sampling has been
+> performed.** All response data currently in the repository is simulated.
+> No OpenRouter credits have been spent. A separate, explicitly approved pilot
+> run is required before any real requests are submitted.
+
+The `llm/` Python package implements the OpenRouter integration that will
+replace the mock providers in `R/08_simulate_llm_responses.R`. It reuses the
+existing persona dataset, candidate crosswalk, and post-stratification
+statistics unchanged; only the response *source* differs.
+
+### API setup
+
+The API key is read **only** from the `OPENROUTER_API_KEY` environment
+variable. It is never written to source code, configuration files, or any
+output artifact.
+
+```sh
+pip install -r llm/requirements.txt     # requests, pyarrow
+export OPENROUTER_API_KEY=sk-or-...     # never commit this key
+```
+
+### Model configuration
+
+Model entries live in `llm/models.json` (git-ignored). Start from the
+committed template:
+
+```sh
+cp llm/models.example.json llm/models.json
+# then edit llm/models.json with VERIFIED model IDs
+```
+
+The template's `example-org-*/example-model` IDs are **placeholders**. The
+assignment forbids hardcoding unverified model IDs, so execution mode refuses
+placeholder IDs by design; dry-run mode permits them. Select real model IDs
+from <https://openrouter.ai/models> and record at least **two entries with
+distinct providers** (the forecast design compares provider arms).
+
+Each entry records: `model_id`, `provider`, `model_version` (optional pin),
+`temperature`, `max_tokens`, `prompt_version`, `timeout_seconds`,
+`max_retries`. Every one of these is stored in the request metadata, the cache
+key, and the output Parquet for audit.
+
+### Dry-run command
+
+Dry-run plans requests, builds prompts, validates candidate lists, estimates
+request counts and cost, and previews prompts — **without an API key and
+without any HTTP requests**:
+
+```sh
+python3 -m llm.runner run --dry-run \
+  --max-personas 3 --repeats 2 --preview 2 \
+  --budget-usd 1.0 \
+  --price-input-per-mtok 0.5 --price-output-per-mtok 1.5
+```
+
+Request count = `personas × 2 races × models × repeats` (each persona answers
+the mayoral race and their own ward race). Supported flags: `--dry-run`,
+`--max-personas`, `--max-requests`, `--models`, `--repeats`, `--budget-usd`,
+`--config`, `--order`, `--seed`, `--refresh-cache`, `--preview`.
+
+### What the LLM receives
+
+Each request gives the model only: the persona's ward number, age group, and
+education group; the race; and the candidate list (candidate_id + ballot
+display name) for that one race. It does **not** receive sampling weights,
+cell IDs, other personas, policy positions, biographies, or historical
+results. Candidate ordering is configurable (`--order ballot|random|id`) and
+reproducible via `--seed`.
+
+### Caching mechanism
+
+Responses are cached on local disk under `processed/llm_cache/` (git-ignored).
+The cache key is a SHA-256 over: model ID, provider, model version,
+temperature, max tokens, prompt version, candidate order + order seed, persona
+ID, race ID, repeat ID, and the digest of the full rendered prompt. Repeated
+runs of the same planned request reuse the cached response (no credits
+spent). Different `repeat_id`s hash to different keys, so repeats are
+independent requests, never copies. Only successful model answers
+(`valid_choice`/`undecided`/`not_voting`) are cached as successes; technical
+failures are recorded separately and re-attempted on later runs.
+
+```sh
+python3 -m llm.runner cache --list          # inspect cached successes
+python3 -m llm.runner cache --list-failures # inspect recorded failures
+python3 -m llm.runner cache --invalidate-model <model_id>
+python3 -m llm.runner cache --invalidate-all
+```
+
+Manual invalidation also works: delete files under
+`processed/llm_cache/success/`.
+
+### Cost tracking
+
+Every submitted request appends one JSON line to
+`processed/llm/cost_log.jsonl` recording: model ID, provider, prompt version,
+persona/race/repeat, request status, HTTP status, input tokens, output tokens,
+prompt-cache tokens (if reported), actual USD cost (if reported by the API),
+an estimate from an optional price table, timestamp, attempts, and elapsed
+time.
+
+**Actual and estimated costs are reported separately and never summed.**
+Actual cost comes from the API response when OpenRouter reports it; prices are
+never assumed fixed. Pre-run estimates use the optional
+`--price-input-per-mtok` / `--price-output-per-mtok` flags (check current
+prices on the OpenRouter model page at run time).
+
+`--budget-usd` halts submission of new requests once cumulative spend reaches
+the threshold (reported cost plus estimates for unreported-cost requests —
+conservative). Spend is re-loaded from the cost log on every run, so a
+resumed run still respects the budget. The run stops cleanly and reports how
+far it got.
+
+### Rate-limit and error behaviour
+
+- HTTP 429, 5xx, timeouts, and connection errors: retried with exponential
+  backoff and jitter (honouring `Retry-After`), up to `max_retries`.
+- HTTP 400/401/402/403/404/422: **permanent** — not retried (retrying an
+  invalid request cannot help).
+- Retries exhausted: recorded as `timeout`, `rate_limit`, or `api_error`.
+- Malformed JSON, missing fields, or a candidate_id outside the race's list:
+  recorded as `invalid`.
+- Successful HTTP but empty content: recorded as `missing`.
+
+Model answers (`valid_choice`/`undecided`/`not_voting`) are always kept
+distinct from technical failures (`missing`/`invalid`/`timeout`/`rate_limit`/
+`api_error`). Failed requests are never cached as successes.
+
+### Output schemas
+
+`processed/llm_responses.parquet` — schema-compatible with the simulated
+pipeline's response file, plus audit columns:
+
+| field | notes |
+|---|---|
+| `persona_id`, `ward`, `race_id`, `candidate_id` | candidate_id is NULL unless `valid_choice` |
+| `provider_id`, `model_id`, `repeat_id`, `response_status` | core simulation columns |
+| `model_version`, `prompt_version`, `temperature`, `max_tokens` | request configuration |
+| `candidate_order`, `n_candidates_in_race` | prompt construction audit |
+| `http_status`, `attempts`, `elapsed_seconds`, `from_cache`, `cache_digest` | transport audit |
+| `request_ts_utc`, `input_tokens`, `output_tokens`, `cached_tokens_reported` | usage audit |
+| `cost_usd_actual`, `cost_usd_estimate`, `cost_source`, `detail` | cost + failure detail |
+
+Raw API responses and request metadata are written to
+`processed/llm/raw_requests/` (git-ignored). The cost log and run summary live
+under `processed/llm/`. No credentials are stored in any output.
+
+### Feeding real responses into the forecast
+
+After an approved real run, convert the response Parquet to forecast
+distributions with the **unchanged** post-stratification statistics:
+
+```sh
+Rscript R/10_llm_poststratify.R
+```
+
+This validates the response file (schema, statuses, candidate–race matching,
+persona coverage) and writes forecasts to `processed/llm/` — never overwriting
+`processed/simulated/`.
+
+### Reproducibility (real sampling)
+
+- The mocked test suite (`python3 -m unittest discover -s tests/python`)
+  covers valid/invalid/undecided/not_voting responses, malformed JSON,
+  missing fields, timeouts, rate limits, retry limits, caching, repeat
+  independence, budget enforcement, and ward-candidate matching — **no test
+  contacts OpenRouter**.
+- R bridge tests (`tests/testthat/test-10_llm_bridge.R`) validate the
+  response schema and confirm the post-stratification glue.
+- For a real run: pin `model_version` and `prompt_version` in
+  `llm/models.json`, keep `--seed` fixed, and archive `cost_log.jsonl` and
+  `run_summary.json` alongside the outputs.
+
 ## Reproduction
 
 Open `toronto-election-forecast.Rproj` in RStudio.
@@ -224,11 +410,12 @@ The `raw/` directory contains downloaded source data, while `processed/` contain
 
 ## Next Steps
 
-The full workflow (persona generation, response collection, post-stratification, forecast distributions, uncertainty quantification) is implemented and tested end-to-end using **simulated** LLM responses. The remaining work will:
+The full workflow (persona generation, response collection, post-stratification, forecast distributions, uncertainty quantification) is implemented and tested end-to-end using **simulated** LLM responses. The real-LLM API infrastructure (OpenRouter client, prompts, strict JSON validation, caching, retries, cost/budget tracking, dry-run mode) is also implemented and tested with mocked HTTP — **but no real LLM sampling has been performed and no OpenRouter credits have been spent.** The remaining work will:
 
-1. connect the response stage to two real LLM providers (replacing the mock providers, using the same response schema);
-2. validate simulated-stage behaviour against real provider outputs;
-3. publish the final results through a reproducible Quarto website.
+1. run a small, explicitly approved OpenRouter pilot (after verifying model IDs in `llm/models.json`) and validate the real client behaviour against the mocked test suite;
+2. collect the full real response set through the cached, budget-tracked pipeline and produce forecasts with `R/10_llm_poststratify.R`;
+3. compare real provider outputs against the simulated-stage behaviour;
+4. publish the final results through a reproducible Quarto website.
 
 ## Reproducibility
 

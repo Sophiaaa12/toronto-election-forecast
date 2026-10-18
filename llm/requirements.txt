@@ -1,0 +1,8 @@
+# Python dependencies for the OpenRouter LLM sampling pipeline.
+#
+# The pipeline itself only needs requests + pyarrow. Tests use the
+# standard library's unittest + unittest.mock (no pytest required) and
+# never contact OpenRouter.
+
+requests>=2.31
+pyarrow>=14
