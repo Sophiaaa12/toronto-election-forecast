@@ -138,6 +138,108 @@ def select_personas(
     return ordered[:max_personas]
 
 
+# Fixed default seed for stratified pilot selection, so a pilot is
+# reproducible out of the box without the analyst choosing a seed.
+STRATIFIED_SELECTION_SEED = 20261026  # Toronto election day, like SEED_DEFAULT
+
+
+def select_personas_stratified(
+    personas: list[Persona],
+    max_personas: Optional[int],
+    seed: int = STRATIFIED_SELECTION_SEED,
+) -> list[Persona]:
+    """Reproducible STRATIFIED selection for small pilots.
+
+    The default head-N selection is cell-ordered, so a pilot of the
+    first 5 personas can come from a single demographic cell (same
+    ward, age, and education group), which makes the pilot useless for
+    checking demographic plumbing. This opt-in mode instead maximises
+    diversity:
+
+      1. personas are sorted by persona_id (stable input order);
+      2. a LOCAL seeded RNG (random.Random(seed)) shuffles the ward
+         list, so the pilot spans distinct wards - one new ward per
+         pick while wards last;
+      3. within each ward, (age_group x education_group) cells are
+         visited in a seeded rotation, so age and education groups
+         also spread across picks.
+
+    Determinism: every random draw comes from the local RNG seeded
+    with `seed`; the global random state is never touched, so results
+    are identical across processes and unaffected by anything else.
+
+    Scope: this changes ONLY which personas are planned. Schemas,
+    prompts, cache keys, post-stratification, and the full-sampling
+    default (head-N with --max-personas unset = all personas) are
+    unchanged, so the forecasting methodology is untouched.
+    """
+    import random as _random
+
+    ordered = sorted(personas, key=lambda p: p.persona_id)
+    if max_personas is None or max_personas >= len(ordered):
+        return ordered
+
+    rng = _random.Random(seed)
+
+    # (ward, age, edu) -> personas in stable ID order.
+    by_key: dict[tuple[int, str, str], list[Persona]] = {}
+    for p in ordered:
+        by_key.setdefault((p.ward, p.age_group, p.education_group), []).append(p)
+
+    wards = sorted({p.ward for p in ordered})
+    cells = sorted({(p.age_group, p.education_group) for p in ordered})
+    rng.shuffle(wards)   # seeded rotations: reproducible yet spread out
+    rng.shuffle(cells)
+
+    used_ids: set[str] = set()
+    used_wards: set[int] = set()
+    selected: list[Persona] = []
+    wi = ci = 0
+
+    while len(selected) < max_personas:
+        # Pick a ward not yet used in this pilot, if one remains.
+        ward: Optional[int] = None
+        for _ in range(len(wards)):
+            cand = wards[wi % len(wards)]
+            wi += 1
+            if cand not in used_wards:
+                ward = cand
+                break
+        if ward is None:  # more picks than wards: allow ward reuse
+            ward = wards[wi % len(wards)]
+            wi += 1
+
+        # Within the ward, rotate cells for age/education diversity.
+        pick: Optional[Persona] = None
+        for _ in range(len(cells)):
+            age, edu = cells[ci % len(cells)]
+            ci += 1
+            for p in by_key.get((ward, age, edu), []):
+                if p.persona_id not in used_ids:
+                    pick = p
+                    break
+            if pick is not None:
+                break
+        if pick is None:  # every cell in this ward used: any unused persona
+            for key, plist in by_key.items():
+                if key[0] != ward:
+                    continue
+                for p in plist:
+                    if p.persona_id not in used_ids:
+                        pick = p
+                        break
+                if pick is not None:
+                    break
+        if pick is None:  # ward fully exhausted: move to the next ward
+            continue
+
+        used_ids.add(pick.persona_id)
+        used_wards.add(pick.ward)
+        selected.append(pick)
+
+    return selected
+
+
 def plan_requests(
     personas: list[Persona],
     candidates_by_race: dict[str, list[Candidate]],
@@ -562,6 +664,16 @@ def build_arg_parser() -> argparse.ArgumentParser:
     run.add_argument("--out", type=Path, default=DEFAULT_OUTPUT)
     run.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_DIR)
     run.add_argument("--max-personas", type=int, default=None)
+    run.add_argument("--selection", choices=["head", "stratified"],
+                     default="head",
+                     help="'head' (default) takes the first N personas by ID; "
+                          "'stratified' spreads a small pilot across distinct "
+                          "wards and age/education groups (seeded, "
+                          "reproducible). Only changes WHICH personas are "
+                          "planned, never the methodology.")
+    run.add_argument("--selection-seed", type=int,
+                     default=STRATIFIED_SELECTION_SEED,
+                     help="seed for --selection stratified (fixed default)")
     run.add_argument("--max-requests", type=int, default=None,
                      help="cap NEW (non-cached) requests this run")
     run.add_argument("--models", type=str, default=None,
@@ -671,7 +783,12 @@ def cmd_run(args: argparse.Namespace) -> int:
             return 2
     personas = load_personas(args.personas)
     candidates_by_race = load_candidates(args.crosswalk)
-    selected = select_personas(personas, args.max_personas)
+    if args.selection == "stratified":
+        selected = select_personas_stratified(
+            personas, args.max_personas, seed=args.selection_seed
+        )
+    else:
+        selected = select_personas(personas, args.max_personas)
 
     # 4. Planning
     plans = plan_requests(
@@ -707,7 +824,10 @@ def cmd_run(args: argparse.Namespace) -> int:
     print(f"== Toronto 2026 LLM sampling ({'DRY RUN' if args.dry_run else 'LIVE'}) ==")
     print(f"config: {config_path}")
     print(f"models: {', '.join(c.model_id for c in configs)}")
-    print(f"personas selected: {len(selected)} of {len(personas)}")
+    print(f"personas selected: {len(selected)} of {len(personas)} "
+          f"(selection={args.selection}"
+          + (f", selection_seed={args.selection_seed}"
+             if args.selection == "stratified" else "") + ")")
     print(f"repeats per race: {args.repeats}   candidate order: {args.order}")
     print(f"planned requests: {len(plans)} "
           f"({len(selected)} personas x 2 races x {len(configs)} models x {args.repeats} repeats)")
@@ -755,6 +875,9 @@ def cmd_run(args: argparse.Namespace) -> int:
         "seed": args.seed,
         "personas_selected": len(selected),
         "personas_available": len(personas),
+        "selection_mode": args.selection,
+        "selection_seed": args.selection_seed if args.selection == "stratified" else None,
+        "selected_persona_ids": [p.persona_id for p in selected],
         "planned_requests": len(plans),
         "stats": stats,
         "cost": tracker.summary(),
