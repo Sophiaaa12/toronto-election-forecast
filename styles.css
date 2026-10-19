@@ -1,0 +1,44 @@
+/* Responsive refinements for the STA2453 Assignment II website. */
+
+/* Figures scale to the viewport. */
+main img,
+figure img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Wide tables: horizontal scroll on small screens only. */
+@media (max-width: 900px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 0.85em;
+    max-width: 100%;
+  }
+
+  /* Long code lines must not widen the page. */
+  pre {
+    overflow-x: auto;
+    max-width: 100%;
+    font-size: 0.8em;
+  }
+
+  code {
+    word-break: break-word;
+  }
+}
+
+/* Keep callouts readable on narrow viewports. */
+.callout {
+  max-width: 100%;
+}
+
+/* Display equations are wider than a phone viewport: scroll them
+   instead of letting them widen the page. */
+.math.display,
+mjx-container[display="true"] {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
