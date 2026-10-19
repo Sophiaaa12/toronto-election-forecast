@@ -1,0 +1,46 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - index.qmd
+    - "!tables/*.md"
+
+website:
+  title: "Toronto 2026 Municipal Election Forecast"
+  site-url: https://sophiaaa12.github.io/toronto-election-forecast/
+  page-footer:
+    left: "STA2453 Assignment II — Toronto 2026 Municipal Election Forecast · [GitHub repository](https://github.com/Sophiaaa12/toronto-election-forecast)"
+    right: "All forecasts are LLM-based silicon-sampling simulations; not calibrated election probabilities."
+  navbar:
+    pinned: false
+    left:
+      - text: "Overview"
+        href: index.qmd#overview
+      - text: "Election Forecasts"
+        href: index.qmd#forecasts
+      - text: "Provider Comparison"
+        href: index.qmd#providers
+      - text: "Forecast Uncertainty"
+        href: index.qmd#uncertainty
+      - text: "Diagnostics"
+        href: index.qmd#diagnostics
+      - text: "Data & Methods"
+        href: index.qmd#methods
+      - text: "Limitations"
+        href: index.qmd#limitations
+      - text: "Conclusion"
+        href: index.qmd#conclusion
+      - text: "Reproducibility"
+        href: index.qmd#reproducibility
+      - text: "References"
+        href: index.qmd#refs
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    anchor-sections: true
+    code-tools: false
+    css:
+      - styles.css
