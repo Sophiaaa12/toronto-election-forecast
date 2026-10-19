@@ -516,3 +516,314 @@ summarise_forecast_draws <- function(draws, point_estimates) {
     left_join(point_estimates, by = c("race_id", "candidate_id")) |>
     arrange(race_id, candidate_id)
 }
+
+# ===========================================================================
+# Task 6C: revised uncertainty construction (Methods B and C)
+# ===========================================================================
+# This section only ADDS functions. generate_forecast_draws() above is
+# left byte-identical so every previously produced mock/simulated forecast
+# output remains exactly reproducible (requirement: original unchanged).
+#
+# Variance sources, kept explicitly distinct:
+#
+#   1. LLM response variability: each draw first resamples one of the
+#      source provider's REPEAT cells (3 repeats within ONE model), so
+#      provider disagreement is never averaged away -- forecast draws are
+#      produced separately for each provider.
+#
+#   2. Dirichlet sampling uncertainty: shares ~ Dirichlet(n_eff * share
+#      + DIRICHLET_PSEUDOCOUNT), where n_eff is the Kish effective sample
+#      size of the post-stratified cell. The +0.5 pseudocount is a
+#      uniform-prior Dirichlet smoother: the cell posterior mean shrinks
+#      toward uniform by  0.5 * (1 - K * share) / (n_eff + 0.5 * K),
+#      and the total mass it gives zero-support candidates is
+#      0.5 * K / (n_eff + 0.5 * K). This effect is material when n_eff is
+#      small and K is large; R/10_llm_poststratify.R reports it per race.
+#
+#   3. Assumed forecast perturbation (Method C only): multiplicative
+#      logistic-normal noise  s_k <- s_k * exp(sigma * eps_k),
+#      eps_k ~ iid N(0,1), renormalised to the simplex. sigma is
+#      calibrated per race (calibrate_forecast_sigma) so this layer ALONE
+#      gives the race leader a marginal sd of target_sd (default
+#      FORECAST_TARGET_SD = 4pp). Unlike the additive-Gaussian layer in
+#      generate_forecast_draws(), this layer injects no positive mass
+#      (exact zeros stay exact zeros) and its absolute effect does not
+#      grow with the number of candidates.
+#      Method C is only APPROXIMATELY centre-preserving: the multiplicative
+#      perturbation plus renormalisation leaves a small O(sigma^2)
+#      displacement of the draw mean from the source shares. The realised
+#      leader bias is therefore computed and REPORTED (see
+#      forecast_centering_bias), never assumed to be zero.
+#
+#   4. Real election uncertainty: NOT modelled by any of these methods.
+#      All intervals and win frequencies are conditional on (a) the LLM
+#      responses and (b) the assumed perturbation scale. They are
+#      illustrative simulation frequencies, not calibrated probabilities
+#      of winning a real election.
+#
+# Method dispatch (used by R/10_llm_poststratify.R):
+#   generate_forecast_draws_centered()   Method C (production default)
+#   generate_forecast_draws_dirichlet()  Method B (sampling only)
+#   generate_forecast_draws_existing()   Method A construction, evaluated
+#                                        per provider (Dirichlet + additive
+#                                        N(0, 3pp^2) + clip + renormalise)
+FORECAST_TARGET_SD      <- 0.04  # Method C default: 4pp leader sd from the
+                                 # perturbation layer alone. ILLUSTRATIVE;
+                                 # NOT calibrated to election history.
+FORECAST_TARGET_SD_GRID <- c(0.02, 0.04, 0.06)  # sensitivity grid (6C)
+CALIBRATION_SEED        <- 245310L  # sigma-calibration RNG (independent of
+                                    # the draw seed, so calibration is
+                                    # reproducible on its own)
+CALIBRATION_PILOT_N     <- 20000L
+
+# Calibrate the multiplicative perturbation scale sigma for one race so
+# that, applied to the race's reference point shares, the perturbation
+# layer alone produces a leader sd of `target_sd`. Returns sigma in
+# [lo, hi]; saturates at the cap if the target is unreachable (e.g. an
+# almost-unanimous leader whose sd is bounded by sqrt(p*(1-p))).
+# NOTE: reseeds the global RNG (CALIBRATION_SEED); callers should
+# set.seed() for the draw stream AFTER calibrating.
+calibrate_forecast_sigma <- function(point_shares,
+                                     target_sd = FORECAST_TARGET_SD,
+                                     n_pilot = CALIBRATION_PILOT_N,
+                                     seed = CALIBRATION_SEED,
+                                     lo = 1e-4, hi = 10) {
+  stopifnot(
+    length(point_shares) >= 2,
+    all(is.finite(point_shares)),
+    all(point_shares >= 0),
+    abs(sum(point_shares) - 1) < 1e-6,
+    target_sd > 0
+  )
+  leader <- which.max(point_shares)
+  set.seed(seed)
+  eps  <- matrix(rnorm(n_pilot * length(point_shares)), nrow = n_pilot)
+  P    <- matrix(point_shares, nrow = n_pilot,
+                 ncol = length(point_shares), byrow = TRUE)
+  leader_sd <- function(sig) {
+    w <- P * exp(sig * eps)          # exact zeros remain exact zeros
+    s <- w / rowSums(w)
+    sd(s[, leader])
+  }
+  if (leader_sd(lo) >= target_sd) return(lo)
+  if (leader_sd(hi) <= target_sd) return(hi)
+  uniroot(function(x) leader_sd(x) - target_sd, interval = c(lo, hi))$root
+}
+
+# The multiplicative layer itself, exposed for unit testing:
+# preserves the simplex, preserves exact zeros, scale-free in shares.
+apply_multiplicative_layer <- function(shares, sigma,
+                                       eps = rnorm(length(shares))) {
+  stopifnot(
+    length(shares) == length(eps),
+    all(is.finite(shares)),
+    all(shares >= 0),
+    sigma >= 0,
+    sum(shares) > 0
+  )
+  w <- shares * exp(sigma * eps)
+  stopifnot(sum(w) > 0)
+  w / sum(w)
+}
+
+# Dirichlet-mean shrinkage caused by the +0.5 pseudocount, in percentage
+# points, for a candidate with cell share `share` in a K-candidate race
+# with effective sample size n_eff (positive = upward pull toward uniform).
+pseudocount_shrinkage_pp <- function(n_eff, n_cand, share) {
+  100 * DIRICHLET_PSEUDOCOUNT * (1 - n_cand * share) /
+    (n_eff + DIRICHLET_PSEUDOCOUNT * n_cand)
+}
+
+# Total mass the +0.5 pseudocount puts on zero-support candidates (%).
+pseudocount_mass_pct <- function(n_eff, n_cand) {
+  100 * DIRICHLET_PSEUDOCOUNT * n_cand /
+    (n_eff + DIRICHLET_PSEUDOCOUNT * n_cand)
+}
+
+# ---------------------------------------------------------------------------
+# Shared draw worker: one provider's cells, methods A/B/C, identical
+# output schema. The provider's draws resample ONLY that provider's
+# repeat cells (provider-specific forecasts).
+# ---------------------------------------------------------------------------
+forecast_draws_one_model <- function(cell_estimates,
+                                      model_id,
+                                      seed,
+                                      n_draws = FORECAST_DRAWS_PER_RACE,
+                                      method = c("centered", "dirichlet",
+                                                 "existing"),
+                                      target_sd = FORECAST_TARGET_SD,
+                                      point_estimates = NULL) {
+  method <- match.arg(method)
+  est <- cell_estimates[cell_estimates$model_id == model_id, , drop = FALSE]
+  if (nrow(est) == 0) {
+    stop("model_id '", model_id, "' not present in cell_estimates")
+  }
+  races <- sort(unique(est$race_id))
+
+  # Method C: one calibrated sigma per race, from the race's reference
+  # (pooled descriptive) point shares; calibration runs before the draw
+  # seed is set so both are independently reproducible.
+  sigmas <- NULL
+  if (method == "centered") {
+    if (is.null(point_estimates)) {
+      stop("method = 'centered' requires point_estimates for sigma calibration")
+    }
+    sigmas <- stats::setNames(numeric(length(races)), races)
+    for (r in races) {
+      ps <- point_estimates$point_share[point_estimates$race_id == r]
+      if (length(ps) == 0) stop("no reference point shares for race '", r, "'")
+      sigmas[[r]] <- calibrate_forecast_sigma(ps, target_sd = target_sd)
+    }
+  }
+
+  set.seed(seed)
+  out <- vector("list", length(races))
+  for (ri in seq_along(races)) {
+    race <- races[ri]
+    sub      <- est[est$race_id == race, , drop = FALSE]
+    reps     <- sort(unique(sub$repeat_id))
+    cand_ids <- sort(unique(sub$candidate_id))
+    n_rep    <- length(reps)
+    n_cand   <- length(cand_ids)
+
+    share_mat <- matrix(0, nrow = n_rep, ncol = n_cand)
+    neff_vec  <- numeric(n_rep)
+    for (j in seq_len(n_rep)) {
+      rows <- sub[sub$repeat_id == reps[j], , drop = FALSE]
+      share_mat[j, ] <- rows$share[match(cand_ids, rows$candidate_id)]
+      neff_vec[j] <- rows$n_eff[1]
+    }
+
+    draw_mat <- matrix(0, nrow = n_draws, ncol = n_cand)
+    src      <- integer(n_draws)
+    sigma_r  <- if (method == "centered") sigmas[[race]] else NA_real_
+    for (d in seq_len(n_draws)) {
+      j <- sample.int(n_rep, 1L)
+      # Layer 2: Dirichlet sampling uncertainty (+ pseudocount)
+      alpha <- neff_vec[j] * share_mat[j, ] + DIRICHLET_PSEUDOCOUNT
+      s <- rgamma(n_cand, shape = alpha)
+      s <- s / sum(s)
+      if (method == "existing") {
+        # Layer 3 (original construction): additive Gaussian, clip, renorm
+        s <- s + rnorm(n_cand, sd = ASSUMED_FORECAST_SD)
+        s <- pmax(s, 0)
+        s <- s / sum(s)
+      } else if (method == "centered") {
+        # Layer 3 (Method C): multiplicative logistic-normal perturbation
+        s <- apply_multiplicative_layer(s, sigma_r)
+      }
+      draw_mat[d, ] <- s
+      src[d]        <- j
+    }
+
+    out[[ri]] <- data.frame(
+      race_id          = race,
+      model_id         = model_id,
+      candidate_id     = rep(cand_ids, each = n_draws),
+      draw_id          = rep(seq_len(n_draws), times = n_cand),
+      source_repeat_id = reps[src][rep(seq_len(n_draws), times = n_cand)],
+      share            = as.vector(draw_mat),
+      stringsAsFactors = FALSE
+    )
+  }
+  dplyr::bind_rows(out) |>
+    dplyr::arrange(race_id, candidate_id, draw_id)
+}
+
+# Method C -- revised production forecast draws (see section header above).
+# `point_estimates` supplies the race-level reference shares used only to
+# calibrate sigma (equal-weight pooled descriptive shares); the draws
+# themselves always come from a single provider's repeat cells.
+generate_forecast_draws_centered <- function(cell_estimates,
+                                             point_estimates,
+                                             model_id,
+                                             seed = SIM_SEEDS$forecast,
+                                             n_draws = FORECAST_DRAWS_PER_RACE,
+                                             target_sd = FORECAST_TARGET_SD) {
+  forecast_draws_one_model(
+    cell_estimates, model_id, seed, n_draws,
+    method = "centered", target_sd = target_sd,
+    point_estimates = point_estimates
+  )
+}
+
+# Method B: Dirichlet sampling uncertainty only.
+generate_forecast_draws_dirichlet <- function(cell_estimates,
+                                              model_id,
+                                              seed = SIM_SEEDS$forecast,
+                                              n_draws = FORECAST_DRAWS_PER_RACE) {
+  forecast_draws_one_model(cell_estimates, model_id, seed, n_draws,
+                           method = "dirichlet")
+}
+
+# Method A construction (Dirichlet + additive Gaussian + clip + renorm),
+# evaluated per provider so it is directly comparable to B and C.
+generate_forecast_draws_existing <- function(cell_estimates,
+                                             model_id,
+                                             seed = SIM_SEEDS$forecast,
+                                             n_draws = FORECAST_DRAWS_PER_RACE) {
+  forecast_draws_one_model(cell_estimates, model_id, seed, n_draws,
+                           method = "existing")
+}
+
+# Summary for provider-specific draws. Unlike summarise_forecast_draws()
+# (left unchanged for the mock pipeline), ties are broken so that EXACTLY
+# ONE candidate wins each draw, guaranteeing p_win sums to 1 per
+# race x provider. point_estimates needs race_id, model_id, candidate_id,
+# n_valid, point_share (provider-specific, equal weight over repeats).
+summarise_provider_draws <- function(draws, point_estimates) {
+  wins <- draws |>
+    dplyr::group_by(race_id, model_id, draw_id) |>
+    dplyr::mutate(is_win = dplyr::row_number() == which.max(share)) |>
+    dplyr::ungroup() |>
+    dplyr::group_by(race_id, model_id, candidate_id) |>
+    dplyr::summarise(p_win = mean(is_win), .groups = "drop")
+
+  draws |>
+    dplyr::group_by(race_id, model_id, candidate_id) |>
+    dplyr::summarise(
+      mean_share = mean(share),
+      sd_share   = sd(share),
+      q025       = as.numeric(stats::quantile(share, 0.025)),
+      q50        = as.numeric(stats::quantile(share, 0.5)),
+      q975       = as.numeric(stats::quantile(share, 0.975)),
+      .groups = "drop"
+    ) |>
+    dplyr::left_join(wins, by = c("race_id", "model_id", "candidate_id")) |>
+    dplyr::left_join(
+      point_estimates,
+      by = c("race_id", "model_id", "candidate_id")
+    ) |>
+    dplyr::arrange(race_id, model_id, candidate_id)
+}
+
+# Realised leader-centring bias of a set of provider-specific draws:
+# draw mean minus the provider's point share for that race's point leader.
+# This is REPORTED (never assumed to be zero): Method C is only
+# approximately centre-preserving, and Method A is strongly biased.
+forecast_centering_bias <- function(draws, point_estimates) {
+  leaders <- point_estimates |>
+    dplyr::group_by(race_id, model_id) |>
+    dplyr::slice_max(point_share, n = 1, with_ties = FALSE) |>
+    dplyr::ungroup() |>
+    dplyr::select(race_id, model_id, candidate_id, point_share)
+
+  draws |>
+    dplyr::group_by(race_id, model_id, candidate_id) |>
+    dplyr::summarise(
+      mean_share = mean(share),
+      sd_share   = stats::sd(share),
+      .groups = "drop"
+    ) |>
+    dplyr::inner_join(leaders, by = c("race_id", "model_id", "candidate_id")) |>
+    dplyr::mutate(
+      leader_candidate    = candidate_id,
+      leader_bias_pp      = 100 * (mean_share - point_share),
+      leader_point_share  = point_share,
+      leader_mean_share   = mean_share,
+      leader_sd_share     = sd_share
+    ) |>
+    dplyr::select(race_id, model_id, leader_candidate,
+                  leader_point_share, leader_mean_share, leader_bias_pp,
+                  leader_sd_share)
+}
