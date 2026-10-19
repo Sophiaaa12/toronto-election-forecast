@@ -28,6 +28,11 @@ processed/llm/run_summary.json
 # Diagnostic dry-run previews (contain no API data; regenerable)
 processed/diagnostic/*/llm_responses_dryrun_preview.parquet
 
+# Production run runtime artifacts: dry-run preview and nohup/runtime logs
+# (regenerable; the final parquet, archived summary, and manifest are committed)
+processed/production/llm_responses_dryrun_preview.parquet
+processed/production/*.log
+
 # User-local model configuration (contains the analyst's verified model
 # IDs and pricing choices; llm/models.example.json is the committed template)
 llm/models.json
