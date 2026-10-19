@@ -1,0 +1,43 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# API keys and local secrets
+.env
+.env.*
+!.env.example
+*.key
+
+# Python artifacts (LLM sampling helpers, if added later)
+__pycache__/
+.venv/
+
+# LLM sampling local state: response cache, cost log, raw API responses
+# (regenerable / user-specific; never commit)
+processed/llm_cache/
+processed/llm/raw_requests/
+processed/llm/cost_log.jsonl
+processed/llm_responses_dryrun_preview.parquet
+
+# Mutable run summary: overwritten by every runner invocation. The immutable
+# pilot archive (run_summary_pilot40.json) and the per-condition summaries in
+# processed/diagnostic/ are committed explicitly instead.
+processed/llm/run_summary.json
+
+# Diagnostic dry-run previews (contain no API data; regenerable)
+processed/diagnostic/*/llm_responses_dryrun_preview.parquet
+
+# Production run runtime artifacts: dry-run preview and nohup/runtime logs
+# (regenerable; the final parquet, archived summary, and manifest are committed)
+processed/production/llm_responses_dryrun_preview.parquet
+processed/production/*.log
+
+# User-local model configuration (contains the analyst's verified model
+# IDs and pricing choices; llm/models.example.json is the committed template)
+llm/models.json
+
+# Quarto website build output
+.quarto/
+_site/
+

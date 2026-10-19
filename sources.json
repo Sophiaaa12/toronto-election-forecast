@@ -1,0 +1,119 @@
+[
+  {
+    "file": "raw/census/ward_profiles_2021.xlsx",
+    "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/6678e1a6-d25f-4dff-b2b7-aa8f042bc2eb/resource/16a31e1d-b4d9-4cf0-b5b3-2e3937cb4121/download/2023-wardprofiles-2011-2021-censusdata_rev0719.xlsx",
+    "source": "https://open.toronto.ca/dataset/ward-profiles-25-ward-model/",
+    "purpose": "2021 ward-level Census data for population frame and post-stratification",
+    "bytes": 540936,
+    "sha256": "2e01e86c0be60a1198c928a9b21ea466841f3544d9de6a90113f44b0230545fb",
+    "downloaded_at": "2026-10-14T16:48:25Z"
+  },
+  {
+    "file": "raw/candidates/mayor_candidates_2026.json",
+    "url": "https://www.toronto.ca/data/elections/candidate_list/mayorCandidates_2026.json",
+    "source": "https://www.toronto.ca/city-government/elections/candidate-list/",
+    "purpose": "Official 2026 mayor candidate list",
+    "bytes": 15706,
+    "sha256": "be9512f9b793844e16e84a94832e0c3887e6c62cd26ac31e81abea581b916618",
+    "downloaded_at": "2026-10-14T16:48:25Z"
+  },
+  {
+    "file": "raw/candidates/councillor_candidates_2026.json",
+    "url": "https://www.toronto.ca/data/elections/candidate_list/councilorCandidates_2026.json",
+    "source": "https://www.toronto.ca/city-government/elections/candidate-list/",
+    "purpose": "Official 2026 councillor candidate lists by ward",
+    "bytes": 64318,
+    "sha256": "665495fa1be0ea0163f320418752f95e17ee5e4d39c634160a07f411c8d79c6b",
+    "downloaded_at": "2026-10-14T16:48:25Z"
+  },
+  {
+    "file": "raw/candidates/withdrawn_candidates_2026.json",
+    "url": "https://www.toronto.ca/data/elections/candidate_list/withdrawnCandidates_2026.json",
+    "source": "https://www.toronto.ca/city-government/elections/candidate-list/",
+    "purpose": "Quality check for withdrawn candidates",
+    "bytes": 6459,
+    "sha256": "ec19ad78f2f5809e68e02aa258be85a48180b8473caa25cc5c8b0df13c6941a6",
+    "downloaded_at": "2026-10-14T16:48:26Z"
+  },
+  {
+    "file": "raw/elections/election_results_2022.zip",
+    "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/96d35404-44d9-49d8-95bb-fb1e5489240d/resource/3ad371de-7c51-45d3-9ea4-0b4efac5fc2b/download/2022-results.zip",
+    "source": "https://open.toronto.ca/dataset/election-results-official/",
+    "purpose": "2022 mayor and councillor historical election results",
+    "bytes": 939065,
+    "sha256": "127d0a29ee82b1e9694078588999e825377cfbb2c5d9f1d1bfaf234f9dbaba76",
+    "downloaded_at": "2026-10-14T16:48:26Z"
+  },
+  {
+    "file": "raw/elections/turnout_2022.xlsx",
+    "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/7dc606ab-f042-4d90-99e2-9247cb5953d2/resource/631b7042-bd71-46b1-9c27-2d4119462ec7/download/2022_voter_turnout_statistics_final.xlsx",
+    "source": "https://open.toronto.ca/dataset/elections-voter-statistics/",
+    "purpose": "Ward-level electorate and turnout for weighting",
+    "bytes": 185514,
+    "sha256": "ab66fa7da43c0118ee3455c804b431ae0ec03e491f7496b3061004c1721cbf21",
+    "downloaded_at": "2026-10-14T16:48:26Z"
+  },
+  {
+    "file": "raw/elections/mayor_by_election_2023.xlsx",
+    "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/97d72233-8681-4b3d-828e-4929d40d122c/resource/868f890d-5432-432b-823c-c6a6fafa2f63/download/2023_office_of_the_mayor.xlsx",
+    "source": "https://open.toronto.ca/dataset/elections-official-by-election-results/",
+    "purpose": "Most recent citywide mayor election baseline",
+    "bytes": 553579,
+    "sha256": "8077b5b94ebd25fb97d34cdeaeeadfb8a8c058d4530c06ab1ad56665a3fe435a",
+    "downloaded_at": "2026-10-14T16:48:26Z"
+  },
+  {
+    "file": "raw/elections/ward20_by_election_2023.xlsx",
+    "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/97d72233-8681-4b3d-828e-4929d40d122c/resource/5ced6a0b-1f7a-4717-b522-da02a4d916ab/download/2023-office-of-the-councillor-ward-20-poll-by-poll.xlsx",
+    "source": "https://open.toronto.ca/dataset/elections-official-by-election-results/",
+    "purpose": "Updated historical councillor result for Ward 20",
+    "bytes": 23682,
+    "sha256": "489a78b37eae4b3b90b8a7907bf4ee852c29449f2703d874e17572ca8c9df9f1",
+    "downloaded_at": "2026-10-14T16:48:26Z"
+  },
+  {
+    "file": "raw/elections/ward15_by_election_2024.xlsx",
+    "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/97d72233-8681-4b3d-828e-4929d40d122c/resource/7e64ea38-c3a4-4b1f-a68e-4127dfca6430/download/2024-councillor-ward-15-poll-by-poll.xlsx",
+    "source": "https://open.toronto.ca/dataset/elections-official-by-election-results/",
+    "purpose": "Updated historical councillor result for Ward 15",
+    "bytes": 20639,
+    "sha256": "f7e2c9023a041982a5645732b92fb70dad92962fc5f9cf6d567c4f5641b5d872",
+    "downloaded_at": "2026-10-14T16:48:27Z"
+  },
+  {
+    "file": "raw/elections/ward25_by_election_2025.xlsx",
+    "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/97d72233-8681-4b3d-828e-4929d40d122c/resource/1a29cfb8-0ee8-4e7d-b415-f07963d5a436/download/2025-councillor-ward25-poll-by-poll.xlsx",
+    "source": "https://open.toronto.ca/dataset/elections-official-by-election-results/",
+    "purpose": "Updated historical councillor result for Ward 25",
+    "bytes": 26780,
+    "sha256": "ce9b2d1466aa87b603d4a1cc4c77e23a111af21bab09d198e9b8a06fa5645fed",
+    "downloaded_at": "2026-10-14T16:48:27Z"
+  },
+  {
+    "file": "raw/geography/wards.geojson",
+    "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/a2a33cd7-877e-4b68-af54-dfe8a6b53170/resource/8d621291-bc8e-482c-ada4-e32c52d6dbdf/download/ward-and-elected-councillor-4326.geojson",
+    "source": "https://open.toronto.ca/dataset/wards-and-elected-councillors/",
+    "purpose": "Ward boundaries for maps and geographic validation",
+    "bytes": 1164839,
+    "sha256": "b553a876130a6685e6ee4a3c74d426f4cf498b7e46938391024a785b194d703f",
+    "downloaded_at": "2026-10-14T16:48:28Z"
+  },
+  {
+    "file": "raw/geography/ward_names.xlsx",
+    "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/6678e1a6-d25f-4dff-b2b7-aa8f042bc2eb/resource/ea4cc466-bd4d-40c6-a616-7abfa9d7398f/download/25-wardnames-numbers.xlsx",
+    "source": "https://open.toronto.ca/dataset/ward-profiles-25-ward-model/",
+    "purpose": "Official ward number and ward name lookup",
+    "bytes": 10675,
+    "sha256": "607e50ce67532853e47c1ce793c7310dcd348c7d5fb013e963668994f03f2d5b",
+    "downloaded_at": "2026-10-14T16:48:28Z"
+  },
+  {
+    "file": "raw/incumbency/elected_officials_2022_2026.json",
+    "url": "https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/27aa4651-4548-4e57-bf00-53a346931251/resource/161c66b5-bcc8-4cb9-bbf8-4f44c837fa0f/download/2022-2026-elected-officials-contact-info.json",
+    "source": "https://open.toronto.ca/dataset/elected-officials-contact-information/",
+    "purpose": "Current elected officials used to identify incumbents",
+    "bytes": 15949,
+    "sha256": "ca2355ef91e277040b2bfd3ea04c107748856c2b7d4baf1f592f1f0df0b6cb85",
+    "downloaded_at": "2026-10-14T16:48:28Z"
+  }
+]

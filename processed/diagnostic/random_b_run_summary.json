@@ -1,0 +1,74 @@
+{
+  "cache": {
+    "failures": 0,
+    "successes": 40
+  },
+  "candidate_order": "random",
+  "config_path": "llm/models.json",
+  "cost": {
+    "actual_reported_usd": 0.0034062,
+    "budget_usd": null,
+    "estimated_on_unreported_usd": 0,
+    "estimated_total_usd": 0.0041532,
+    "n_requests_logged": 40,
+    "note": "actual_reported_usd is billed cost reported by the API; estimated_total_usd uses the analyst price table and is reported separately, never added to actual.",
+    "price_table_source": "not set",
+    "remaining_budget_usd": null,
+    "spent_for_budget_usd": 0.0034062
+  },
+  "dry_run": true,
+  "generated_at_utc": "2026-10-18T02:59:57Z",
+  "models": [
+    {
+      "max_retries": 5,
+      "max_tokens": 256,
+      "model_id": "openai/gpt-4o-mini",
+      "model_version": null,
+      "prompt_version": "v1",
+      "provider": "openai",
+      "temperature": 0.7,
+      "timeout_seconds": 60.0
+    },
+    {
+      "max_retries": 5,
+      "max_tokens": 256,
+      "model_id": "google/gemini-2.5-flash-lite",
+      "model_version": null,
+      "prompt_version": "v1",
+      "provider": "google",
+      "temperature": 0.7,
+      "timeout_seconds": 60.0
+    }
+  ],
+  "output_path": "processed/diagnostic/random_b/out.parquet",
+  "personas_available": 3042,
+  "personas_selected": 12,
+  "planned_requests": 144,
+  "repeats": 3,
+  "seed": 7777777,
+  "selected_persona_ids": [
+    "P001034",
+    "P000129",
+    "P001287",
+    "P002092",
+    "P000807",
+    "P001528",
+    "P002313",
+    "P002846",
+    "P002824",
+    "P001815",
+    "P003017",
+    "P002556"
+  ],
+  "selection_mode": "stratified",
+  "selection_seed": 20261026,
+  "stats": {
+    "budget_stopped": false,
+    "dry_run": true,
+    "failed": 0,
+    "from_cache": 0,
+    "planned": 144,
+    "submitted": 0,
+    "succeeded": 0
+  }
+}
