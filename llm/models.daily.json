@@ -1,0 +1,25 @@
+{
+  "_comment": "Daily tracker configuration used by .github/workflows/daily-forecast.yml. Same two OpenRouter models and generation settings as the frozen production run (see processed/production/production_manifest.json); only the prompt differs (v2 = v1 + poll date + that day's Toronto news headlines).",
+  "models": [
+    {
+      "model_id": "google/gemini-2.5-flash-lite",
+      "provider": "google",
+      "model_version": null,
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "prompt_version": "v2",
+      "timeout_seconds": 60,
+      "max_retries": 5
+    },
+    {
+      "model_id": "openai/gpt-4o-mini",
+      "provider": "openai",
+      "model_version": null,
+      "temperature": 0.7,
+      "max_tokens": 256,
+      "prompt_version": "v2",
+      "timeout_seconds": 60,
+      "max_retries": 5
+    }
+  ]
+}

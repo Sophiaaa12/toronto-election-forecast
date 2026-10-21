@@ -451,6 +451,50 @@ The published site will be at
 site performs no API calls and modifies no data, so it is safe to re-render
 in CI.
 
+## Daily tracker (GitHub Action)
+
+`.github/workflows/daily-forecast.yml` re-polls a fixed persona panel every
+morning with that day's Toronto news headlines, in the style of the
+[Synthetic Voter Project](https://rohanalexander.github.io/synthetic_voter_project/),
+and republishes the site with a **Daily Tracker** page (`website/daily.qmd`).
+The frozen production sample and forecast are never touched.
+
+Each run (07:00 Toronto time, `scripts/run_daily.sh`):
+
+1. `R/11_daily_panel.R` builds the fixed panel: 4 personas per census cell
+   (1,200 in total), reweighted so cell, ward, and citywide weights match the
+   full frame.
+2. `python3 -m llm.news` downloads CBC Toronto, Toronto Star, CityNews,
+   Global News, and Toronto Sun RSS feeds. It keeps up to 12 recent stories,
+   with Toronto election stories first, and writes
+   `processed/daily/news/<date>.json`. If fewer than 2 feeds or 5 stories are
+   available, the day is skipped.
+3. `llm.runner` runs once per model, in parallel, with `--news`
+   (prompt v2 = v1 + date + headlines). That is 1,200 personas × 2 races ×
+   2 models = 4,800 requests, written to `processed/daily/responses/<date>/`.
+4. `R/12_daily_forecast.R <date>` runs the production post-stratification and
+   Method C draws, writes `processed/daily/summary/<date>.parquet` and
+   `stats/<date>.csv`, and rebuilds `processed/daily/history.csv`.
+5. `website/make_daily.R` regenerates the daily figures and tables. The
+   workflow commits `processed/daily/` and `website/` to `main`, then runs
+   `quarto publish gh-pages website`.
+
+Pushes to `main` that touch `website/` only re-render and republish.
+
+**One-time setup** (repository settings on GitHub):
+
+- *Secrets and variables → Actions → New repository secret*:
+  `OPENROUTER_API_KEY`.
+- *Settings → Pages*: source = deploy from branch `gh-pages` / root.
+- *Settings → Actions → General → Workflow permissions*: read and write.
+- Optional repository variables: `DAILY_BUDGET_USD` (default `1.50`, a hard
+  cap split across the two models), `DAILY_PERSONAS_PER_CELL` (default `4`),
+  `POLL_END_DATE` (default `2026-10-26`; scheduled runs stop polling after it).
+
+Run it immediately from *Actions → Daily forecast → Run workflow*. A date that
+already has responses is not re-polled unless `force_poll` is ticked. Locally:
+`OPENROUTER_API_KEY=... scripts/run_daily.sh && Rscript website/make_daily.R`.
+
 ## AI-use declaration
 
 An AI coding assistant (Anthropic Claude, via the OpenCode CLI) was used to

@@ -29,6 +29,11 @@ Headline results:
 - Ward races vary substantially, and the **two providers name different leading candidates in 8 of 25 wards** (leader defined by post-stratified point share; see [Provider Comparison](#providers) for the full reconciliation with the alternative definition).
 - Forecast uncertainty is **assumption-driven**: widening the assumed perturbation from 2pp to 6pp widens median leader intervals from 33.6pp to 41.0pp — an explicit, documented knob, not an empirical calibration.
 
+::: {.callout-tip}
+## Daily Tracker
+A fixed 1,200-persona panel is re-polled every morning with that day's Toronto news headlines, and the results are published automatically on the [Daily Tracker](daily.qmd) page. The frozen forecast on this page does not change.
+:::
+
 ::: {.callout-important}
 ## What this forecast is — and is not
 - **Is:** a post-stratified summary of *what LLMs say* about a Census-shaped synthetic electorate, with model-based uncertainty from repeated sampling.

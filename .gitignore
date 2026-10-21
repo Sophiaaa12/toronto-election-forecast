@@ -37,6 +37,9 @@ processed/production/*.log
 # IDs and pricing choices; llm/models.example.json is the committed template)
 llm/models.json
 
+# Daily tracker scratch space (LLM cache, raw requests, cost logs; CI-cached)
+.daily-work/
+
 # Quarto website build output
 .quarto/
 _site/

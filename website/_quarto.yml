@@ -3,6 +3,7 @@ project:
   output-dir: _site
   render:
     - index.qmd
+    - daily.qmd
     - "!tables/*.md"
 
 website:
@@ -34,6 +35,9 @@ website:
         href: index.qmd#reproducibility
       - text: "References"
         href: index.qmd#refs
+    right:
+      - text: "Daily Tracker"
+        href: daily.qmd
 
 format:
   html:

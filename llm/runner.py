@@ -60,8 +60,10 @@ from .config import (
 )
 from .cost import BudgetExceeded, CostTracker, PriceTable
 from .prompts import (
+    DAILY_PROMPT_VERSION,
     PROMPT_VERSION,
     Candidate,
+    DailyContext,
     Persona,
     build_messages,
     derive_order_seed,
@@ -247,12 +249,14 @@ def plan_requests(
     repeats: int,
     order_mode: str,
     base_seed: int,
+    context: Optional[DailyContext] = None,
 ) -> list[dict[str, Any]]:
     """Build the full list of planned API requests.
 
     Each persona answers TWO races: the mayoral race and their own
     ward's councillor race. Each (persona, race, model, repeat) is one
-    independent planned request with its own cache key.
+    independent planned request with its own cache key. A DailyContext
+    (daily tracker) changes the rendered prompt, and therefore the key.
     """
     if repeats < 1:
         raise ValueError("repeats must be >= 1")
@@ -274,7 +278,7 @@ def plan_requests(
                         else None
                     )
                     ordered = order_candidates(base_cands, order_mode, seed)
-                    messages = build_messages(persona, race_id, ordered)
+                    messages = build_messages(persona, race_id, ordered, context)
                     fp = prompt_fingerprint(messages)
                     key = CacheKey(
                         model_id=cfg.model_id,
@@ -691,6 +695,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
                      help="USD per 1M input tokens (estimates only)")
     run.add_argument("--price-output-per-mtok", type=float, default=None,
                      help="USD per 1M output tokens (estimates only)")
+    run.add_argument("--news", type=Path, default=None,
+                     help="daily news JSON from `python3 -m llm.news`; switches "
+                          "to the v2 daily-tracker prompt")
+    run.add_argument("--cost-log", type=Path, default=DEFAULT_COST_LOG)
+    run.add_argument("--summary", type=Path, default=DEFAULT_SUMMARY)
+    run.add_argument("--raw-dir", type=Path, default=DEFAULT_RAW_DIR)
 
     cache = sub.add_parser("cache", help="inspect or invalidate the cache")
     cache.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_DIR)
@@ -765,6 +775,19 @@ def cmd_run(args: argparse.Namespace) -> int:
             print(f"config error: {exc}", file=sys.stderr)
             return 2
 
+    context: Optional[DailyContext] = None
+    if args.news is not None:
+        news = json.loads(args.news.read_text())
+        context = DailyContext(poll_date=news["poll_date"],
+                               news_block=news["news_block"])
+        stale = [c.model_id for c in configs
+                 if c.prompt_version != DAILY_PROMPT_VERSION]
+        if stale:
+            print(f"config error: --news uses prompt {DAILY_PROMPT_VERSION} but "
+                  f"these models are configured with another prompt_version: "
+                  f"{', '.join(stale)}", file=sys.stderr)
+            return 2
+
     # 2. API key (only needed for real runs)
     try:
         api_key = get_api_key(required=not args.dry_run)
@@ -794,6 +817,7 @@ def cmd_run(args: argparse.Namespace) -> int:
     plans = plan_requests(
         selected, candidates_by_race, configs,
         repeats=args.repeats, order_mode=args.order, base_seed=args.seed,
+        context=context,
     )
 
     # Candidate-list validation (dry run must catch schema problems).
@@ -809,7 +833,7 @@ def cmd_run(args: argparse.Namespace) -> int:
         output_per_mtok=args.price_output_per_mtok,
         source="cli flags" if (args.price_input_per_mtok or args.price_output_per_mtok) else "not set",
     )
-    tracker = CostTracker(DEFAULT_COST_LOG, budget_usd=args.budget_usd, prices=prices)
+    tracker = CostTracker(args.cost_log, budget_usd=args.budget_usd, prices=prices)
     cache = ResponseCache(args.cache_dir)
 
     # 6. Execute (or dry-run)
@@ -850,7 +874,7 @@ def cmd_run(args: argparse.Namespace) -> int:
 
     rows, stats = execute_plan(
         plans, cache, tracker, client,
-        raw_dir=DEFAULT_RAW_DIR, dry_run=args.dry_run,
+        raw_dir=args.raw_dir, dry_run=args.dry_run,
         max_requests=args.max_requests, refresh_cache=args.refresh_cache,
     )
 
@@ -883,10 +907,12 @@ def cmd_run(args: argparse.Namespace) -> int:
         "cost": tracker.summary(),
         "cache": cache.stats(),
         "output_path": str(args.out),
+        "poll_date": context.poll_date if context else None,
+        "news_path": str(args.news) if args.news else None,
     }
-    DEFAULT_SUMMARY.parent.mkdir(parents=True, exist_ok=True)
-    DEFAULT_SUMMARY.write_text(json.dumps(summary, indent=2, sort_keys=True))
-    print(f"run summary -> {DEFAULT_SUMMARY}")
+    args.summary.parent.mkdir(parents=True, exist_ok=True)
+    args.summary.write_text(json.dumps(summary, indent=2, sort_keys=True))
+    print(f"run summary -> {args.summary}")
     print("cost summary:", json.dumps(tracker.summary(), indent=2, sort_keys=True))
     return 0
 

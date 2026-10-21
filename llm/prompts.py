@@ -60,6 +60,56 @@ policy positions, biographies, or any information not provided here.
 - Do not include markdown, comments, or any text outside the JSON object.
 """
 
+# Daily tracker prompt (v2): same task and JSON schema as v1, plus the
+# poll date and a block of that day's Toronto news headlines, which is
+# identical for every persona on a given day.
+DAILY_PROMPT_VERSION = "v2"
+
+DAILY_SYSTEM_PROMPT_TEMPLATE = """\
+You are simulating one Toronto resident answering a short municipal \
+election survey for research purposes (prompt version {version}).
+
+Today is {poll_date}. Toronto's municipal election (mayor and ward \
+councillors) is on Monday 26 October 2026.
+
+You will be told the respondent's ward, age group, and education group, \
+and the list of candidates in exactly one race. Reply with ONLY a JSON \
+object and no other text, using this exact schema:
+
+{{"response_status": "valid_choice"|"undecided"|"not_voting", \
+"candidate_id": "<candidate_id from the list>" or null}}
+
+Rules:
+- If response_status is "valid_choice", candidate_id MUST be one of the \
+candidate_id values in the provided candidate list (exact string match).
+- If response_status is "undecided" or "not_voting", candidate_id MUST \
+be null.
+- Choose as the described respondent would, given the candidate names, \
+the respondent's demographics, and the local news headlines below, which \
+this resident has seen today. Do not invent policy positions, \
+biographies, or any information not provided here.
+- Do not include markdown, comments, or any text outside the JSON object.
+
+Today's Toronto news headlines ({poll_date}):
+{news_block}
+"""
+
+
+@dataclass(frozen=True)
+class DailyContext:
+    """Per-day context shared by every request in a daily poll."""
+
+    poll_date: str   # YYYY-MM-DD (Toronto time)
+    news_block: str  # rendered headlines (llm.news.render_news_block)
+
+
+def build_daily_system_prompt(context: "DailyContext") -> str:
+    return DAILY_SYSTEM_PROMPT_TEMPLATE.format(
+        version=DAILY_PROMPT_VERSION,
+        poll_date=context.poll_date,
+        news_block=context.news_block.strip() or "(no headlines available)",
+    )
+
 
 @dataclass(frozen=True)
 class Persona:
@@ -159,10 +209,17 @@ def build_messages(
     persona: Persona,
     race_id: str,
     candidates: Sequence[Candidate],
+    context: DailyContext | None = None,
 ) -> list[dict[str, str]]:
-    """Full chat messages (system + user) for one planned request."""
+    """Full chat messages (system + user) for one planned request.
+
+    With a DailyContext the v2 system prompt is used. The news block
+    sits in the system message so the long shared prefix is identical
+    across all of a day's requests (provider prompt caching).
+    """
+    system = SYSTEM_PROMPT if context is None else build_daily_system_prompt(context)
     return [
-        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "system", "content": system},
         {
             "role": "user",
             "content": build_user_prompt(persona, race_id, candidates),
