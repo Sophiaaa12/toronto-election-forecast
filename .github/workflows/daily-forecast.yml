@@ -5,8 +5,13 @@ name: Daily forecast
 # Pushes that touch the website only re-render and republish it.
 
 on:
+  # GitHub can delay or drop scheduled runs, so later slots are backups:
+  # once a day has been polled, run_daily.sh skips the API calls.
   schedule:
-    - cron: "0 11 * * *"   # 07:00 Toronto (EDT)
+    - cron: "17 10 * * *"   # 06:17 Toronto (EDT)
+    - cron: "17 13 * * *"   # 09:17 backup
+    - cron: "17 16 * * *"   # 12:17 backup
+    - cron: "17 20 * * *"   # 16:17 backup
   workflow_dispatch:
     inputs:
       force_poll:
@@ -43,6 +48,9 @@ jobs:
       WORK_DIR: ${{ github.workspace }}/.daily-work
     steps:
       - uses: actions/checkout@v4
+        with:
+          # A queued backup run must see the data committed by the run before it.
+          ref: main
 
       - name: Poll date (Toronto)
         id: date
