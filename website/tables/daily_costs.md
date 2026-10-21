@@ -1,6 +1,6 @@
 | Date | Model | Requests | Valid | Undecided | Failed | Input tokens | Cached | Output tokens | Cost |
 |---|---|---|---|---|---|---|---|---|---|
-| 2026-10-20 | Gemini 2.5 Flash Lite | 2,400 | 641 | 269 | 1,490 | 1,210,931 | 78,102 | 24,200 | $0.12 |
-| 2026-10-20 | GPT-4o-mini | 2,400 | 275 | 85 | 2,039 | 441,755 | 149,248 | 6,198 | $0.06 |
+| 2026-10-20 | Gemini 2.5 Flash Lite | 2,400 | 1,587 | 813 | 0 | 3,227,360 | 182,600 | 63,385 | $0.21 |
+| 2026-10-20 | GPT-4o-mini | 2,400 | 1,771 | 626 | 0 | 2,949,904 | 1,020,928 | 40,878 | $0.33 |
 
-Cumulative daily-tracker spend: **$0.18** over 1 day (actual cost reported by OpenRouter).
+Cumulative daily-tracker spend: **$0.54** over 1 day (actual cost reported by OpenRouter).

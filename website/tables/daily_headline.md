@@ -2,8 +2,8 @@
 
 | Mayoral candidate | Share of decided voters |
 |---|---|
-| Brad Bradford | 99.4% |
-| Olivia Chow | 0.6% |
+| Brad Bradford | 97.9% |
+| Olivia Chow | 2.1% |
 | Imad Abdulkadir | 0.0% |
 | Bahira Abdulsalam | 0.0% |
 | Chris Alexander | 0.0% |

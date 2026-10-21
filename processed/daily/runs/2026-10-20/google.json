@@ -1,23 +1,23 @@
 {
   "cache": {
     "failures": 1490,
-    "successes": 910
+    "successes": 2400
   },
   "candidate_order": "random",
   "config_path": "llm/models.daily.json",
   "cost": {
-    "actual_reported_usd": 0.12374392,
+    "actual_reported_usd": 0.20791208,
     "budget_usd": 0.75,
-    "estimated_on_unreported_usd": 0.0,
+    "estimated_on_unreported_usd": 0,
     "estimated_total_usd": 0.0,
-    "n_requests_logged": 2400,
+    "n_requests_logged": 1490,
     "note": "actual_reported_usd is billed cost reported by the API; estimated_total_usd uses the analyst price table and is reported separately, never added to actual.",
     "price_table_source": "not set",
-    "remaining_budget_usd": 0.62625608,
-    "spent_for_budget_usd": 0.12374392
+    "remaining_budget_usd": 0.54208792,
+    "spent_for_budget_usd": 0.20791208
   },
   "dry_run": false,
-  "generated_at_utc": "2026-10-21T02:30:35Z",
+  "generated_at_utc": "2026-10-21T03:01:29Z",
   "models": [
     {
       "max_retries": 5,
@@ -1245,10 +1245,10 @@
   "stats": {
     "budget_stopped": false,
     "dry_run": false,
-    "failed": 1490,
-    "from_cache": 0,
+    "failed": 0,
+    "from_cache": 910,
     "planned": 2400,
-    "submitted": 2400,
-    "succeeded": 910
+    "submitted": 1490,
+    "succeeded": 1490
   }
 }
