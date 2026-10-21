@@ -1,0 +1,155 @@
+{
+  "poll_date": "2026-10-21",
+  "fetched_at_utc": "2026-10-21T18:05:51Z",
+  "lookback_hours": 36,
+  "sources": [
+    {
+      "source": "CBC Toronto",
+      "url": "https://www.cbc.ca/webfeed/rss/rss-canada-toronto",
+      "ok": true,
+      "n_items": 20,
+      "error": null
+    },
+    {
+      "source": "Toronto Star",
+      "url": "https://www.thestar.com/search/?f=rss&t=article&c=news/gta&l=50&s=start_time&sd=desc",
+      "ok": false,
+      "n_items": 0,
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://www.thestar.com/search/?f=rss&t=article&c=news/gta&l=50&s=start_time&sd=desc"
+    },
+    {
+      "source": "CityNews Toronto",
+      "url": "https://toronto.citynews.ca/feed/",
+      "ok": true,
+      "n_items": 13,
+      "error": null
+    },
+    {
+      "source": "Global News Toronto",
+      "url": "https://globalnews.ca/toronto/feed/",
+      "ok": true,
+      "n_items": 10,
+      "error": null
+    },
+    {
+      "source": "Toronto Sun",
+      "url": "https://torontosun.com/category/news/local-news/feed",
+      "ok": true,
+      "n_items": 10,
+      "error": null
+    }
+  ],
+  "n_sources_ok": 4,
+  "items": [
+    {
+      "source": "CBC Toronto",
+      "title": "Bradford defends debt plan, proposed new water company in Toronto mayoral campaign",
+      "description": "Mayoral candidate Brad Bradford is defending his plan to borrow more for the city budget and create a new water company — promises incumbent Olivia Chow's…",
+      "published_utc": "2026-10-21T16:08:51Z",
+      "link": "https://www.cbc.ca/news/canada/toronto/brad-bradford-defends-debt-toronto-election-9.7389774?cmp=rss",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "CityNews Toronto",
+      "title": "‘That’s crazy’: Legendary environmentalist David Suzuki speaks out against Bradford’s plan for Toronto’s water",
+      "description": "World renowned environmentalist and activist David Suzuki spoke out Wednesday about mayoral candidate Brad Bradford’s plan for Toronto’s water and how it is…",
+      "published_utc": "2026-10-21T16:17:06Z",
+      "link": "https://toronto.citynews.ca/2026/10/21/environmentalist-david-suzuki-speaks-out-against-brafords-plan-for-torontos-water/",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Global News Toronto",
+      "title": "New poll shows deadlock between Chow and Bradford days before Toronto election",
+      "description": "Several polls put candidate Bradford slightly ahead of Chow, while others still place her ahead of Bradford, indicating there is no clear favourite, according…",
+      "published_utc": "2026-10-21T15:42:49Z",
+      "link": "https://globalnews.ca/news/12110991/poll-chow-bradford-toronto-election/",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Toronto Sun",
+      "title": "Progress Toronto candidate offers confusing story",
+      "description": "Diana Chan McNally, a candidate for city council in Parkdale-High Park, has admitted to “deliberately” misleading a news outlet about her age",
+      "published_utc": "2026-10-21T16:35:50Z",
+      "link": "https://torontosun.com/news/local-news/diana-chan-mcnally-parkdale-high-park",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "CBC Toronto",
+      "title": "Hear from 8 Toronto mayoral candidates also on your ballot",
+      "description": "Toronto’s mayoral race appears to be a two-way battle between Olivia Chow and Brad Bradford, but it’s a long ballot. There are 50 other candidates in the…",
+      "published_utc": "2026-10-21T17:08:51Z",
+      "link": "https://www.cbc.ca/news/canada/toronto/toronto-mayoral-candidates-platforms-9.7390058?cmp=rss",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "CBC Toronto",
+      "title": "Toronto's mayoral race a 'statistical dead heat,' new poll suggests",
+      "description": "A new poll looking at Toronto’s mayoral race puts Brad Bradford and Mayor Olivia Chow in a 'statistical dead heat' as election day looms.",
+      "published_utc": "2026-10-21T09:00:00Z",
+      "link": "https://www.cbc.ca/news/canada/toronto/toronto-mayoral-race-dead-heat-9.7389083?cmp=rss",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "CityNews Toronto",
+      "title": "Federal union announces strike votes for 120,000 federal public servants",
+      "description": "OTTAWA — Canada's largest federal public service union says 120,000 workers will take part in nationwide strike votes starting next month after contract talks…",
+      "published_utc": "2026-10-21T16:00:09Z",
+      "link": "https://toronto.citynews.ca/2026/10/21/federal-union-announces-strike-votes-for-120000-federal-public-servants-2/",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "CityNews Toronto",
+      "title": "First Nations say Elections Alberta unprepared for referendum turnout",
+      "description": "OTTAWA — First Nations in Alberta are celebrating the win for the pro-Canada side in Monday's referendum — but they're also raising concerns about a shortage…",
+      "published_utc": "2026-10-21T15:34:39Z",
+      "link": "https://toronto.citynews.ca/2026/10/21/first-nations-say-elections-alberta-unprepared-for-referendum-turnout/",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "CBC Toronto",
+      "title": "Mississauga mayoral election 2026: Where candidates stand on key issues",
+      "description": "Carolyn Parrish, Bonnie Crombie, Dipika Damerla and Alvin Tedjo have outlined competing plans for affordability, housing, policing and transit as Mississauga…",
+      "published_utc": "2026-10-21T08:00:00Z",
+      "link": "https://www.cbc.ca/news/canada/toronto/mississauga-mayoral-race-promises-9.7388547?cmp=rss",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "CityNews Toronto",
+      "title": "Risk to Windsor, Ont., ‘very low’ after Ohio chemical leak: mayor’s office",
+      "description": "WINDSOR — A spokesperson for the mayor of Windsor, Ont., says the border city is monitoring a toxic chemical leak in Toledo, Ohio that prompted evacuations on…",
+      "published_utc": "2026-10-21T14:55:32Z",
+      "link": "https://toronto.citynews.ca/2026/10/21/risk-to-windsor-ont-very-low-after-ohio-chemical-leak-mayors-office/",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "Global News Toronto",
+      "title": "Toddler in critical condition after group of children struck by vehicle in Oshawa",
+      "description": "Police said the children were walking in the area of Ryerson Crescent and Sheridan Way with a daycare worker when they were all struck.",
+      "published_utc": "2026-10-21T17:05:51Z",
+      "link": "https://globalnews.ca/news/12111245/toddler-critical-condition-daycare-children-struck-vehicle-oshawa/",
+      "election_related": false,
+      "toronto_related": false
+    },
+    {
+      "source": "Toronto Sun",
+      "title": "Meta’s AI goes rogue, sells man’s keyboard on Marketplace without permission",
+      "description": "The digital assistant handles scheduling, shopping, and messaging across WhatsApp and iOS/Android programs.",
+      "published_utc": "2026-10-21T17:56:56Z",
+      "link": "https://torontosun.com/news/weird/metas-muse-ai-attempts-sell-keyboard-without-sellers-permission",
+      "election_related": false,
+      "toronto_related": false
+    }
+  ],
+  "news_block": "- [CBC Toronto] Bradford defends debt plan, proposed new water company in Toronto mayoral campaign — Mayoral candidate Brad Bradford is defending his plan to borrow more for the city budget and create a new water company — promises incumbent Olivia Chow's…\n- [CityNews Toronto] ‘That’s crazy’: Legendary environmentalist David Suzuki speaks out against Bradford’s plan for Toronto’s water — World renowned environmentalist and activist David Suzuki spoke out Wednesday about mayoral candidate Brad Bradford’s plan for Toronto’s water and how it is…\n- [Global News Toronto] New poll shows deadlock between Chow and Bradford days before Toronto election — Several polls put candidate Bradford slightly ahead of Chow, while others still place her ahead of Bradford, indicating there is no clear favourite, according…\n- [Toronto Sun] Progress Toronto candidate offers confusing story — Diana Chan McNally, a candidate for city council in Parkdale-High Park, has admitted to “deliberately” misleading a news outlet about her age\n- [CBC Toronto] Hear from 8 Toronto mayoral candidates also on your ballot — Toronto’s mayoral race appears to be a two-way battle between Olivia Chow and Brad Bradford, but it’s a long ballot. There are 50 other candidates in the…\n- [CBC Toronto] Toronto's mayoral race a 'statistical dead heat,' new poll suggests — A new poll looking at Toronto’s mayoral race puts Brad Bradford and Mayor Olivia Chow in a 'statistical dead heat' as election day looms.\n- [CityNews Toronto] Federal union announces strike votes for 120,000 federal public servants — OTTAWA — Canada's largest federal public service union says 120,000 workers will take part in nationwide strike votes starting next month after contract talks…\n- [CityNews Toronto] First Nations say Elections Alberta unprepared for referendum turnout — OTTAWA — First Nations in Alberta are celebrating the win for the pro-Canada side in Monday's referendum — but they're also raising concerns about a shortage…\n- [CBC Toronto] Mississauga mayoral election 2026: Where candidates stand on key issues — Carolyn Parrish, Bonnie Crombie, Dipika Damerla and Alvin Tedjo have outlined competing plans for affordability, housing, policing and transit as Mississauga…\n- [CityNews Toronto] Risk to Windsor, Ont., ‘very low’ after Ohio chemical leak: mayor’s office — WINDSOR — A spokesperson for the mayor of Windsor, Ont., says the border city is monitoring a toxic chemical leak in Toledo, Ohio that prompted evacuations on…\n- [Global News Toronto] Toddler in critical condition after group of children struck by vehicle in Oshawa — Police said the children were walking in the area of Ryerson Crescent and Sheridan Way with a daycare worker when they were all struck.\n- [Toronto Sun] Meta’s AI goes rogue, sells man’s keyboard on Marketplace without permission — The digital assistant handles scheduling, shopping, and messaging across WhatsApp and iOS/Android programs.",
+  "usable": true
+}
