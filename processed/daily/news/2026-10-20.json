@@ -1,0 +1,155 @@
+{
+  "poll_date": "2026-10-20",
+  "fetched_at_utc": "2026-10-21T02:21:20Z",
+  "lookback_hours": 36,
+  "sources": [
+    {
+      "source": "CBC Toronto",
+      "url": "https://www.cbc.ca/webfeed/rss/rss-canada-toronto",
+      "ok": true,
+      "n_items": 20,
+      "error": null
+    },
+    {
+      "source": "Toronto Star",
+      "url": "https://www.thestar.com/search/?f=rss&t=article&c=news/gta&l=50&s=start_time&sd=desc",
+      "ok": true,
+      "n_items": 50,
+      "error": null
+    },
+    {
+      "source": "CityNews Toronto",
+      "url": "https://toronto.citynews.ca/feed/",
+      "ok": true,
+      "n_items": 11,
+      "error": null
+    },
+    {
+      "source": "Global News Toronto",
+      "url": "https://globalnews.ca/toronto/feed/",
+      "ok": true,
+      "n_items": 10,
+      "error": null
+    },
+    {
+      "source": "Toronto Sun",
+      "url": "https://torontosun.com/category/news/local-news/feed",
+      "ok": true,
+      "n_items": 10,
+      "error": null
+    }
+  ],
+  "n_sources_ok": 5,
+  "items": [
+    {
+      "source": "Global News Toronto",
+      "title": "Chow and Bradford neck-and-neck with days left in Toronto mayoral election campaign",
+      "description": "As the race is in its final stretch, Bradford and Chow are shoring up their main talking points with the goal of moving the needle to their benefit.",
+      "published_utc": "2026-10-20T21:14:36Z",
+      "link": "https://globalnews.ca/news/12110038/chow-and-bradford-neck-and-neck-days-left-toronto-mayoral-election-campaign/",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Toronto Sun",
+      "title": "LILLEY: Brad Bradford pulls ahead of Olivia Chow for first time",
+      "description": "New poll shows Toronto’s most reliable voters lining up behind the challenger",
+      "published_utc": "2026-10-20T09:00:33Z",
+      "link": "https://torontosun.com/opinion/columnists/bradford-pulls-ahead-of-chow-for-first-time",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Toronto Sun",
+      "title": "LILLEY: Desperate Chow turns to scare tactics as Bradford surges",
+      "description": "Nonstop negativity the tell as polls show challenger pulling ahead",
+      "published_utc": "2026-10-20T21:15:23Z",
+      "link": "https://torontosun.com/opinion/columnists/desperate-chow-scare-tactics-bradford-surges",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "CBC Toronto",
+      "title": "Durham Region Votes 2026: 3 mayoral races to watch",
+      "description": "With one week until election day, voters in Pickering, Whitby and Oshawa are preparing to choose their next mayor. Here’s a look at the candidates and the…",
+      "published_utc": "2026-10-20T09:00:00Z",
+      "link": "https://www.cbc.ca/news/canada/toronto/durham-region-three-mayoral-races-9.7387624?cmp=rss",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "CityNews Toronto",
+      "title": "Swearing-in of newly-elected trustees in supervised Ontario school boards to be delayed: source",
+      "description": "The Ministry of Education does not plan on swearing in newly elected trustees immediately following the municipal elections next week, a source with the…",
+      "published_utc": "2026-10-20T21:09:02Z",
+      "link": "https://toronto.citynews.ca/2026/10/20/swearing-in-of-newly-elected-trustees-in-supervised-ontario-school-boards-to-be-delayed-source/",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "CBC Toronto",
+      "title": "Oshawa’s mayoral race is wide open. CBC’s Durham team gives you a primer",
+      "description": "Nine mayoral candidates in Oshawa are vying for your vote this October. Here’s a rundown of where they stand on the biggest issues facing the city.",
+      "published_utc": "2026-10-19T18:13:16Z",
+      "link": "https://www.cbc.ca/player/play/9.7387041?cmp=rss",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "Toronto Sun",
+      "title": "Alberta referendum: How voters answered all 10 questions",
+      "description": "Results show 75.5% of voters chose to remain in Canada, dealing a major blow to separatists",
+      "published_utc": "2026-10-20T19:48:19Z",
+      "link": "https://torontosun.com/news/national/alberta-referendum-how-voters-answered-all-10-questions",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "Toronto Star",
+      "title": "Former Blue Jays player, wife accused of defrauding families $60,000 in youth baseball program",
+      "description": "Richard Butler, who played a handful of games with the Jays in 1997, and his wife are facing fraud charges in Durham region.",
+      "published_utc": "2026-10-20T15:12:00Z",
+      "link": "https://www.thestar.com/news/gta/former-blue-jays-player-wife-accused-of-defrauding-families-60-000-in-youth-baseball-program/article_40bb79b3-416a-4a17-9d1b-2df5f20535b2.html",
+      "election_related": false,
+      "toronto_related": false
+    },
+    {
+      "source": "Toronto Star",
+      "title": "Burn centres in Toronto, Hamilton offer to help CFB Wainwright victims: 'Unique type of trauma'",
+      "description": "\"Even five severely burned patients could overwhelm available resources\" anywhere in the country, surgeon says.",
+      "published_utc": "2026-10-20T09:00:00Z",
+      "link": "https://www.thestar.com/news/canada/alberta/burn-centres-in-toronto-hamilton-offer-to-help-cfb-wainwright-victims-unique-type-of-trauma/article_2556b3f8-705c-46df-a90d-b6cee7dca1cd.html",
+      "election_related": false,
+      "toronto_related": true
+    },
+    {
+      "source": "CityNews Toronto",
+      "title": "Halloween on Church returns to The Village for two-day event",
+      "description": "A spooky Halloween bash is set to take over the Church-Wellesley neighbourhood next week for a beastly two-day event that promises to bring out a few ghastly…",
+      "published_utc": "2026-10-21T01:59:05Z",
+      "link": "https://toronto.citynews.ca/2026/10/20/halloween-on-church-returns-to-the-village-for-two-day-event/",
+      "election_related": false,
+      "toronto_related": false
+    },
+    {
+      "source": "Global News Toronto",
+      "title": "Celebrini scores twice, Sharks rally to beat Habs",
+      "description": "Macklin Celebrini scored his second goal of the game at 2:13 in overtime as the San Jose Sharks erased a two-goal deficit to beat the Montreal Canadiens 4-3…",
+      "published_utc": "2026-10-21T02:04:16Z",
+      "link": "https://globalnews.ca/news/12110560/celebrini-scores-twice-sharks-rally-to-beat-habs/",
+      "election_related": false,
+      "toronto_related": false
+    },
+    {
+      "source": "CBC Toronto",
+      "title": "Toronto's OCAD University to offer 150 scholarships to mark its 150th anniversary",
+      "description": "Toronto's OCAD University will offer 150 undergraduate scholarships to mark its 150th anniversary this year as a way to invest in Canadian art, design and…",
+      "published_utc": "2026-10-20T23:37:32Z",
+      "link": "https://www.cbc.ca/news/canada/toronto/ocad-university-150-scholarships-9.7389287?cmp=rss",
+      "election_related": false,
+      "toronto_related": true
+    }
+  ],
+  "news_block": "- [Global News Toronto] Chow and Bradford neck-and-neck with days left in Toronto mayoral election campaign — As the race is in its final stretch, Bradford and Chow are shoring up their main talking points with the goal of moving the needle to their benefit.\n- [Toronto Sun] LILLEY: Brad Bradford pulls ahead of Olivia Chow for first time — New poll shows Toronto’s most reliable voters lining up behind the challenger\n- [Toronto Sun] LILLEY: Desperate Chow turns to scare tactics as Bradford surges — Nonstop negativity the tell as polls show challenger pulling ahead\n- [CBC Toronto] Durham Region Votes 2026: 3 mayoral races to watch — With one week until election day, voters in Pickering, Whitby and Oshawa are preparing to choose their next mayor. Here’s a look at the candidates and the…\n- [CityNews Toronto] Swearing-in of newly-elected trustees in supervised Ontario school boards to be delayed: source — The Ministry of Education does not plan on swearing in newly elected trustees immediately following the municipal elections next week, a source with the…\n- [CBC Toronto] Oshawa’s mayoral race is wide open. CBC’s Durham team gives you a primer — Nine mayoral candidates in Oshawa are vying for your vote this October. Here’s a rundown of where they stand on the biggest issues facing the city.\n- [Toronto Sun] Alberta referendum: How voters answered all 10 questions — Results show 75.5% of voters chose to remain in Canada, dealing a major blow to separatists\n- [Toronto Star] Former Blue Jays player, wife accused of defrauding families $60,000 in youth baseball program — Richard Butler, who played a handful of games with the Jays in 1997, and his wife are facing fraud charges in Durham region.\n- [Toronto Star] Burn centres in Toronto, Hamilton offer to help CFB Wainwright victims: 'Unique type of trauma' — \"Even five severely burned patients could overwhelm available resources\" anywhere in the country, surgeon says.\n- [CityNews Toronto] Halloween on Church returns to The Village for two-day event — A spooky Halloween bash is set to take over the Church-Wellesley neighbourhood next week for a beastly two-day event that promises to bring out a few ghastly…\n- [Global News Toronto] Celebrini scores twice, Sharks rally to beat Habs — Macklin Celebrini scored his second goal of the game at 2:13 in overtime as the San Jose Sharks erased a two-goal deficit to beat the Montreal Canadiens 4-3…\n- [CBC Toronto] Toronto's OCAD University to offer 150 scholarships to mark its 150th anniversary — Toronto's OCAD University will offer 150 undergraduate scholarships to mark its 150th anniversary this year as a way to invest in Canadian art, design and…",
+  "usable": true
+}
