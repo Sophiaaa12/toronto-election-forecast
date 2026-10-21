@@ -4,28 +4,28 @@
     "href": "daily.html",
     "title": "Daily Tracker",
     "section": "",
-    "text": "Every morning a GitHub Action asks the same panel of synthetic Toronto voters how they would vote, after showing them that day’s Toronto news headlines. The answers are post-stratified to the Census exactly as in the main forecast, and this page is rebuilt from the accumulated history. The design follows the Synthetic Voter Project.\nNo daily runs yet. The first results appear after the next scheduled run of the daily GitHub Action."
+    "text": "Every morning a GitHub Action asks the same panel of synthetic Toronto voters how they would vote, after showing them that day’s Toronto news headlines. The answers are post-stratified to the Census exactly as in the main forecast, and this page is rebuilt from the accumulated history. The design follows the Synthetic Voter Project.\nLatest estimate · 1-day average across 2 models · Updated Tuesday, October 20, 2026, 10:21 PM EDT · 1 polling day so far"
   },
   {
     "objectID": "daily.html#daily-mayor",
     "href": "daily.html#daily-mayor",
     "title": "Daily Tracker",
     "section": "Mayor",
-    "text": "Mayor\n\nNo daily runs yet. The first results appear after the next scheduled run of the daily GitHub Action.\nBy day (each model’s post-stratified share of decided first preferences, last 14 days):\nNo daily runs yet. The first results appear after the next scheduled run of the daily GitHub Action."
+    "text": "Mayor\n\nResults for October 20, 2026: post-stratified share [95% simulation interval] · simulation win frequency.\n\n\n\n\n\n\n\n\nCandidate\nGemini 2.5 Flash Lite\nGPT-4o-mini\n\n\n\n\nBrad Bradford\n98.8% [34.0%, 98.5%] · win 99%\n100.0% [20.1%, 97.5%] · win 98%\n\n\nOlivia Chow\n1.2% [0.0%, 14.9%] · win 0%\n0.0% [0.0%, 4.4%] · win 0%\n\n\nImad Abdulkadir\n0.0% [0.0%, 2.5%] · win 0%\n0.0% [0.0%, 5.0%] · win 0%\n\n\nBahira Abdulsalam\n0.0% [0.0%, 3.1%] · win 0%\n0.0% [0.0%, 4.4%] · win 0%\n\n\nChris Alexander\n0.0% [0.0%, 3.0%] · win 0%\n0.0% [0.0%, 4.4%] · win 0%\n\n\n\nBy day (each model’s post-stratified share of decided first preferences, last 14 days):\n\n\n\n\n\n\n\n\n\n\nDate\nBrad Bradford (Gemini 2.5 Flash Lite)\nBrad Bradford (GPT-4o-mini)\nOlivia Chow (Gemini 2.5 Flash Lite)\nOlivia Chow (GPT-4o-mini)\n\n\n\n\n2026-10-20\n99%\n100%\n1%\n0%"
   },
   {
     "objectID": "daily.html#daily-wards",
     "href": "daily.html#daily-wards",
     "title": "Daily Tracker",
     "section": "Ward councillor races",
-    "text": "Ward councillor races\n\nNo daily runs yet. The first results appear after the next scheduled run of the daily GitHub Action."
+    "text": "Ward councillor races\n\n\n\n\n\n\n\n\n\n\n\n\n\nWard\nLeader\nLeader share\nRunner-up\nRunner-up share\nToday: Gemini 2.5 Flash Lite\nToday: GPT-4o-mini\n\n\n\n\nW01 Etobicoke North\nVincent Crisanti*\n59.9%\nChloe Brown\n30.4%\nVincent Crisanti (100%)\nChloe Brown (61%)\n\n\nW02 Etobicoke Centre\nStephen Holyday*\n49.2%\nKatie Andrachuk\n27.9%\nStephen Holyday (74%)\nJennifer Alexander (46%)\n\n\nW03 Etobicoke-Lakeshore\nTed Opitz\n40.6%\nAmber Morley*\n28.6%\nTed Opitz (80%)\nAmber Morley (50%)\n\n\nW04 Parkdale-High Park\nDiana Chan McNally\n41.4%\nMichael Corcoran\n37.5%\nMichael Corcoran (75%)\nDiana Chan McNally (83%)\n\n\nW05 York South-Weston\nSharmarke Ali\n50.0%\nFrances Nunziata*\n28.9%\nFrances Nunziata (58%)\nSharmarke Ali (100%)\n\n\nW06 York Centre\nAlexander Artamonov\n74.6%\nJames Pasternak*\n25.4%\nAlexander Artamonov (75%)\nNA\n\n\nW07 Humber River-Black Creek\nAnthony Perruzza*\n51.1%\nAmanda Coombs\n48.9%\nAnthony Perruzza (51%)\nNA\n\n\nW08 Eglinton-Lawrence\nMike Colle*\n100.0%\nLiz Grade\n0.0%\nMike Colle (100%)\nNA\n\n\nW09 Davenport\nAshley Jansen\n60.0%\nNeil Simon\n23.7%\nAshley Jansen (60%)\nNA\n\n\nW11 University-Rosedale\nMike Layton\n100.0%\nKeenan Courtis\n0.0%\nMike Layton (100%)\nNA\n\n\nW12 Toronto-St. Paul’s\nJosh Matlow*\n100.0%\nDavid Cottrell\n0.0%\nJosh Matlow (100%)\nNA\n\n\n\nLeader and runner-up by 1-day average of the cross-model mean; * = incumbent. “Today” columns give each model’s own leader on October 20."
   },
   {
     "objectID": "daily.html#daily-news",
     "href": "daily.html#daily-news",
     "title": "Daily Tracker",
     "section": "Today’s news context",
-    "text": "Today’s news context\nNo daily runs yet. The first results appear after the next scheduled run of the daily GitHub Action."
+    "text": "Today’s news context\nHeadlines shown to every persona on October 20, 2026 (12 items from 5 feeds):\n\nGlobal News Toronto: Chow and Bradford neck-and-neck with days left in Toronto mayoral election campaign\nToronto Sun: LILLEY: Brad Bradford pulls ahead of Olivia Chow for first time\nToronto Sun: LILLEY: Desperate Chow turns to scare tactics as Bradford surges\nCBC Toronto: Durham Region Votes 2026: 3 mayoral races to watch\nCityNews Toronto: Swearing-in of newly-elected trustees in supervised Ontario school boards to be delayed: source\nCBC Toronto: Oshawa’s mayoral race is wide open. CBC’s Durham team gives you a primer\nToronto Sun: Alberta referendum: How voters answered all 10 questions\nToronto Star: Former Blue Jays player, wife accused of defrauding families $60,000 in youth baseball program\nToronto Star: Burn centres in Toronto, Hamilton offer to help CFB Wainwright victims: ‘Unique type of trauma’\nCityNews Toronto: Halloween on Church returns to The Village for two-day event\nGlobal News Toronto: Celebrini scores twice, Sharks rally to beat Habs\nCBC Toronto: Toronto’s OCAD University to offer 150 scholarships to mark its 150th anniversary"
   },
   {
     "objectID": "daily.html#daily-method",
@@ -39,7 +39,7 @@
     "href": "daily.html#daily-costs",
     "title": "Daily Tracker",
     "section": "API costs",
-    "text": "API costs\nNo daily runs yet. The first results appear after the next scheduled run of the daily GitHub Action."
+    "text": "API costs\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDate\nModel\nRequests\nValid\nUndecided\nFailed\nInput tokens\nCached\nOutput tokens\nCost\n\n\n\n\n2026-10-20\nGemini 2.5 Flash Lite\n2,400\n641\n269\n1,490\n1,210,931\n78,102\n24,200\n$0.12\n\n\n2026-10-20\nGPT-4o-mini\n2,400\n275\n85\n2,039\n441,755\n149,248\n6,198\n$0.06\n\n\n\nCumulative daily-tracker spend: $0.18 over 1 day (actual cost reported by OpenRouter)."
   },
   {
     "objectID": "index.html",

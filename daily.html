@@ -196,7 +196,37 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>Every morning a GitHub Action asks the same panel of synthetic Toronto voters how they would vote, after showing them that day’s Toronto news headlines. The answers are post-stratified to the Census exactly as in the <a href="./index.html">main forecast</a>, and this page is rebuilt from the accumulated history. The design follows the <a href="https://rohanalexander.github.io/synthetic_voter_project/">Synthetic Voter Project</a>.</p>
-<p><em>No daily runs yet. The first results appear after the next scheduled run of the daily GitHub Action.</em></p>
+<p><strong>Latest estimate</strong> · 1-day average across 2 models · Updated Tuesday, October 20, 2026, 10:21 PM EDT · 1 polling day so far</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Mayoral candidate</th>
+<th>Share of decided voters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Brad Bradford</td>
+<td>99.4%</td>
+</tr>
+<tr class="even">
+<td>Olivia Chow</td>
+<td>0.6%</td>
+</tr>
+<tr class="odd">
+<td>Imad Abdulkadir</td>
+<td>0.0%</td>
+</tr>
+<tr class="even">
+<td>Bahira Abdulsalam</td>
+<td>0.0%</td>
+</tr>
+<tr class="odd">
+<td>Chris Alexander</td>
+<td>0.0%</td>
+</tr>
+</tbody>
+</table>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -213,18 +243,222 @@ ul.task-list li input[type="checkbox"] {
 <section id="daily-mayor" class="level2">
 <h2 class="anchored" data-anchor-id="daily-mayor">Mayor</h2>
 <p><img src="figures/daily_mayor.png" class="img-fluid" alt="Line chart of the top mayoral candidates' daily post-stratified shares. Thick lines are the moving average of the cross-model mean; thin lines and points are each model's daily estimate."></p>
-<p><em>No daily runs yet. The first results appear after the next scheduled run of the daily GitHub Action.</em></p>
+<p>Results for October 20, 2026: post-stratified share [95% simulation interval] · simulation win frequency.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Candidate</th>
+<th>Gemini 2.5 Flash Lite</th>
+<th>GPT-4o-mini</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Brad Bradford</td>
+<td>98.8% [34.0%, 98.5%] · win 99%</td>
+<td>100.0% [20.1%, 97.5%] · win 98%</td>
+</tr>
+<tr class="even">
+<td>Olivia Chow</td>
+<td>1.2% [0.0%, 14.9%] · win 0%</td>
+<td>0.0% [0.0%, 4.4%] · win 0%</td>
+</tr>
+<tr class="odd">
+<td>Imad Abdulkadir</td>
+<td>0.0% [0.0%, 2.5%] · win 0%</td>
+<td>0.0% [0.0%, 5.0%] · win 0%</td>
+</tr>
+<tr class="even">
+<td>Bahira Abdulsalam</td>
+<td>0.0% [0.0%, 3.1%] · win 0%</td>
+<td>0.0% [0.0%, 4.4%] · win 0%</td>
+</tr>
+<tr class="odd">
+<td>Chris Alexander</td>
+<td>0.0% [0.0%, 3.0%] · win 0%</td>
+<td>0.0% [0.0%, 4.4%] · win 0%</td>
+</tr>
+</tbody>
+</table>
 <p><strong>By day</strong> (each model’s post-stratified share of decided first preferences, last 14 days):</p>
-<p><em>No daily runs yet. The first results appear after the next scheduled run of the daily GitHub Action.</em></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Date</th>
+<th>Brad Bradford (Gemini 2.5 Flash Lite)</th>
+<th>Brad Bradford (GPT-4o-mini)</th>
+<th>Olivia Chow (Gemini 2.5 Flash Lite)</th>
+<th>Olivia Chow (GPT-4o-mini)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2026-10-20</td>
+<td>99%</td>
+<td>100%</td>
+<td>1%</td>
+<td>0%</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="daily-wards" class="level2">
 <h2 class="anchored" data-anchor-id="daily-wards">Ward councillor races</h2>
 <p><img src="figures/daily_wards.png" class="img-fluid" alt="Small-multiple line charts, one per ward, showing the top three councillor candidates' moving-average shares over the polling days."></p>
-<p><em>No daily runs yet. The first results appear after the next scheduled run of the daily GitHub Action.</em></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Ward</th>
+<th>Leader</th>
+<th>Leader share</th>
+<th>Runner-up</th>
+<th>Runner-up share</th>
+<th>Today: Gemini 2.5 Flash Lite</th>
+<th>Today: GPT-4o-mini</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>W01 Etobicoke North</td>
+<td>Vincent Crisanti*</td>
+<td>59.9%</td>
+<td>Chloe Brown</td>
+<td>30.4%</td>
+<td>Vincent Crisanti (100%)</td>
+<td>Chloe Brown (61%)</td>
+</tr>
+<tr class="even">
+<td>W02 Etobicoke Centre</td>
+<td>Stephen Holyday*</td>
+<td>49.2%</td>
+<td>Katie Andrachuk</td>
+<td>27.9%</td>
+<td>Stephen Holyday (74%)</td>
+<td>Jennifer Alexander (46%)</td>
+</tr>
+<tr class="odd">
+<td>W03 Etobicoke-Lakeshore</td>
+<td>Ted Opitz</td>
+<td>40.6%</td>
+<td>Amber Morley*</td>
+<td>28.6%</td>
+<td>Ted Opitz (80%)</td>
+<td>Amber Morley (50%)</td>
+</tr>
+<tr class="even">
+<td>W04 Parkdale-High Park</td>
+<td>Diana Chan McNally</td>
+<td>41.4%</td>
+<td>Michael Corcoran</td>
+<td>37.5%</td>
+<td>Michael Corcoran (75%)</td>
+<td>Diana Chan McNally (83%)</td>
+</tr>
+<tr class="odd">
+<td>W05 York South-Weston</td>
+<td>Sharmarke Ali</td>
+<td>50.0%</td>
+<td>Frances Nunziata*</td>
+<td>28.9%</td>
+<td>Frances Nunziata (58%)</td>
+<td>Sharmarke Ali (100%)</td>
+</tr>
+<tr class="even">
+<td>W06 York Centre</td>
+<td>Alexander Artamonov</td>
+<td>74.6%</td>
+<td>James Pasternak*</td>
+<td>25.4%</td>
+<td>Alexander Artamonov (75%)</td>
+<td>NA</td>
+</tr>
+<tr class="odd">
+<td>W07 Humber River-Black Creek</td>
+<td>Anthony Perruzza*</td>
+<td>51.1%</td>
+<td>Amanda Coombs</td>
+<td>48.9%</td>
+<td>Anthony Perruzza (51%)</td>
+<td>NA</td>
+</tr>
+<tr class="even">
+<td>W08 Eglinton-Lawrence</td>
+<td>Mike Colle*</td>
+<td>100.0%</td>
+<td>Liz Grade</td>
+<td>0.0%</td>
+<td>Mike Colle (100%)</td>
+<td>NA</td>
+</tr>
+<tr class="odd">
+<td>W09 Davenport</td>
+<td>Ashley Jansen</td>
+<td>60.0%</td>
+<td>Neil Simon</td>
+<td>23.7%</td>
+<td>Ashley Jansen (60%)</td>
+<td>NA</td>
+</tr>
+<tr class="even">
+<td>W11 University-Rosedale</td>
+<td>Mike Layton</td>
+<td>100.0%</td>
+<td>Keenan Courtis</td>
+<td>0.0%</td>
+<td>Mike Layton (100%)</td>
+<td>NA</td>
+</tr>
+<tr class="odd">
+<td>W12 Toronto-St.&nbsp;Paul’s</td>
+<td>Josh Matlow*</td>
+<td>100.0%</td>
+<td>David Cottrell</td>
+<td>0.0%</td>
+<td>Josh Matlow (100%)</td>
+<td>NA</td>
+</tr>
+</tbody>
+</table>
+<p>Leader and runner-up by 1-day average of the cross-model mean; * = incumbent. “Today” columns give each model’s own leader on October 20.</p>
 </section>
 <section id="daily-news" class="level2">
 <h2 class="anchored" data-anchor-id="daily-news">Today’s news context</h2>
-<p><em>No daily runs yet. The first results appear after the next scheduled run of the daily GitHub Action.</em></p>
+<p>Headlines shown to every persona on October 20, 2026 (12 items from 5 feeds):</p>
+<ul>
+<li><strong>Global News Toronto</strong>: <a href="https://globalnews.ca/news/12110038/chow-and-bradford-neck-and-neck-days-left-toronto-mayoral-election-campaign/">Chow and Bradford neck-and-neck with days left in Toronto mayoral election campaign</a></li>
+<li><strong>Toronto Sun</strong>: <a href="https://torontosun.com/opinion/columnists/bradford-pulls-ahead-of-chow-for-first-time">LILLEY: Brad Bradford pulls ahead of Olivia Chow for first time</a></li>
+<li><strong>Toronto Sun</strong>: <a href="https://torontosun.com/opinion/columnists/desperate-chow-scare-tactics-bradford-surges">LILLEY: Desperate Chow turns to scare tactics as Bradford surges</a></li>
+<li><strong>CBC Toronto</strong>: <a href="https://www.cbc.ca/news/canada/toronto/durham-region-three-mayoral-races-9.7387624?cmp=rss">Durham Region Votes 2026: 3 mayoral races to watch</a></li>
+<li><strong>CityNews Toronto</strong>: <a href="https://toronto.citynews.ca/2026/10/20/swearing-in-of-newly-elected-trustees-in-supervised-ontario-school-boards-to-be-delayed-source/">Swearing-in of newly-elected trustees in supervised Ontario school boards to be delayed: source</a></li>
+<li><strong>CBC Toronto</strong>: <a href="https://www.cbc.ca/player/play/9.7387041?cmp=rss">Oshawa’s mayoral race is wide open. CBC’s Durham team gives you a primer</a></li>
+<li><strong>Toronto Sun</strong>: <a href="https://torontosun.com/news/national/alberta-referendum-how-voters-answered-all-10-questions">Alberta referendum: How voters answered all 10 questions</a></li>
+<li><strong>Toronto Star</strong>: <a href="https://www.thestar.com/news/gta/former-blue-jays-player-wife-accused-of-defrauding-families-60-000-in-youth-baseball-program/article_40bb79b3-416a-4a17-9d1b-2df5f20535b2.html">Former Blue Jays player, wife accused of defrauding families $60,000 in youth baseball program</a></li>
+<li><strong>Toronto Star</strong>: <a href="https://www.thestar.com/news/canada/alberta/burn-centres-in-toronto-hamilton-offer-to-help-cfb-wainwright-victims-unique-type-of-trauma/article_2556b3f8-705c-46df-a90d-b6cee7dca1cd.html">Burn centres in Toronto, Hamilton offer to help CFB Wainwright victims: ‘Unique type of trauma’</a></li>
+<li><strong>CityNews Toronto</strong>: <a href="https://toronto.citynews.ca/2026/10/20/halloween-on-church-returns-to-the-village-for-two-day-event/">Halloween on Church returns to The Village for two-day event</a></li>
+<li><strong>Global News Toronto</strong>: <a href="https://globalnews.ca/news/12110560/celebrini-scores-twice-sharks-rally-to-beat-habs/">Celebrini scores twice, Sharks rally to beat Habs</a></li>
+<li><strong>CBC Toronto</strong>: <a href="https://www.cbc.ca/news/canada/toronto/ocad-university-150-scholarships-9.7389287?cmp=rss">Toronto’s OCAD University to offer 150 scholarships to mark its 150th anniversary</a></li>
+</ul>
 </section>
 <section id="daily-method" class="level2">
 <h2 class="anchored" data-anchor-id="daily-method">Method</h2>
@@ -240,7 +474,61 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="daily-costs" class="level2">
 <h2 class="anchored" data-anchor-id="daily-costs">API costs</h2>
-<p><em>No daily runs yet. The first results appear after the next scheduled run of the daily GitHub Action.</em></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Date</th>
+<th>Model</th>
+<th>Requests</th>
+<th>Valid</th>
+<th>Undecided</th>
+<th>Failed</th>
+<th>Input tokens</th>
+<th>Cached</th>
+<th>Output tokens</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2026-10-20</td>
+<td>Gemini 2.5 Flash Lite</td>
+<td>2,400</td>
+<td>641</td>
+<td>269</td>
+<td>1,490</td>
+<td>1,210,931</td>
+<td>78,102</td>
+<td>24,200</td>
+<td>$0.12</td>
+</tr>
+<tr class="even">
+<td>2026-10-20</td>
+<td>GPT-4o-mini</td>
+<td>2,400</td>
+<td>275</td>
+<td>85</td>
+<td>2,039</td>
+<td>441,755</td>
+<td>149,248</td>
+<td>6,198</td>
+<td>$0.06</td>
+</tr>
+</tbody>
+</table>
+<p>Cumulative daily-tracker spend: <strong>$0.18</strong> over 1 day (actual cost reported by OpenRouter).</p>
 
 
 </section>
