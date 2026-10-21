@@ -1,6 +1,6 @@
 # website/make_daily.R
 #
-# Figures and markdown tables for the Daily Tracker page (daily.qmd),
+# Figures and markdown tables for the Daily Tracker section of index.qmd,
 # built from the committed daily history. No API calls.
 #
 # Usage (from anywhere inside the project):

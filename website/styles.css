@@ -1,5 +1,33 @@
 /* Responsive refinements for the STA2453 Assignment II website. */
 
+/* The section menu is longer than one row on a laptop. Keep every
+   link reachable by wrapping under the title instead of clipping. */
+@media (min-width: 992px) {
+  .navbar .navbar-container {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .navbar .navbar-brand-container {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    flex: 1 1 auto;
+  }
+
+  .navbar #navbarCollapse {
+    flex: 1 0 100%;
+  }
+
+  .navbar .navbar-nav {
+    flex-wrap: wrap;
+  }
+
+  .navbar .nav-link {
+    padding-top: 0.2rem;
+    padding-bottom: 0.35rem;
+  }
+}
+
 /* Figures scale to the viewport. */
 main img,
 figure img {

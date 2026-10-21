@@ -3,7 +3,6 @@ project:
   output-dir: _site
   render:
     - index.qmd
-    - daily.qmd
     - "!tables/*.md"
 
 website:
@@ -19,6 +18,8 @@ website:
         href: index.qmd#overview
       - text: "Election Forecasts"
         href: index.qmd#forecasts
+      - text: "Daily Tracker"
+        href: index.qmd#daily
       - text: "Provider Comparison"
         href: index.qmd#providers
       - text: "Forecast Uncertainty"
@@ -35,9 +36,6 @@ website:
         href: index.qmd#reproducibility
       - text: "References"
         href: index.qmd#refs
-    right:
-      - text: "Daily Tracker"
-        href: daily.qmd
 
 format:
   html:

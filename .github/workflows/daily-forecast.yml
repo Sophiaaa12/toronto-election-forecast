@@ -8,10 +8,7 @@ on:
   # GitHub can delay or drop scheduled runs, so later slots are backups:
   # once a day has been polled, run_daily.sh skips the API calls.
   schedule:
-    - cron: "17 10 * * *"   # 06:17 Toronto (EDT)
-    - cron: "17 13 * * *"   # 09:17 backup
-    - cron: "17 16 * * *"   # 12:17 backup
-    - cron: "17 20 * * *"   # 16:17 backup
+    - cron: "0 8 * * *"   # 04:00 Toronto (EDT)
   workflow_dispatch:
     inputs:
       force_poll:

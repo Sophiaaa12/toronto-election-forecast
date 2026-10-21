@@ -61,6 +61,8 @@ else
   if [[ $rc -eq 3 ]]; then
     mkdir -p "$(dirname "$NEWS")"
     cp "$WORK_NEWS" "$NEWS"
+    # Not kept in WORK_DIR, otherwise the cached copy would be reused by a later run.
+    rm -f "$WORK_NEWS"
     log "news block unusable today; skipping the poll (news file kept for audit)"
     exit 0
   elif [[ $rc -ne 0 ]]; then

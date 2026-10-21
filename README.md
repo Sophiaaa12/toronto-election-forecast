@@ -456,7 +456,7 @@ in CI.
 `.github/workflows/daily-forecast.yml` re-polls a fixed persona panel every
 morning with that day's Toronto news headlines, in the style of the
 [Synthetic Voter Project](https://rohanalexander.github.io/synthetic_voter_project/),
-and republishes the site with a **Daily Tracker** page (`website/daily.qmd`).
+and republishes the site. The **Daily Tracker** is a section of the main page (`website/index.qmd#daily`).
 The frozen production sample and forecast are never touched.
 
 Each run (07:00 Toronto time, `scripts/run_daily.sh`):
