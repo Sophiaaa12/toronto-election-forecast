@@ -75,7 +75,7 @@ Every race in one table: the *descriptive* pooled leader (equal-weight average o
 
 ## Daily Tracker {#daily}
 
-Every morning a GitHub Action asks the same panel of synthetic Toronto voters how they would vote, after showing them that day's Toronto news headlines. The answers are post-stratified to the Census exactly as in the [Election Forecasts](#forecasts), and this section is rebuilt from the accumulated history. The design follows the [Synthetic Voter Project](https://rohanalexander.github.io/synthetic_voter_project/): the race charts come first, then the day's news, then the panel and models, then API costs.
+Every morning a GitHub Action asks the same panel of synthetic Toronto voters how they would vote, after showing them that day's Toronto news headlines. The answers are post-stratified to the Census exactly as in the [Election Forecasts](#forecasts), and this section is rebuilt from the accumulated history.
 
 {{< include tables/daily_headline.md >}}
 
