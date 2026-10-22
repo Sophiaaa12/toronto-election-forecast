@@ -98,7 +98,7 @@ stats <- readr::read_csv(file.path(DAILY_DIR, "stats_history.csv"),
 dates <- sort(unique(history$poll_date))
 latest <- max(dates)
 
-ward_names <- read_excel(file.path("raw", "geography", "ward_names.xlsx")) |>
+ward_names <- read_excel(file.path("data", "01-raw_data", "geography", "ward_names.xlsx")) |>
   transmute(ward = as.integer(`Ward Number`), ward_name = `Ward Name`)
 ward_of <- function(race_id) as.integer(sub("ward_(\\d+)_councillor", "\\1", race_id))
 
