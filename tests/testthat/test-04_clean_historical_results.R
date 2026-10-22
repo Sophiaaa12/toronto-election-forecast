@@ -40,8 +40,7 @@ find_project_root <- function(path = getwd()) {
 }
 
 project_root <- find_project_root()
-old_wd <- setwd(project_root)
-on.exit(setwd(old_wd), add = TRUE)
+withr::local_dir(project_root)
 
 # Rebuild the cleaned dataset from raw sources
 source(file.path("R", "04_clean_historical_results.R"))
@@ -59,7 +58,7 @@ test_that("Ward 1 2022 mayoral total valid votes equal the official count", {
       office == "mayor",
       ward == 1
     )
-  
+
   # 31 candidates official; total_valid_votes must be 16512, not the
   # doubled 33024 produced by the previous buggy aggregation.
   expect_equal(nrow(ward_1_2022), 31)
@@ -76,16 +75,16 @@ test_that("aggregate Total columns are not double counted in any race", {
       reported_total = first(total_valid_votes),
       .groups = "drop"
     )
-  
+
   expect_true(all(race_totals$sum_votes == race_totals$reported_total))
-  
+
   # Citywide mayoral totals pinned to the official declarations
   mayor_2022_total <- historical |>
     filter(year == 2022, office == "mayor") |>
     pull(votes) |>
     sum()
   expect_equal(mayor_2022_total, 551890)
-  
+
   mayor_2023_total <- historical |>
     filter(
       year == 2023,
@@ -115,7 +114,7 @@ test_that("vote shares sum to one within each race", {
       total = sum(vote_share),
       .groups = "drop"
     )
-  
+
   expect_true(all(abs(share_totals$total - 1) < 1e-8))
 })
 
@@ -124,23 +123,23 @@ test_that("no duplicated race-candidate records", {
     group_by(year, election_type, office, ward, candidate) |>
     summarise(n = n(), .groups = "drop") |>
     filter(n > 1)
-  
+
   expect_equal(nrow(duplicates), 0)
 })
 
 test_that("all expected races are present", {
   races <- historical |>
     distinct(year, election_type, office)
-  
+
   expect_equal(nrow(races), 6)
-  
+
   # 25 wards per citywide race; exactly one ward per by-election race
   wards_by_race <- historical |>
     distinct(year, election_type, office, ward) |>
     count(year, election_type, office)
-  
+
   expect_true(all(wards_by_race$n %in% c(1, 25)))
-  
+
   expect_equal(
     historical |>
       filter(election_type == "by-election", office == "councillor") |>
@@ -155,7 +154,7 @@ test_that("results match official declarations of results", {
   tory <- historical |>
     filter(year == 2022, office == "mayor", grepl("Tory", candidate))
   expect_equal(sum(tory$votes), 342158)
-  
+
   # 2022 general Ward 1 councillor: Crisanti 6815
   crisanti <- historical |>
     filter(
@@ -166,12 +165,12 @@ test_that("results match official declarations of results", {
       grepl("Crisanti", candidate)
     )
   expect_equal(sum(crisanti$votes), 6815)
-  
+
   # 2023 by-election: Olivia Chow 269372 votes citywide
   chow <- historical |>
     filter(year == 2023, office == "mayor", grepl("Chow", candidate))
   expect_equal(sum(chow$votes), 269372)
-  
+
   # 2023 Ward 20 by-election: Kandavel elected; 16974 ballots cast,
   # of which 16950 valid votes in the poll-by-poll workbook
   ward_20 <- historical |>
@@ -183,7 +182,7 @@ test_that("results match official declarations of results", {
     )
   expect_equal(unique(ward_20$total_valid_votes), 16950)
   expect_equal(ward_20$candidate[which.max(ward_20$votes)], "Kandavel Parthi")
-  
+
   # 2024 Ward 15 by-election: Chernos Lin 12899, Furey 7343
   ward_15 <- historical |>
     filter(
@@ -194,7 +193,7 @@ test_that("results match official declarations of results", {
     )
   expect_equal(ward_15$votes[grepl("Chernos Lin", ward_15$candidate)], 12899)
   expect_equal(ward_15$votes[grepl("Furey", ward_15$candidate)], 7343)
-  
+
   # 2025 Ward 25 by-election: Shan 5174; valid votes sum to 19260
   # (19284 ballots cast per the City Clerk's news release)
   ward_25 <- historical |>

@@ -31,8 +31,7 @@ find_project_root <- function(path = getwd()) {
 }
 
 project_root <- find_project_root()
-old_wd <- setwd(project_root)
-on.exit(setwd(old_wd), add = TRUE)
+withr::local_dir(project_root)
 
 # Rebuild the full simulated pipeline from source
 source(file.path("R", "07_simulate_personas.R"))
@@ -57,12 +56,16 @@ summary_tbl <- read_parquet(
 
 test_that("forecast outputs have the required schema", {
   expect_true(all(
-    c("race_id", "candidate_id", "draw_id", "source_model_id",
-      "source_repeat_id", "share") %in% names(draws)
+    c(
+      "race_id", "candidate_id", "draw_id", "source_model_id",
+      "source_repeat_id", "share"
+    ) %in% names(draws)
   ))
   expect_true(all(
-    c("race_id", "candidate_id", "mean_share", "sd_share", "q025",
-      "q50", "q975", "p_win", "point_share") %in% names(summary_tbl)
+    c(
+      "race_id", "candidate_id", "mean_share", "sd_share", "q025",
+      "q50", "q975", "p_win", "point_share"
+    ) %in% names(summary_tbl)
   ))
 })
 
@@ -134,7 +137,8 @@ test_that("mayoral aggregation is population-weighted, not equal-ward", {
 
   expect_equal(design_share$candidate_id[1], reported$candidate_id[1])
   expect_equal(design_share$share[1], reported$point_share[1],
-               tolerance = 1e-9)
+    tolerance = 1e-9
+  )
 
   # Equal-ward average (WRONG scheme) must give a different top-share
   # value, confirming wards are not treated as equally sized.
@@ -151,7 +155,8 @@ test_that("mayoral aggregation is population-weighted, not equal-ward", {
   # The two weighting schemes are genuinely different estimators.
   expect_false(
     isTRUE(all.equal(design_share$share[1], equal_ward_share$share[1],
-                     tolerance = 1e-6))
+      tolerance = 1e-6
+    ))
   )
 })
 

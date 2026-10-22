@@ -43,10 +43,10 @@ population_frame <- population_frame |>
   mutate(
     cell_proportion =
       age_proportion *
-      education_proportion,
+        education_proportion,
     estimated_population =
       population_20plus *
-      cell_proportion
+        cell_proportion
   )
 
 # Add stable identifiers for each population cell

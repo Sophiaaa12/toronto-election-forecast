@@ -8,7 +8,7 @@
 #
 # Environment (all optional):
 #   POLL_DATE                 YYYY-MM-DD; default = today in Toronto
-#   POLL_END_DATE             last day to poll (default 2026-10-26, election day)
+#   POLL_END_DATE             last day to poll (default 2026-10-25, the submission deadline)
 #   DAILY_BUDGET_USD          hard spend cap for the day, split across models (default 1.50)
 #   DAILY_PERSONAS_PER_CELL   panel size per census cell (default 4 -> 1,200 personas)
 #   FORCE_POLL                "true" re-polls a date that already has responses
@@ -19,7 +19,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 POLL_DATE="${POLL_DATE:-$(TZ=America/Toronto date +%F)}"
-POLL_END_DATE="${POLL_END_DATE:-2026-10-26}"
+POLL_END_DATE="${POLL_END_DATE:-2026-10-25}"
 DAILY_BUDGET_USD="${DAILY_BUDGET_USD:-1.50}"
 PER_CELL="${DAILY_PERSONAS_PER_CELL:-4}"
 FORCE_POLL="${FORCE_POLL:-false}"

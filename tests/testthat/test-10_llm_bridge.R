@@ -35,8 +35,7 @@ find_project_root <- function(path = getwd()) {
 }
 
 project_root <- find_project_root()
-old_wd <- setwd(project_root)
-on.exit(setwd(old_wd), add = TRUE)
+withr::local_dir(project_root)
 
 source(file.path("R", "10_llm_poststratify.R"))
 
@@ -47,7 +46,7 @@ source(file.path("R", "10_llm_poststratify.R"))
 
 fake_crosswalk <- data.frame(
   candidate_id = c("MAYOR-001", "MAYOR-002", "W01-C01", "W01-C02"),
-  race_id      = c("mayor", "mayor", "ward_01_councillor", "ward_01_councillor"),
+  race_id = c("mayor", "mayor", "ward_01_councillor", "ward_01_councillor"),
   stringsAsFactors = FALSE
 )
 
@@ -62,31 +61,43 @@ fake_personas <- data.frame(
 # cell gets at least one valid_choice so share vectors are well-defined;
 # row 1 (valid_choice) and row 2 (undecided) anchor the nullability tests.
 fake_responses <- data.frame(
-  persona_id     = c("P000001",  # mayor  x prov-a/m x rep1  valid
-                     "P000001",  # mayor  x prov-a/m x rep2  undecided
-                     "P000002",  # mayor  x prov-b/m x rep1  valid
-                     "P000002",  # mayor  x prov-b/m x rep2  valid
-                     "P000002",  # mayor  x prov-a/m x rep2  valid (fills cell)
-                     "P000001",  # ward   x prov-a/m x rep1  valid
-                     "P000001",  # ward   x prov-a/m x rep2  valid
-                     "P000002",  # ward   x prov-b/m x rep1  valid
-                     "P000002",  # ward   x prov-b/m x rep2  valid
-                     "P000002"), # ward   x prov-b/m x rep2  not_voting
-  ward           = 1,
-  race_id        = c("mayor", "mayor", "mayor", "mayor", "mayor",
-                     "ward_01_councillor", "ward_01_councillor",
-                     "ward_01_councillor", "ward_01_councillor",
-                     "ward_01_councillor"),
-  candidate_id   = c("MAYOR-001", NA, "MAYOR-002", "MAYOR-001", "MAYOR-002",
-                     "W01-C01", "W01-C02", "W01-C01", "W01-C02", NA),
-  provider_id    = c("prov-a", "prov-a", "prov-b", "prov-b", "prov-a",
-                     "prov-a", "prov-a", "prov-b", "prov-b", "prov-b"),
-  model_id       = c("prov-a/m", "prov-a/m", "prov-b/m", "prov-b/m", "prov-a/m",
-                     "prov-a/m", "prov-a/m", "prov-b/m", "prov-b/m", "prov-b/m"),
-  repeat_id      = c(1L, 2L, 1L, 2L, 2L, 1L, 2L, 1L, 2L, 2L),
-  response_status= c("valid_choice", "undecided", "valid_choice", "valid_choice",
-                     "valid_choice", "valid_choice", "valid_choice",
-                     "valid_choice", "valid_choice", "not_voting"),
+  persona_id = c(
+    "P000001", # mayor  x prov-a/m x rep1  valid
+    "P000001", # mayor  x prov-a/m x rep2  undecided
+    "P000002", # mayor  x prov-b/m x rep1  valid
+    "P000002", # mayor  x prov-b/m x rep2  valid
+    "P000002", # mayor  x prov-a/m x rep2  valid (fills cell)
+    "P000001", # ward   x prov-a/m x rep1  valid
+    "P000001", # ward   x prov-a/m x rep2  valid
+    "P000002", # ward   x prov-b/m x rep1  valid
+    "P000002", # ward   x prov-b/m x rep2  valid
+    "P000002"
+  ), # ward   x prov-b/m x rep2  not_voting
+  ward = 1,
+  race_id = c(
+    "mayor", "mayor", "mayor", "mayor", "mayor",
+    "ward_01_councillor", "ward_01_councillor",
+    "ward_01_councillor", "ward_01_councillor",
+    "ward_01_councillor"
+  ),
+  candidate_id = c(
+    "MAYOR-001", NA, "MAYOR-002", "MAYOR-001", "MAYOR-002",
+    "W01-C01", "W01-C02", "W01-C01", "W01-C02", NA
+  ),
+  provider_id = c(
+    "prov-a", "prov-a", "prov-b", "prov-b", "prov-a",
+    "prov-a", "prov-a", "prov-b", "prov-b", "prov-b"
+  ),
+  model_id = c(
+    "prov-a/m", "prov-a/m", "prov-b/m", "prov-b/m", "prov-a/m",
+    "prov-a/m", "prov-a/m", "prov-b/m", "prov-b/m", "prov-b/m"
+  ),
+  repeat_id = c(1L, 2L, 1L, 2L, 2L, 1L, 2L, 1L, 2L, 2L),
+  response_status = c(
+    "valid_choice", "undecided", "valid_choice", "valid_choice",
+    "valid_choice", "valid_choice", "valid_choice",
+    "valid_choice", "valid_choice", "not_voting"
+  ),
   stringsAsFactors = FALSE
 )
 
@@ -112,19 +123,19 @@ test_that("validation catches a candidate from the wrong race", {
   # A ward candidate claimed in the mayor race.
   bad <- fake_responses
   bad$race_id[1] <- "mayor"
-  bad$candidate_id[1] <- "W01-C02"   # exists, but in ward_01, not mayor
+  bad$candidate_id[1] <- "W01-C02" # exists, but in ward_01, not mayor
   probs <- validate_llm_responses(bad, fake_crosswalk)
   expect_true(any(grepl("not in the crosswalk", probs)))
 })
 
 test_that("validation enforces candidate_id nullability rules", {
   bad_null <- fake_responses
-  bad_null$candidate_id[2] <- "MAYOR-002"   # undecided must have NULL
+  bad_null$candidate_id[2] <- "MAYOR-002" # undecided must have NULL
   probs <- validate_llm_responses(bad_null, fake_crosswalk)
   expect_true(any(grepl("must have NULL candidate_id", probs)))
 
   bad_valid <- fake_responses
-  bad_valid$candidate_id[1] <- NA            # valid_choice needs an ID
+  bad_valid$candidate_id[1] <- NA # valid_choice needs an ID
   probs <- validate_llm_responses(bad_valid, fake_crosswalk)
   expect_true(any(grepl("valid_choice rows with missing candidate_id", probs)))
 })
@@ -147,8 +158,10 @@ test_that("post-stratification reuses unchanged stats with real model IDs", {
     n_repeats = max(fake_responses$repeat_id)
   )
   cells <- res$cells
-  expect_true(all(c("race_id", "model_id", "repeat_id", "candidate_id",
-                    "share") %in% names(cells)))
+  expect_true(all(c(
+    "race_id", "model_id", "repeat_id", "candidate_id",
+    "share"
+  ) %in% names(cells)))
   # Real (non-mock) model IDs flow through.
   expect_setequal(unique(cells$model_id), c("prov-a/m", "prov-b/m"))
   # Shares in [0, 1] and sum to one per race x model x repeat.
@@ -165,7 +178,7 @@ test_that("bridge main function is a safe no-op when outputs are absent", {
   tmp_out <- file.path(tempdir(), "llm-bridge-test-out")
   expect_message(
     out <- run_llm_poststratify(
-      llm_path   = file.path(tempdir(), "does-not-exist.parquet"),
+      llm_path = file.path(tempdir(), "does-not-exist.parquet"),
       personas_path = file.path("processed", "simulated", "simulated_personas.parquet"),
       crosswalk_path = file.path("processed", "simulated", "candidate_crosswalk.parquet"),
       out_dir = tmp_out
@@ -180,7 +193,9 @@ test_that("simulated outputs are never written by the bridge", {
   # The bridge writes only under processed/llm/; assert that this
   # directory is distinct from the simulated outputs directory.
   expect_false(
-    identical(normalizePath(file.path("processed", "llm"), mustWork = FALSE),
-              normalizePath(file.path("processed", "simulated"), mustWork = FALSE))
+    identical(
+      normalizePath(file.path("processed", "llm"), mustWork = FALSE),
+      normalizePath(file.path("processed", "simulated"), mustWork = FALSE)
+    )
   )
 })

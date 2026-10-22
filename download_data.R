@@ -6,7 +6,7 @@
 #   source("download_data.R")
 #
 # Required packages:
-#   install.packages(c("jsonlite", "digest"))
+#   (requires the jsonlite and digest packages)
 
 library(jsonlite)
 library(digest)
@@ -34,11 +34,9 @@ for (dir in dirs) {
 # ------------------------------------------------------------
 
 files <- list(
-  
   # ------------------------
   # Census
   # ------------------------
-  
   list(
     file = "raw/census/ward_profiles_2021.xlsx",
     url = paste0(
@@ -50,38 +48,36 @@ files <- list(
     source = "https://open.toronto.ca/dataset/ward-profiles-25-ward-model/",
     purpose = "2021 ward-level Census data for population frame and post-stratification"
   ),
-  
-  
+
+
   # ------------------------
   # 2026 candidates
   # ------------------------
-  
+
   list(
     file = "raw/candidates/mayor_candidates_2026.json",
     url = "https://www.toronto.ca/data/elections/candidate_list/mayorCandidates_2026.json",
     source = "https://www.toronto.ca/city-government/elections/candidate-list/",
     purpose = "Official 2026 mayor candidate list"
   ),
-  
   list(
     file = "raw/candidates/councillor_candidates_2026.json",
     url = "https://www.toronto.ca/data/elections/candidate_list/councilorCandidates_2026.json",
     source = "https://www.toronto.ca/city-government/elections/candidate-list/",
     purpose = "Official 2026 councillor candidate lists by ward"
   ),
-  
   list(
     file = "raw/candidates/withdrawn_candidates_2026.json",
     url = "https://www.toronto.ca/data/elections/candidate_list/withdrawnCandidates_2026.json",
     source = "https://www.toronto.ca/city-government/elections/candidate-list/",
     purpose = "Quality check for withdrawn candidates"
   ),
-  
-  
+
+
   # ------------------------
   # Historical elections
   # ------------------------
-  
+
   list(
     file = "raw/elections/election_results_2022.zip",
     url = paste0(
@@ -93,7 +89,6 @@ files <- list(
     source = "https://open.toronto.ca/dataset/election-results-official/",
     purpose = "2022 mayor and councillor historical election results"
   ),
-  
   list(
     file = "raw/elections/turnout_2022.xlsx",
     url = paste0(
@@ -105,7 +100,6 @@ files <- list(
     source = "https://open.toronto.ca/dataset/elections-voter-statistics/",
     purpose = "Ward-level electorate and turnout for weighting"
   ),
-  
   list(
     file = "raw/elections/mayor_by_election_2023.xlsx",
     url = paste0(
@@ -117,7 +111,6 @@ files <- list(
     source = "https://open.toronto.ca/dataset/elections-official-by-election-results/",
     purpose = "Most recent citywide mayor election baseline"
   ),
-  
   list(
     file = "raw/elections/ward20_by_election_2023.xlsx",
     url = paste0(
@@ -129,7 +122,6 @@ files <- list(
     source = "https://open.toronto.ca/dataset/elections-official-by-election-results/",
     purpose = "Updated historical councillor result for Ward 20"
   ),
-  
   list(
     file = "raw/elections/ward15_by_election_2024.xlsx",
     url = paste0(
@@ -141,7 +133,6 @@ files <- list(
     source = "https://open.toronto.ca/dataset/elections-official-by-election-results/",
     purpose = "Updated historical councillor result for Ward 15"
   ),
-  
   list(
     file = "raw/elections/ward25_by_election_2025.xlsx",
     url = paste0(
@@ -153,12 +144,12 @@ files <- list(
     source = "https://open.toronto.ca/dataset/elections-official-by-election-results/",
     purpose = "Updated historical councillor result for Ward 25"
   ),
-  
-  
+
+
   # ------------------------
   # Geography
   # ------------------------
-  
+
   list(
     file = "raw/geography/wards.geojson",
     url = paste0(
@@ -170,7 +161,6 @@ files <- list(
     source = "https://open.toronto.ca/dataset/wards-and-elected-councillors/",
     purpose = "Ward boundaries for maps and geographic validation"
   ),
-  
   list(
     file = "raw/geography/ward_names.xlsx",
     url = paste0(
@@ -182,12 +172,12 @@ files <- list(
     source = "https://open.toronto.ca/dataset/ward-profiles-25-ward-model/",
     purpose = "Official ward number and ward name lookup"
   ),
-  
-  
+
+
   # ------------------------
   # Incumbency
   # ------------------------
-  
+
   list(
     file = "raw/incumbency/elected_officials_2022_2026.json",
     url = paste0(
@@ -207,35 +197,34 @@ files <- list(
 # ------------------------------------------------------------
 
 download_one <- function(x) {
-  
   message("Downloading: ", x$file)
-  
+
   status <- download.file(
     url = x$url,
     destfile = x$file,
     mode = "wb",
     quiet = FALSE
   )
-  
+
   if (status != 0) {
     stop("Download failed: ", x$file)
   }
-  
+
   x$bytes <- file.info(x$file)$size
-  
+
   x$sha256 <- digest(
     file = x$file,
     algo = "sha256"
   )
-  
+
   x$downloaded_at <- format(
     Sys.time(),
     "%Y-%m-%dT%H:%M:%SZ",
     tz = "UTC"
   )
-  
+
   message("Saved: ", x$file)
-  
+
   x
 }
 

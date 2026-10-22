@@ -22,9 +22,9 @@
 library(dplyr)
 library(nanoparquet)
 
-DAILY_PANEL_SEED     <- 20261020
+DAILY_PANEL_SEED <- 20261020
 DAILY_PANEL_PER_CELL <- 4L
-DAILY_PANEL_PATH     <- file.path("processed", "daily", "panel_personas.parquet")
+DAILY_PANEL_PATH <- file.path("processed", "daily", "panel_personas.parquet")
 
 build_daily_panel <- function(personas, per_cell = DAILY_PANEL_PER_CELL,
                               seed = DAILY_PANEL_SEED) {
@@ -33,8 +33,10 @@ build_daily_panel <- function(personas, per_cell = DAILY_PANEL_PER_CELL,
     group_by(population_cell_id) |>
     summarise(cell_weight = sum(sampling_weight), n_cell = n(), .groups = "drop")
   if (any(cell_w$n_cell < per_cell)) {
-    stop("per_cell = ", per_cell, " exceeds the smallest cell (",
-         min(cell_w$n_cell), " personas)")
+    stop(
+      "per_cell = ", per_cell, " exceeds the smallest cell (",
+      min(cell_w$n_cell), " personas)"
+    )
   }
 
   set.seed(seed)
@@ -48,16 +50,20 @@ build_daily_panel <- function(personas, per_cell = DAILY_PANEL_PER_CELL,
       sampling_weight = cell_weight / per_cell,
       ward = as.integer(ward)
     ) |>
-    select(persona_id, ward, age_group, education_group,
-           population_cell_id, sampling_weight) |>
+    select(
+      persona_id, ward, age_group, education_group,
+      population_cell_id, sampling_weight
+    ) |>
     arrange(persona_id)
 }
 
 if (sys.nframe() == 0) {
   args <- commandArgs(trailingOnly = TRUE)
   per_cell <- if (length(args) >= 1) as.integer(args[1]) else DAILY_PANEL_PER_CELL
-  personas <- read_parquet(file.path("processed", "simulated",
-                                     "simulated_personas.parquet"))
+  personas <- read_parquet(file.path(
+    "processed", "simulated",
+    "simulated_personas.parquet"
+  ))
   panel <- build_daily_panel(personas, per_cell = per_cell)
   stopifnot(
     n_distinct(panel$population_cell_id) == 300,
@@ -65,6 +71,8 @@ if (sys.nframe() == 0) {
   )
   dir.create(dirname(DAILY_PANEL_PATH), showWarnings = FALSE, recursive = TRUE)
   write_parquet(panel, DAILY_PANEL_PATH)
-  message("Daily panel: ", nrow(panel), " personas (", per_cell,
-          " per cell x 300 cells) -> ", DAILY_PANEL_PATH)
+  message(
+    "Daily panel: ", nrow(panel), " personas (", per_cell,
+    " per cell x 300 cells) -> ", DAILY_PANEL_PATH
+  )
 }

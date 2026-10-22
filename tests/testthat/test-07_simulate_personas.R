@@ -29,8 +29,7 @@ find_project_root <- function(path = getwd()) {
 }
 
 project_root <- find_project_root()
-old_wd <- setwd(project_root)
-on.exit(setwd(old_wd), add = TRUE)
+withr::local_dir(project_root)
 
 # Rebuild the simulated personas from the population frame
 source(file.path("R", "07_simulate_personas.R"))
@@ -40,7 +39,7 @@ personas <- read_parquet(
 )
 
 pop_frame <- read.csv("processed/population_frame.csv")
-ward_pop  <- read.csv("processed/ward_population.csv")
+ward_pop <- read.csv("processed/ward_population.csv")
 
 test_that("personas have the required schema", {
   expect_true(all(

@@ -67,9 +67,9 @@ summary_tbl <- summarise_forecast_draws(draws, post$point)
 stopifnot(
   # Point shares sum to 1 among valid choices, per race.
   all(abs(post$point |>
-            group_by(race_id) |>
-            summarise(s = sum(point_share)) |>
-            pull(s) - 1) < 1e-9),
+    group_by(race_id) |>
+    summarise(s = sum(point_share)) |>
+    pull(s) - 1) < 1e-9),
   # Shares are valid probabilities.
   all(draws$share >= 0 & draws$share <= 1),
   all(summary_tbl$point_share >= 0 & summary_tbl$point_share <= 1),
@@ -79,7 +79,7 @@ stopifnot(
   n_distinct(draws$source_repeat_id) == N_REPEATS,
   # Every draw vector sums to 1 (spot-check one race).
   abs(sum(draws$share[draws$race_id == "mayor" &
-                        draws$draw_id == 1]) - 1) < 1e-9
+    draws$draw_id == 1]) - 1) < 1e-9
 )
 
 dir.create(file.path("processed", "simulated"), showWarnings = FALSE)

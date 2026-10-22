@@ -41,13 +41,15 @@ source("R/simulation_helpers.R")
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
-N_DRAWS           <- 2000     # per (race, model, method); pipeline uses 500
-TARGET_FORECAST_SD <- 0.04    # C: target sd (4pp) for the race leader under
-                              #    the forecast layer alone
-FOCUS_RACES <- c("mayor",                  # K = 53 (collapse + high-K artifact)
-                 "ward_02_councillor",     # K = 3  (few candidates)
-                 "ward_14_councillor",     # K = 18 (many candidates, low n_eff)
-                 "ward_20_councillor")     # K = 8  (closest pooled margin, 1.4pp)
+N_DRAWS <- 2000 # per (race, model, method); pipeline uses 500
+TARGET_FORECAST_SD <- 0.04 # C: target sd (4pp) for the race leader under
+#    the forecast layer alone
+FOCUS_RACES <- c(
+  "mayor", # K = 53 (collapse + high-K artifact)
+  "ward_02_councillor", # K = 3  (few candidates)
+  "ward_14_councillor", # K = 18 (many candidates, low n_eff)
+  "ward_20_councillor"
+) # K = 8  (closest pooled margin, 1.4pp)
 OUT_DIR <- file.path("experiments", "output")
 dir.create(OUT_DIR, recursive = TRUE, showWarnings = FALSE)
 
@@ -58,12 +60,13 @@ set.seed(20261018)
 # ---------------------------------------------------------------------------
 res <- read_parquet(file.path("processed", "production", "llm_responses.parquet"))
 per <- read_parquet(file.path("processed", "simulated", "simulated_personas.parquet"))
-cw  <- read_parquet(file.path("processed", "simulated", "candidate_crosswalk.parquet"))
+cw <- read_parquet(file.path("processed", "simulated", "candidate_crosswalk.parquet"))
 
-post  <- poststratify_responses(res, per, cw,
-                                model_ids = sort(unique(res$model_id)),
-                                n_repeats = max(res$repeat_id))
-cells  <- post$cells
+post <- poststratify_responses(res, per, cw,
+  model_ids = sort(unique(res$model_id)),
+  n_repeats = max(res$repeat_id)
+)
+cells <- post$cells
 points <- post$point
 model_ids <- sort(unique(res$model_id))
 
@@ -76,7 +79,7 @@ build_cell_arrays <- function(race, model) {
   reps <- sort(unique(est$repeat_id))
   cands <- sort(unique(est$candidate_id))
   share_mat <- matrix(0, length(reps), length(cands))
-  neff_vec  <- numeric(length(reps))
+  neff_vec <- numeric(length(reps))
   for (j in seq_along(reps)) {
     row <- est |> filter(repeat_id == reps[j])
     share_mat[j, ] <- row$share[match(cands, row$candidate_id)]
@@ -95,12 +98,16 @@ calibrate_sigma <- function(p, target_sd, n_pilot = 20000) {
   pilot_sds <- function(sig) {
     e <- matrix(rnorm(n_pilot * length(p), sd = sig), nrow = n_pilot)
     P <- matrix(p, nrow = n_pilot, ncol = length(p), byrow = TRUE)
-    w <- P * exp(e)                    # p == 0 stays exactly 0
+    w <- P * exp(e) # p == 0 stays exactly 0
     s <- w / rowSums(w)
     sd(s[, L])
   }
-  if (pilot_sds(1e-4) >= target_sd) return(1e-4)
-  if (pilot_sds(10)   <= target_sd) return(10)   # saturation guard
+  if (pilot_sds(1e-4) >= target_sd) {
+    return(1e-4)
+  }
+  if (pilot_sds(10) <= target_sd) {
+    return(10)
+  } # saturation guard
   uniroot(function(x) pilot_sds(x) - target_sd, interval = c(1e-4, 10))$root
 }
 
@@ -115,15 +122,15 @@ sigmas <- points |>
 # the source-cell repeat per draw.
 # ---------------------------------------------------------------------------
 draw_race_model <- function(arr, method, n_draws, sigma, noise_sd) {
-  n_rep  <- length(arr$reps)
+  n_rep <- length(arr$reps)
   n_cand <- length(arr$cands)
-  dm  <- matrix(0, n_draws * n_rep, n_cand)
+  dm <- matrix(0, n_draws * n_rep, n_cand)
   zer <- numeric(n_draws * n_rep)
   src <- integer(n_draws * n_rep)
   row <- 0L
   for (j in seq_len(n_rep)) {
     alpha_base <- arr$neff_vec[j] * arr$share_mat[j, ] + DIRICHLET_PSEUDOCOUNT
-    zero_mask  <- arr$share_mat[j, ] == 0
+    zero_mask <- arr$share_mat[j, ] == 0
     for (d in seq_len(n_draws)) {
       row <- row + 1L
       s <- rgamma(n_cand, shape = alpha_base)
@@ -136,9 +143,9 @@ draw_race_model <- function(arr, method, n_draws, sigma, noise_sd) {
         s <- s * exp(sigma * rnorm(n_cand))
         s <- s / sum(s)
       }
-      dm[row, ]  <- s
-      zer[row]   <- sum(s[zero_mask])
-      src[row]   <- j
+      dm[row, ] <- s
+      zer[row] <- sum(s[zero_mask])
+      src[row] <- j
     }
   }
   list(draws = dm, zero_mass = zer, src_rep = arr$reps[src])
@@ -151,26 +158,26 @@ draw_race_model <- function(arr, method, n_draws, sigma, noise_sd) {
 races <- sort(unique(cells$race_id))
 
 metrics_list <- list()
-focus_list   <- list()
-timing       <- c(A = 0, B = 0, C = 0)
+focus_list <- list()
+timing <- c(A = 0, B = 0, C = 0)
 
 for (method in c("A", "B", "C")) {
   t0 <- proc.time()[["elapsed"]]
   for (race in races) {
     point_race <- points |> filter(race_id == race)
-    cands  <- sort(point_race$candidate_id)
+    cands <- sort(point_race$candidate_id)
     p_pool <- point_race$point_share[match(cands, point_race$candidate_id)]
-    sigma  <- sigmas$sigma[sigmas$race_id == race]
+    sigma <- sigmas$sigma[sigmas$race_id == race]
     for (model in model_ids) {
       arr <- build_cell_arrays(race, model)
       stopifnot(identical(arr$cands, cands))
-      model_center <- colMeans(arr$share_mat)  # equal avg over repeat cells
+      model_center <- colMeans(arr$share_mat) # equal avg over repeat cells
       g <- draw_race_model(arr, method, N_DRAWS, sigma, ASSUMED_FORECAST_SD)
       dm <- g$draws
-      L  <- which.max(p_pool)
+      L <- which.max(p_pool)
       mean_s <- colMeans(dm)
-      sd_s   <- apply(dm, 2, sd)
-      q      <- apply(dm, 2, quantile, probs = c(0.025, 0.975))
+      sd_s <- apply(dm, 2, sd)
+      q <- apply(dm, 2, quantile, probs = c(0.025, 0.975))
       # winning frequency: candidate index of row max per draw
       winner_idx <- max.col(dm, ties.method = "first")
       p_win <- tabulate(winner_idx, nbins = length(cands)) / nrow(dm)
@@ -207,12 +214,14 @@ for (method in c("A", "B", "C")) {
 }
 
 metrics <- bind_rows(metrics_list) |> left_join(K_CAND, by = "race_id")
-focus   <- bind_rows(focus_list)
+focus <- bind_rows(focus_list)
 
 write.csv(metrics, file.path(OUT_DIR, "method_metrics_all_races.csv"), row.names = FALSE)
-write.csv(focus,   file.path(OUT_DIR, "method_focus_races.csv"), row.names = FALSE)
+write.csv(focus, file.path(OUT_DIR, "method_focus_races.csv"), row.names = FALSE)
 write.csv(sigmas |> left_join(K_CAND, by = "race_id"),
-          file.path(OUT_DIR, "calibrated_sigmas.csv"), row.names = FALSE)
+  file.path(OUT_DIR, "calibrated_sigmas.csv"),
+  row.names = FALSE
+)
 
 cat("\n================ RESULTS ================\n\n")
 
@@ -221,29 +230,39 @@ shrink <- cells |>
   distinct(race_id, model_id, repeat_id, n_eff) |>
   left_join(K_CAND, by = "race_id") |>
   mutate(pseudocount_mass = (DIRICHLET_PSEUDOCOUNT * n_candidates) /
-          (n_eff + DIRICHLET_PSEUDOCOUNT * n_candidates)) |>
+    (n_eff + DIRICHLET_PSEUDOCOUNT * n_candidates)) |>
   filter(race_id %in% FOCUS_RACES)
 print(as.data.frame(shrink |> group_by(race_id) |>
-  summarise(n_eff_min = min(n_eff), n_eff_max = max(n_eff),
-            n_candidates = first(n_candidates),
-            pseudocount_mass_pct = round(100 * mean(pseudocount_mass), 2),
-            .groups = "drop")))
+  summarise(
+    n_eff_min = min(n_eff), n_eff_max = max(n_eff),
+    n_candidates = first(n_candidates),
+    pseudocount_mass_pct = round(100 * mean(pseudocount_mass), 2),
+    .groups = "drop"
+  )))
 
 cat("\n--- 2. FOCUS RACES: leader metrics (per provider x method) ---\n")
-foc <- metrics |> filter(race_id %in% FOCUS_RACES) |>
-  select(race_id, model_id, method, n_cand, leader_point, leader_mean,
-         leader_bias_pp, leader_sd, leader_width95, leader_p_win, zero_mass) |>
+foc <- metrics |>
+  filter(race_id %in% FOCUS_RACES) |>
+  select(
+    race_id, model_id, method, n_cand, leader_point, leader_mean,
+    leader_bias_pp, leader_sd, leader_width95, leader_p_win, zero_mass
+  ) |>
   mutate(across(where(is.numeric), ~ round(., 4)))
 print(as.data.frame(foc |> arrange(race_id, method, model_id)))
 
 cat("\n--- 3. Close race (ward_20): full p_win vectors ---\n")
-w20 <- focus |> filter(race_id == "ward_20_councillor", p_win > 0.001) |>
-  select(race_id, model_id, method, candidate_id, point_share, mean_share,
-         q025, q975, p_win) |> mutate(across(where(is.numeric), ~ round(., 4)))
+w20 <- focus |>
+  filter(race_id == "ward_20_councillor", p_win > 0.001) |>
+  select(
+    race_id, model_id, method, candidate_id, point_share, mean_share,
+    q025, q975, p_win
+  ) |>
+  mutate(across(where(is.numeric), ~ round(., 4)))
 print(as.data.frame(w20 |> arrange(candidate_id, method, model_id)))
 
 cat("\n--- 4. K-dependence across all 26 races (Spearman corr with K) ---\n")
-kdep <- metrics |> group_by(method) |>
+kdep <- metrics |>
+  group_by(method) |>
   summarise(
     cor_K_leader_bias = round(cor(n_cand, abs(leader_bias_pp), method = "spearman"), 3),
     cor_K_leader_width = round(cor(n_cand, leader_width95, method = "spearman"), 3),
@@ -252,23 +271,30 @@ kdep <- metrics |> group_by(method) |>
     median_leader_width_pp = round(median(leader_width95), 2),
     races_pwin_eq_1 = sum(leader_p_win == 1),
     races_pwin_ge_095 = sum(leader_p_win >= 0.95),
-    .groups = "drop")
+    .groups = "drop"
+  )
 print(as.data.frame(kdep))
 
 cat("\n--- 5. Provider sensitivity: |gpt - gemini| in leader stats ---\n")
-m1 <- model_ids[1]; m2 <- model_ids[2]
-prov <- metrics |> select(race_id, model_id, method, leader_mean, leader_p_win, leader_sd) |>
+m1 <- model_ids[1]
+m2 <- model_ids[2]
+prov <- metrics |>
+  select(race_id, model_id, method, leader_mean, leader_p_win, leader_sd) |>
   pivot_longer(c(leader_mean, leader_p_win, leader_sd), names_to = "stat", values_to = "v") |>
   pivot_wider(names_from = model_id, values_from = v) |>
   mutate(abs_diff = abs(.data[[m1]] - .data[[m2]])) |>
   group_by(method, stat) |>
-  summarise(median_diff = round(median(abs_diff), 4),
-            max_diff = round(max(abs_diff), 4),
-            max_race = race_id[which.max(abs_diff)], .groups = "drop")
+  summarise(
+    median_diff = round(median(abs_diff), 4),
+    max_diff = round(max(abs_diff), 4),
+    max_race = race_id[which.max(abs_diff)], .groups = "drop"
+  )
 print(as.data.frame(prov))
 
 cat("\n--- 6. Computational cost (full 26-race x 2-model sweep, ", N_DRAWS,
-    " draws/cell) ---\n", sep = "")
+  " draws/cell) ---\n",
+  sep = ""
+)
 print(round(timing, 2))
 cat("\n(sigmas calibrated per race for C; see experiments/output/calibrated_sigmas.csv)\n")
 print(as.data.frame(sigmas |> filter(race_id %in% FOCUS_RACES) |>

@@ -34,7 +34,7 @@ SIM_SEEDS <- list(
 # is proportional to each cell's share of the citywide 20+ population,
 # with a minimum floor per cell so that no population cell has zero
 # representation.
-PERSONA_TARGET_N    <- 3000
+PERSONA_TARGET_N <- 3000
 PERSONA_MIN_PER_CELL <- 5
 
 # ---------------------------------------------------------------------------
@@ -44,12 +44,12 @@ PERSONA_MIN_PER_CELL <- 5
 # HTTP requests are ever made to them. Each provider is queried three
 # independent times per persona-race pair (repeated sampling).
 PROVIDER_MODELS <- data.frame(
-  provider_id   = c("mock-alpha", "mock-beta"),
-  model_id      = c("mock-alpha/silicon-1", "mock-beta/silicon-1"),
-  temperature   = c(1.00, 1.15),   # choice-noise scale in the softmax
-  p_missing     = c(0.02, 0.04),   # simulated API failure (no usable reply)
-  p_invalid     = c(0.01, 0.02),   # reply received but unparseable
-  p_undecided   = c(0.10, 0.14),   # persona replies "undecided"
+  provider_id = c("mock-alpha", "mock-beta"),
+  model_id = c("mock-alpha/silicon-1", "mock-beta/silicon-1"),
+  temperature = c(1.00, 1.15), # choice-noise scale in the softmax
+  p_missing = c(0.02, 0.04), # simulated API failure (no usable reply)
+  p_invalid = c(0.01, 0.02), # reply received but unparseable
+  p_undecided = c(0.10, 0.14), # persona replies "undecided"
   stringsAsFactors = FALSE
 )
 
@@ -62,11 +62,11 @@ RESPONSE_STATUSES <- c(
 )
 
 # Latent-utility (softmax) model parameters.
-INCUMBENT_LOGODDS_BONUS <- 0.90  # ~2.5x odds vs. an average challenger
-BASE_STRENGTH_SD        <- 1.00  # exchangeable candidate base strengths
-AGE_SLOPE_SD            <- 0.35  # candidate x age-group preference slopes
-EDU_SLOPE_SD            <- 0.35  # candidate x education preference slopes
-PROVIDER_BIAS_SD        <- 0.25  # systematic per-provider candidate framing
+INCUMBENT_LOGODDS_BONUS <- 0.90 # ~2.5x odds vs. an average challenger
+BASE_STRENGTH_SD <- 1.00 # exchangeable candidate base strengths
+AGE_SLOPE_SD <- 0.35 # candidate x age-group preference slopes
+EDU_SLOPE_SD <- 0.35 # candidate x education preference slopes
+PROVIDER_BIAS_SD <- 0.25 # systematic per-provider candidate framing
 
 # Fixed demographic level order used for slope matrices.
 AGE_LEVELS <- c("20-29", "30-44", "45-64", "65+")
@@ -79,13 +79,13 @@ EDU_LEVELS <- c(
 # ---------------------------------------------------------------------------
 # Forecast uncertainty assumptions (Monte Carlo draws)
 # ---------------------------------------------------------------------------
-FORECAST_DRAWS_PER_RACE   <- 500
-DIRICHLET_PSEUDOCOUNT     <- 0.5  # smoothing so zero-support candidates are
-                                  # not impossible in the response-sampling
-                                  # component of the draws
-ASSUMED_FORECAST_SD       <- 0.03 # zero-mean Gaussian share noise (3pp),
-                                  # truncation at 0 then renormalisation.
-                                  # ILLUSTRATIVE, NOT calibrated.
+FORECAST_DRAWS_PER_RACE <- 500
+DIRICHLET_PSEUDOCOUNT <- 0.5 # smoothing so zero-support candidates are
+# not impossible in the response-sampling
+# component of the draws
+ASSUMED_FORECAST_SD <- 0.03 # zero-mean Gaussian share noise (3pp),
+# truncation at 0 then renormalisation.
+# ILLUSTRATIVE, NOT calibrated.
 
 # ---------------------------------------------------------------------------
 # Candidate ID scheme (deterministic)
@@ -203,7 +203,7 @@ simulate_llm_responses <- function(personas,
     )
   }
 
-  races  <- sort(unique(crosswalk$race_id))
+  races <- sort(unique(crosswalk$race_id))
   models <- PROVIDER_MODELS
 
   out <- list()
@@ -222,7 +222,9 @@ simulate_llm_responses <- function(personas,
 
   for (ri in seq_along(races)) {
     race <- races[ri]
-    cand <- crosswalk |> filter(race_id == race) |> arrange(candidate_id)
+    cand <- crosswalk |>
+      filter(race_id == race) |>
+      arrange(candidate_id)
     cand_ids <- cand$candidate_id
     K <- length(cand_ids)
 
@@ -302,13 +304,13 @@ simulate_llm_responses <- function(personas,
         }
 
         out[[length(out) + 1]] <- data.frame(
-          persona_id      = p$persona_id,
-          ward            = p$ward,
-          race_id         = race,
-          candidate_id    = choice,
-          provider_id     = prov$provider_id,
-          model_id        = prov$model_id,
-          repeat_id       = rep_id,
+          persona_id = p$persona_id,
+          ward = p$ward,
+          race_id = race,
+          candidate_id = choice,
+          provider_id = prov$provider_id,
+          model_id = prov$model_id,
+          repeat_id = rep_id,
           response_status = status,
           stringsAsFactors = FALSE
         )
@@ -412,8 +414,10 @@ poststratify_responses <- function(responses,
       crosswalk |> select(race_id, candidate_id),
       by = c("race_id", "candidate_id")
     ) |>
-    mutate(point_share = ifelse(is.na(point_share), 0, point_share),
-           n_valid = ifelse(is.na(n_valid), 0L, n_valid)) |>
+    mutate(
+      point_share = ifelse(is.na(point_share), 0, point_share),
+      n_valid = ifelse(is.na(n_valid), 0L, n_valid)
+    ) |>
     select(race_id, candidate_id, n_valid, point_share) |>
     arrange(race_id, candidate_id)
 
@@ -446,18 +450,22 @@ generate_forecast_draws <- function(cell_estimates,
 
   for (ri in seq_along(races)) {
     race <- races[ri]
-    est  <- cell_estimates |> filter(race_id == race)
-    cells <- est |> distinct(model_id, repeat_id) |> arrange(model_id, repeat_id)
+    est <- cell_estimates |> filter(race_id == race)
+    cells <- est |>
+      distinct(model_id, repeat_id) |>
+      arrange(model_id, repeat_id)
     cand_ids <- sort(unique(est$candidate_id))
     K <- nrow(cells)
     n_cand <- length(cand_ids)
 
     share_mat <- matrix(0, nrow = K, ncol = n_cand)
-    neff_vec  <- numeric(K)
+    neff_vec <- numeric(K)
     for (j in seq_len(K)) {
       sub <- est |>
-        filter(model_id == cells$model_id[j],
-               repeat_id == cells$repeat_id[j])
+        filter(
+          model_id == cells$model_id[j],
+          repeat_id == cells$repeat_id[j]
+        )
       share_mat[j, ] <- sub$share[match(cand_ids, sub$candidate_id)]
       neff_vec[j] <- sub$n_eff[1]
     }
@@ -506,10 +514,10 @@ summarise_forecast_draws <- function(draws, point_estimates) {
     group_by(race_id, candidate_id) |>
     summarise(
       mean_share = mean(share),
-      sd_share   = sd(share),
-      q025       = as.numeric(quantile(share, 0.025)),
-      q50        = as.numeric(quantile(share, 0.5)),
-      q975       = as.numeric(quantile(share, 0.975)),
+      sd_share = sd(share),
+      q025 = as.numeric(quantile(share, 0.025)),
+      q50 = as.numeric(quantile(share, 0.5)),
+      q975 = as.numeric(quantile(share, 0.975)),
       .groups = "drop"
     ) |>
     left_join(win_rates, by = c("race_id", "candidate_id")) |>
@@ -567,14 +575,14 @@ summarise_forecast_draws <- function(draws, point_estimates) {
 #   generate_forecast_draws_existing()   Method A construction, evaluated
 #                                        per provider (Dirichlet + additive
 #                                        N(0, 3pp^2) + clip + renormalise)
-FORECAST_TARGET_SD      <- 0.04  # Method C default: 4pp leader sd from the
-                                 # perturbation layer alone. ILLUSTRATIVE;
-                                 # NOT calibrated to election history.
-FORECAST_TARGET_SD_GRID <- c(0.02, 0.04, 0.06)  # sensitivity grid (6C)
-CALIBRATION_SEED        <- 245310L  # sigma-calibration RNG (independent of
-                                    # the draw seed, so calibration is
-                                    # reproducible on its own)
-CALIBRATION_PILOT_N     <- 20000L
+FORECAST_TARGET_SD <- 0.04 # Method C default: 4pp leader sd from the
+# perturbation layer alone. ILLUSTRATIVE;
+# NOT calibrated to election history.
+FORECAST_TARGET_SD_GRID <- c(0.02, 0.04, 0.06) # sensitivity grid (6C)
+CALIBRATION_SEED <- 245310L # sigma-calibration RNG (independent of
+# the draw seed, so calibration is
+# reproducible on its own)
+CALIBRATION_PILOT_N <- 20000L
 
 # Calibrate the multiplicative perturbation scale sigma for one race so
 # that, applied to the race's reference point shares, the perturbation
@@ -597,16 +605,22 @@ calibrate_forecast_sigma <- function(point_shares,
   )
   leader <- which.max(point_shares)
   set.seed(seed)
-  eps  <- matrix(rnorm(n_pilot * length(point_shares)), nrow = n_pilot)
-  P    <- matrix(point_shares, nrow = n_pilot,
-                 ncol = length(point_shares), byrow = TRUE)
+  eps <- matrix(rnorm(n_pilot * length(point_shares)), nrow = n_pilot)
+  P <- matrix(point_shares,
+    nrow = n_pilot,
+    ncol = length(point_shares), byrow = TRUE
+  )
   leader_sd <- function(sig) {
-    w <- P * exp(sig * eps)          # exact zeros remain exact zeros
+    w <- P * exp(sig * eps) # exact zeros remain exact zeros
     s <- w / rowSums(w)
     sd(s[, leader])
   }
-  if (leader_sd(lo) >= target_sd) return(lo)
-  if (leader_sd(hi) <= target_sd) return(hi)
+  if (leader_sd(lo) >= target_sd) {
+    return(lo)
+  }
+  if (leader_sd(hi) <= target_sd) {
+    return(hi)
+  }
   uniroot(function(x) leader_sd(x) - target_sd, interval = c(lo, hi))$root
 }
 
@@ -646,13 +660,15 @@ pseudocount_mass_pct <- function(n_eff, n_cand) {
 # repeat cells (provider-specific forecasts).
 # ---------------------------------------------------------------------------
 forecast_draws_one_model <- function(cell_estimates,
-                                      model_id,
-                                      seed,
-                                      n_draws = FORECAST_DRAWS_PER_RACE,
-                                      method = c("centered", "dirichlet",
-                                                 "existing"),
-                                      target_sd = FORECAST_TARGET_SD,
-                                      point_estimates = NULL) {
+                                     model_id,
+                                     seed,
+                                     n_draws = FORECAST_DRAWS_PER_RACE,
+                                     method = c(
+                                       "centered", "dirichlet",
+                                       "existing"
+                                     ),
+                                     target_sd = FORECAST_TARGET_SD,
+                                     point_estimates = NULL) {
   method <- match.arg(method)
   est <- cell_estimates[cell_estimates$model_id == model_id, , drop = FALSE]
   if (nrow(est) == 0) {
@@ -680,14 +696,14 @@ forecast_draws_one_model <- function(cell_estimates,
   out <- vector("list", length(races))
   for (ri in seq_along(races)) {
     race <- races[ri]
-    sub      <- est[est$race_id == race, , drop = FALSE]
-    reps     <- sort(unique(sub$repeat_id))
+    sub <- est[est$race_id == race, , drop = FALSE]
+    reps <- sort(unique(sub$repeat_id))
     cand_ids <- sort(unique(sub$candidate_id))
-    n_rep    <- length(reps)
-    n_cand   <- length(cand_ids)
+    n_rep <- length(reps)
+    n_cand <- length(cand_ids)
 
     share_mat <- matrix(0, nrow = n_rep, ncol = n_cand)
-    neff_vec  <- numeric(n_rep)
+    neff_vec <- numeric(n_rep)
     for (j in seq_len(n_rep)) {
       rows <- sub[sub$repeat_id == reps[j], , drop = FALSE]
       share_mat[j, ] <- rows$share[match(cand_ids, rows$candidate_id)]
@@ -695,8 +711,8 @@ forecast_draws_one_model <- function(cell_estimates,
     }
 
     draw_mat <- matrix(0, nrow = n_draws, ncol = n_cand)
-    src      <- integer(n_draws)
-    sigma_r  <- if (method == "centered") sigmas[[race]] else NA_real_
+    src <- integer(n_draws)
+    sigma_r <- if (method == "centered") sigmas[[race]] else NA_real_
     for (d in seq_len(n_draws)) {
       j <- sample.int(n_rep, 1L)
       # Layer 2: Dirichlet sampling uncertainty (+ pseudocount)
@@ -713,7 +729,7 @@ forecast_draws_one_model <- function(cell_estimates,
         s <- apply_multiplicative_layer(s, sigma_r)
       }
       draw_mat[d, ] <- s
-      src[d]        <- j
+      src[d] <- j
     }
 
     out[[ri]] <- data.frame(
@@ -753,7 +769,8 @@ generate_forecast_draws_dirichlet <- function(cell_estimates,
                                               seed = SIM_SEEDS$forecast,
                                               n_draws = FORECAST_DRAWS_PER_RACE) {
   forecast_draws_one_model(cell_estimates, model_id, seed, n_draws,
-                           method = "dirichlet")
+    method = "dirichlet"
+  )
 }
 
 # Method A construction (Dirichlet + additive Gaussian + clip + renorm),
@@ -763,7 +780,8 @@ generate_forecast_draws_existing <- function(cell_estimates,
                                              seed = SIM_SEEDS$forecast,
                                              n_draws = FORECAST_DRAWS_PER_RACE) {
   forecast_draws_one_model(cell_estimates, model_id, seed, n_draws,
-                           method = "existing")
+    method = "existing"
+  )
 }
 
 # Summary for provider-specific draws. Unlike summarise_forecast_draws()
@@ -783,10 +801,10 @@ summarise_provider_draws <- function(draws, point_estimates) {
     dplyr::group_by(race_id, model_id, candidate_id) |>
     dplyr::summarise(
       mean_share = mean(share),
-      sd_share   = sd(share),
-      q025       = as.numeric(stats::quantile(share, 0.025)),
-      q50        = as.numeric(stats::quantile(share, 0.5)),
-      q975       = as.numeric(stats::quantile(share, 0.975)),
+      sd_share = sd(share),
+      q025 = as.numeric(stats::quantile(share, 0.025)),
+      q50 = as.numeric(stats::quantile(share, 0.5)),
+      q975 = as.numeric(stats::quantile(share, 0.975)),
       .groups = "drop"
     ) |>
     dplyr::left_join(wins, by = c("race_id", "model_id", "candidate_id")) |>
@@ -812,7 +830,7 @@ forecast_centering_bias <- function(draws, point_estimates) {
     dplyr::group_by(race_id, model_id, candidate_id) |>
     dplyr::summarise(
       mean_share = mean(share),
-      sd_share   = stats::sd(share),
+      sd_share = stats::sd(share),
       .groups = "drop"
     ) |>
     dplyr::inner_join(leaders, by = c("race_id", "model_id", "candidate_id")) |>
@@ -823,7 +841,9 @@ forecast_centering_bias <- function(draws, point_estimates) {
       leader_mean_share   = mean_share,
       leader_sd_share     = sd_share
     ) |>
-    dplyr::select(race_id, model_id, leader_candidate,
-                  leader_point_share, leader_mean_share, leader_bias_pp,
-                  leader_sd_share)
+    dplyr::select(
+      race_id, model_id, leader_candidate,
+      leader_point_share, leader_mean_share, leader_bias_pp,
+      leader_sd_share
+    )
 }

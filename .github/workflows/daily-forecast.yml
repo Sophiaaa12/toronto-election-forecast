@@ -41,7 +41,26 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Submission deadline: no polling, commits, or redeploys after end of day
+  # Sunday 25 October 2026 (Toronto time), whatever the trigger.
+  deadline:
+    runs-on: ubuntu-24.04
+    outputs:
+      open: ${{ steps.check.outputs.open }}
+    steps:
+      - id: check
+        run: |
+          today=$(TZ=America/Toronto date +%F)
+          if [[ "$today" > "2026-10-25" ]]; then
+            echo "Past the 25 October submission deadline; skipping."
+            echo "open=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "open=true" >> "$GITHUB_OUTPUT"
+          fi
+
   daily:
+    needs: deadline
+    if: needs.deadline.outputs.open == 'true'
     # Pin the image that succeeded on 21 Oct. ubuntu-latest is moving to
     # Ubuntu 26.04 through 19 Nov 2026, and setup-r has hung on that label.
     runs-on: ubuntu-24.04
@@ -89,6 +108,8 @@ jobs:
             any::ggplot2
             any::scales
             any::readxl
+            any::ragg
+            any::systemfonts
 
       - name: Restore today's LLM response cache
         if: env.POLL == 'true'
@@ -106,7 +127,7 @@ jobs:
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           POLL_DATE: ${{ steps.date.outputs.date }}
-          POLL_END_DATE: ${{ vars.POLL_END_DATE || '2026-10-26' }}
+          POLL_END_DATE: ${{ vars.POLL_END_DATE || '2026-10-25' }}
           DAILY_BUDGET_USD: ${{ inputs.budget_usd || vars.DAILY_BUDGET_USD || '1.50' }}
           DAILY_PERSONAS_PER_CELL: ${{ vars.DAILY_PERSONAS_PER_CELL || '4' }}
           FORCE_POLL: ${{ inputs.force_poll == true }}
