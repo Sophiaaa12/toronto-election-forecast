@@ -11,6 +11,7 @@ on:
     - cron: "17 10 * * *"   # 06:17 Toronto (EDT)
     - cron: "17 13 * * *"   # 09:17 backup
     - cron: "17 16 * * *"   # 12:17 backup
+    - cron: "0 18 * * *"    # 14:00 backup
     - cron: "17 20 * * *"   # 16:17 backup
   workflow_dispatch:
     inputs:
