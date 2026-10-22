@@ -100,7 +100,7 @@ The moving average hides how the panel behaves. On 20 October, when the headline
 
 ### Ward councillor races {#daily-wards}
 
-![Ward councillor races in the daily tracker: moving-average share of each ward's top three candidates as of the latest poll. About 48 panel personas per ward and model per day, so ward lines move more than the citywide mayoral line.](figures/daily_wards.png){#fig-daily-wards fig-alt="Small-multiple line charts, one per ward, showing the top three councillor candidates' moving-average shares over the polling days."}
+![Ward councillor races in the daily tracker: moving-average share of each ward's top two candidates as of the latest poll. About 48 panel personas per ward and model per day, so ward lines move more than the citywide mayoral line.](figures/daily_wards.png){#fig-daily-wards fig-alt="Small-multiple line charts, one per ward, showing the top two councillor candidates' moving-average shares over the polling days."}
 
 {{< include tables/daily_ward_table.md >}}
 
