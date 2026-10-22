@@ -69,7 +69,7 @@ One panel per ward. Each panel lists every candidate who is in *either* provider
 
 ### All 26 races
 
-Every race in one table: the *descriptive* pooled leader (equal-weight average over all six provider × repeat cells — a summary, not a forecast combination), and each provider's leading candidate with post-stratified point share, 95% simulation interval, and simulation win frequency. "Candidates" is the number of candidates on that race's ballot. "Leaders" flags races where the providers' top-post-stratified-share candidates differ.
+Every race in one table: the *descriptive* pooled leader (equal-weight average over all six provider × repeat cells — a summary, not a forecast combination), and each provider's leading candidate with post-stratified point share, 95% simulation interval, and simulation win frequency. "Candidates" is the number of names on that race's ballot, and "Same leader?" says whether the two providers' top candidates by post-stratified share match.
 
 {{< include tables/race_table.md >}}
 

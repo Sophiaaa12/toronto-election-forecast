@@ -6,7 +6,7 @@ project:
     - "!tables/*.md"
 
 website:
-  title: "Toronto 2026 Municipal Election Forecast"
+  title: "Toronto 2026 Election Forecast"
   site-url: https://sophiaaa12.github.io/toronto-election-forecast/
   page-footer:
     left: "Jingwen Zhong and Siyi Zhu · STA2453, University of Toronto · [GitHub repository](https://github.com/Sophiaaa12/toronto-election-forecast)"
@@ -16,17 +16,17 @@ website:
     left:
       - text: "Overview"
         href: index.qmd#overview
-      - text: "Election Forecasts"
+      - text: "Forecasts"
         href: index.qmd#forecasts
-      - text: "Daily Tracker"
+      - text: "Daily"
         href: index.qmd#daily
-      - text: "Provider Comparison"
+      - text: "Providers"
         href: index.qmd#providers
-      - text: "Forecast Uncertainty"
+      - text: "Uncertainty"
         href: index.qmd#uncertainty
       - text: "Diagnostics"
         href: index.qmd#diagnostics
-      - text: "Data & Methods"
+      - text: "Methods"
         href: index.qmd#methods
       - text: "Discussion"
         href: index.qmd#discussion

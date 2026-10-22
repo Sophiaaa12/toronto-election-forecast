@@ -593,10 +593,10 @@ pooled_lead <- pooled2 |>
 K_tbl <- cw |> count(race_id, name = "K")
 gem <- lead_s |>
   filter(model_id == "google/gemini-2.5-flash-lite") |>
-  transmute(race_id, gem = sprintf("%s %s %s (%s)", ballot_name, pct, ci, wf))
+  transmute(race_id, gem = sprintf("%s<br><span class=\"nw\">%s %s · win %s</span>", ballot_name, pct, ci, wf))
 gpt <- lead_s |>
   filter(model_id == "openai/gpt-4o-mini") |>
-  transmute(race_id, gpt = sprintf("%s %s %s (%s)", ballot_name, pct, ci, wf))
+  transmute(race_id, gpt = sprintf("%s<br><span class=\"nw\">%s %s · win %s</span>", ballot_name, pct, ci, wf))
 spl <- split_tbl |> transmute(race_id, split = ifelse(split,
   "**no**", "yes"
 ))
@@ -611,14 +611,14 @@ race_tbl <- pooled_lead |>
   transmute(
     Race = ifelse(race_id == "mayor", "Mayor", sprintf("Ward %02d", ward)),
     Candidates = K,
-    `Pooled leader` = sprintf("%s %s", pooled_name, pooled_pct),
-    `Gemini leader (share, 95% interval, win freq.)` = gem,
-    `GPT leader (share, 95% interval, win freq.)` = gpt,
+    `Pooled leader` = sprintf("%s<br>%s", pooled_name, pooled_pct),
+    `Gemini leader` = gem,
+    `GPT leader` = gpt,
     `Same leader?` = split
   )
 md_table <- function(df) {
   hdr <- paste0("| ", paste(names(df), collapse = " | "), " |")
-  sep <- paste0("|", paste(rep("---", ncol(df)), collapse = "|"), "|")
+  sep <- paste0("|", paste(rep(":---", ncol(df)), collapse = "|"), "|")
   rows <- apply(df, 1, function(r) paste0("| ", paste(r, collapse = " | "), " |"))
   c(hdr, sep, rows)
 }
@@ -631,7 +631,7 @@ writeLines(c(
     ": Leading candidate in all 26 races. Pooled leader is a descriptive",
     "equal-weight average of both providers. Each provider cell gives its",
     "leader's post-stratified share, 95% simulation interval, and simulation",
-    "win frequency in parentheses. Candidates is the number of names on the",
+    "win frequency. Candidates is the number of names on the",
     "ballot. {#tbl-races}"
   )
 ), "website/tables/race_table.md")

@@ -64,7 +64,14 @@ table thead th {
   text-transform: none;
 }
 table td, table th { border-color: $rule !important; padding: 0.35rem 0.6rem; }
-table td:not(:first-child) { white-space: nowrap; }
+table td:first-child { white-space: nowrap; }
+table colgroup col { width: auto !important; }
+table th, table td { text-align: left !important; vertical-align: top; }
+
+// A table wider than the text column scrolls inside the column instead of
+// running under the table of contents.
+main div:has(> table) { overflow-x: auto; }
+.quarto-float-caption, caption, .table-caption { text-align: left !important; }
 
 // Figures and captions.
 .figure-caption, figcaption {
@@ -91,3 +98,16 @@ div.callout.callout-titled .callout-header {
   border-bottom: none;
   font-weight: 600;
 }
+
+// Navbar: title and every section link on one line.
+.navbar .navbar-title { font-size: 1.05rem; font-weight: 600; }
+.navbar .nav-link {
+  font-size: 0.82rem;
+  padding-left: 0.45rem !important;
+  padding-right: 0.45rem !important;
+  white-space: nowrap;
+}
+@media (min-width: 992px) {
+  .navbar .navbar-nav { flex-wrap: nowrap; }
+}
+.nw { white-space: nowrap; }
