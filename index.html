@@ -8,7 +8,7 @@
 
 <meta name="author" content="Jingwen Zhong, Siyi Zhu">
 
-<title>Toronto 2026 Municipal Election Forecast</title>
+<title>Toronto 2026 Municipal Election Forecast – Toronto 2026 Election Forecast</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -97,10 +97,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-34f491a4a85bb593f57b8b1d848837bc.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-55617497126496852ff9f5a59253c640.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3665113ef01fc8bf345f447c7fd2f78b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -170,7 +170,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Toronto 2026 Municipal Election Forecast</span>
+    <span class="navbar-title">Toronto 2026 Election Forecast</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -185,19 +185,19 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./index.html#forecasts"> 
-<span class="menu-text">Election Forecasts</span></a>
+<span class="menu-text">Forecasts</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./index.html#daily"> 
-<span class="menu-text">Daily Tracker</span></a>
+<span class="menu-text">Daily</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./index.html#providers"> 
-<span class="menu-text">Provider Comparison</span></a>
+<span class="menu-text">Providers</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./index.html#uncertainty"> 
-<span class="menu-text">Forecast Uncertainty</span></a>
+<span class="menu-text">Uncertainty</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./index.html#diagnostics"> 
@@ -205,15 +205,15 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./index.html#methods"> 
-<span class="menu-text">Data &amp; Methods</span></a>
+<span class="menu-text">Methods</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html#discussion"> 
+<span class="menu-text">Discussion</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./index.html#limitations"> 
 <span class="menu-text">Limitations</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./index.html#conclusion"> 
-<span class="menu-text">Conclusion</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./index.html#reproducibility"> 
@@ -270,7 +270,16 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data sources</a></li>
   <li><a href="#silicon-sampling" id="toc-silicon-sampling" class="nav-link" data-scroll-target="#silicon-sampling">Silicon sampling</a></li>
+  <li><a href="#what-the-model-sees" id="toc-what-the-model-sees" class="nav-link" data-scroll-target="#what-the-model-sees">What the model sees</a></li>
   <li><a href="#post-stratification" id="toc-post-stratification" class="nav-link" data-scroll-target="#post-stratification">Post-stratification</a></li>
+  <li><a href="#software" id="toc-software" class="nav-link" data-scroll-target="#software">Software</a></li>
+  </ul></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a>
+  <ul class="collapse">
+  <li><a href="#what-a-silicon-sample-measures-in-a-local-election" id="toc-what-a-silicon-sample-measures-in-a-local-election" class="nav-link" data-scroll-target="#what-a-silicon-sample-measures-in-a-local-election">What a silicon sample measures in a local election</a></li>
+  <li><a href="#the-collapse-follows-salience-not-demographics" id="toc-the-collapse-follows-salience-not-demographics" class="nav-link" data-scroll-target="#the-collapse-follows-salience-not-demographics">The collapse follows salience, not demographics</a></li>
+  <li><a href="#analyst-choices-are-first-order" id="toc-analyst-choices-are-first-order" class="nav-link" data-scroll-target="#analyst-choices-are-first-order">Analyst choices are first-order</a></li>
+  <li><a href="#what-post-stratification-can-and-cannot-fix" id="toc-what-post-stratification-can-and-cannot-fix" class="nav-link" data-scroll-target="#what-post-stratification-can-and-cannot-fix">What post-stratification can and cannot fix</a></li>
   </ul></li>
   <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion and Future Work</a></li>
@@ -319,7 +328,8 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <section id="research-question-and-objective" class="level3">
 <h3 class="anchored" data-anchor-id="research-question-and-objective">Research question and objective</h3>
-<p>Toronto voters elect a mayor and 25 ward councillors on <strong>Monday 26 October 2026</strong>, and almost no published polling exists for the race <span class="citation" data-cites="wang2015forecasting">(<a href="#ref-wang2015forecasting" role="doc-biblioref">Wang et al. 2015</a> discuss the general problem of forecasting from non-representative pools)</span>. This project therefore asks:</p>
+<p>Every number on this page comes from synthetic voters: two large language models answering a ballot question while playing Census-shaped Toronto residents. No real person was surveyed.</p>
+<p>Toronto elects a mayor and 25 ward councillors on Monday 26 October 2026, and almost no public polling exists for these races. Forecasting from a sample that does not represent the electorate is an old problem <span class="citation" data-cites="wang2015forecasting">(<a href="#ref-wang2015forecasting" role="doc-biblioref">Wang et al. 2015</a>)</span>; here the sample does not contain voters at all. This project therefore asks:</p>
 <blockquote class="blockquote">
 <p><strong>Can a <em>silicon sample</em> — simulated voters answered by large language models — post-stratified to Census marginals, produce a transparent, reproducible forecast for all 26 Toronto municipal races, and what uncertainty and model disagreement does it imply?</strong></p>
 </blockquote>
@@ -328,7 +338,7 @@ window.Quarto = {
 <p><strong>Pipeline at a glance:</strong> LLM ballot responses (committed production sample: 3,042 synthetic personas × 26 races × 2 providers × 3 repeats = 36,504 requests, 0 technical failures) → census <strong>post-stratification</strong> (decided first-preference shares per race × provider × repeat) → <strong>Method C</strong> forecast draws (500 per race × provider: Dirichlet sampling uncertainty + centered multiplicative perturbation, target SD 4pp) → provider-specific forecasts, plus a <em>descriptive</em> equal-weight pooled summary.</p>
 <p>Headline results:</p>
 <ul>
-<li>The <strong>mayoral race is degenerate in the source data</strong>: the two providers name the same candidate, <strong>Chow, Olivia</strong> (incumbent), on 97.7% of all valid mayoral responses — a measured <em>mode collapse</em> of the silicon sample, reported prominently below rather than smoothed away.</li>
+<li>The <strong>mayoral forecast collapses onto one name</strong>. In the frozen production run both models pick the incumbent, Olivia Chow, in 97.7% of valid mayoral responses, and her main challenger, Brad Bradford, in 0 of 16,406. When the daily tracker shows the same models that day’s headlines, the whole electorate swings to whoever the headlines favour (Bradford at 97–99% on 20 October, Chow at 99% on 21 October). The models answer from salience, not from the personas’ demographics; see the <a href="#discussion">Discussion</a>.</li>
 <li>Ward races vary substantially, and the <strong>two providers name different leading candidates in 8 of 25 wards</strong> (leader defined by post-stratified point share; see <a href="#providers">Provider Comparison</a> for the full reconciliation with the alternative definition).</li>
 <li>Forecast uncertainty is <strong>assumption-driven</strong>: widening the assumed perturbation from 2pp to 6pp widens median leader intervals from 33.6pp to 41.0pp — an explicit, documented knob, not an empirical calibration.</li>
 </ul>
@@ -371,10 +381,10 @@ window.Quarto = {
 <div id="fig-mayor" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dot-and-interval chart of mayoral vote shares by LLM provider. Chow, Olivia (incumbent) leads at about 99.9 percent post-stratified share for Gemini and 94.7 percent for GPT-4o-mini, with all other candidates near zero. Points are post-stratified point estimates; horizontal bars are 95 percent simulation intervals.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-mayor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/fig1_mayoral.png" id="fig-mayor" class="img-fluid figure-img" alt="Dot-and-interval chart of mayoral vote shares by LLM provider. Chow, Olivia (incumbent) leads at about 99.9 percent post-stratified share for Gemini and 94.7 percent for GPT-4o-mini, with all other candidates near zero. Points are post-stratified point estimates; horizontal bars are 95 percent simulation intervals.">
+<img src="figures/fig1_mayoral.png" class="img-fluid figure-img" alt="Dot-and-interval chart of mayoral vote shares by LLM provider. Chow, Olivia (incumbent) leads at about 99.9 percent post-stratified share for Gemini and 94.7 percent for GPT-4o-mini, with all other candidates near zero. Points are post-stratified point estimates; horizontal bars are 95 percent simulation intervals.">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-mayor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mayor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Mayoral vote shares by provider for the eight candidates with the largest pooled shares. Points are census post-stratified estimates of each candidate’s share of decided first preferences; bars are 95% simulation intervals. Both providers put almost all support on Olivia Chow.
 </figcaption>
 </figure>
 </div>
@@ -389,11 +399,17 @@ Figure&nbsp;1
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The mayoral forecast is <strong>not</strong> a competitive distribution. In the production silicon sample, Chow absorbs <strong>97.7%</strong> of all valid mayoral choices (99.93% for Gemini, 95.00% for GPT); only 11 of the 53 mayoral candidates are ever chosen. The diagnostic experiment reproduced this under three ballot orders (see <a href="#diagnostics">Diagnostics</a>), confirming it is a <strong>knowledge-driven property of the models</strong>, not a ballot-position artifact — the same failure mode documented by <span class="citation" data-cites="heath2026correcting">Heath and Alexander (<a href="#ref-heath2026correcting" role="doc-biblioref">2026</a>)</span>. No uncertainty method can honestly manufacture competitiveness from it, so the mayoral “forecast” should be read as a <em>measured model output</em>, not a horse race.</p>
+<p>The mayoral forecast is <strong>not</strong> a competitive distribution. In the production silicon sample, Chow absorbs <strong>97.7%</strong> of all valid mayoral choices (99.93% for Gemini, 95.00% for GPT); only 11 of the 53 mayoral candidates are ever chosen. The diagnostic experiment reproduced this under three ballot orders (see <a href="#diagnostics">Diagnostics</a>), so it is a property of the models rather than of ballot position, the same failure mode documented by <span class="citation" data-cites="heath2026correcting">Heath and Alexander (<a href="#ref-heath2026correcting" role="doc-biblioref">2026</a>)</span>. No uncertainty method can honestly manufacture competitiveness from it, so the mayoral “forecast” should be read as a <em>measured model output</em>, not a horse race. The daily tracker shows that this output is not stable either: the same collapse moves to Brad Bradford when the day’s headlines favour him (see <a href="#daily">Daily Tracker</a> and <a href="#discussion">Discussion</a>).</p>
 </div>
 </div>
 <p>Full mayoral detail, one row per candidate sorted by descriptive pooled share (candidates with pooled share above 0.1% or any provider share above 0.5%):</p>
 <!-- Generated by website/make_figures.R from committed forecast data. -->
+<div id="tbl-mayor" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mayor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Mayoral candidates with a pooled share above 0.1% or any provider share above 0.5%, sorted by pooled share. Brackets give 95% simulation intervals; win frequencies are the share of 500 simulation draws in which the candidate leads.
+</figcaption>
+<div aria-describedby="tbl-mayor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <colgroup>
 <col style="width: 14%">
@@ -406,64 +422,67 @@ Figure&nbsp;1
 </colgroup>
 <thead>
 <tr class="header">
-<th>Candidate</th>
-<th>Incumbent</th>
-<th>Pooled share (desc.)</th>
-<th>Gemini share [95% interval]</th>
-<th>Gemini win freq.</th>
-<th>GPT share [95% interval]</th>
-<th>GPT win freq.</th>
+<th style="text-align: left;">Candidate</th>
+<th style="text-align: left;">Incumbent</th>
+<th style="text-align: left;">Pooled share</th>
+<th style="text-align: left;">Gemini share [95% interval]</th>
+<th style="text-align: left;">Gemini win freq.</th>
+<th style="text-align: left;">GPT share [95% interval]</th>
+<th style="text-align: left;">GPT win freq.</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Chow, Olivia</td>
-<td>yes</td>
-<td>97.33%</td>
-<td>99.94% [95.0-99.7%]</td>
-<td>100.0%</td>
-<td>94.73% [53.6-99.6%]</td>
-<td>99.2%</td>
+<td style="text-align: left;">Chow, Olivia</td>
+<td style="text-align: left;">yes</td>
+<td style="text-align: left;">97.3%</td>
+<td style="text-align: left;">99.9% [95.0-99.7%]</td>
+<td style="text-align: left;">100.0%</td>
+<td style="text-align: left;">94.7% [53.6-99.6%]</td>
+<td style="text-align: left;">99.2%</td>
 </tr>
 <tr class="even">
-<td>Brown, Darrell</td>
-<td></td>
-<td>1.52%</td>
-<td>0.00% [0.0-0.2%]</td>
-<td>0.0%</td>
-<td>3.03% [0.0-28.4%]</td>
-<td>0.4%</td>
+<td style="text-align: left;">Brown, Darrell</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1.5%</td>
+<td style="text-align: left;">0.0% [0.0-0.2%]</td>
+<td style="text-align: left;">0.0%</td>
+<td style="text-align: left;">3.0% [0.0-28.4%]</td>
+<td style="text-align: left;">0.4%</td>
 </tr>
 <tr class="odd">
-<td>Dorville, Wincess</td>
-<td></td>
-<td>0.57%</td>
-<td>0.00% [0.0-0.2%]</td>
-<td>0.0%</td>
-<td>1.13% [0.0-10.9%]</td>
-<td>0.0%</td>
+<td style="text-align: left;">Dorville, Wincess</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.6%</td>
+<td style="text-align: left;">0.0% [0.0-0.2%]</td>
+<td style="text-align: left;">0.0%</td>
+<td style="text-align: left;">1.1% [0.0-10.9%]</td>
+<td style="text-align: left;">0.0%</td>
 </tr>
 <tr class="even">
-<td>Fraser, Martin</td>
-<td></td>
-<td>0.49%</td>
-<td>0.00% [0.0-0.2%]</td>
-<td>0.0%</td>
-<td>0.98% [0.0-11.8%]</td>
-<td>0.4%</td>
+<td style="text-align: left;">Fraser, Martin</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0.5%</td>
+<td style="text-align: left;">0.0% [0.0-0.2%]</td>
+<td style="text-align: left;">0.0%</td>
+<td style="text-align: left;">1.0% [0.0-11.8%]</td>
+<td style="text-align: left;">0.4%</td>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 </section>
 <section id="ward-councillor-races" class="level3">
 <h3 class="anchored" data-anchor-id="ward-councillor-races">Ward councillor races</h3>
 <div id="fig-wards" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Faceted dot-and-interval chart for all 25 ward councillor races. Each panel lists the candidates in either provider's top two, with each provider's post-stratified point estimate as a dot and its 95 percent simulation interval as a horizontal bar.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wards-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/fig2_wards.png" id="fig-wards" class="img-fluid figure-img" alt="Faceted dot-and-interval chart for all 25 ward councillor races. Each panel lists the candidates in either provider's top two, with each provider's post-stratified point estimate as a dot and its 95 percent simulation interval as a horizontal bar.">
+<img src="figures/fig2_wards.png" class="img-fluid figure-img" alt="Faceted dot-and-interval chart for all 25 ward councillor races. Each panel lists the candidates in either provider's top two, with each provider's post-stratified point estimate as a dot and its 95 percent simulation interval as a horizontal bar.">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-wards-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wards-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: All 25 ward councillor races. Each panel lists every candidate in either provider’s top two (* = incumbent), strongest pooled share at the top. Dots are each provider’s post-stratified share and bars its 95% simulation interval; when the two providers’ highest dots sit on different rows, they disagree about who leads.
 </figcaption>
 </figure>
 </div>
@@ -471,8 +490,14 @@ Figure&nbsp;2
 </section>
 <section id="all-26-races" class="level3">
 <h3 class="anchored" data-anchor-id="all-26-races">All 26 races</h3>
-<p>Every race in one table: the <em>descriptive</em> pooled leader (equal-weight average over all six provider × repeat cells — a summary, not a forecast combination), and each provider’s leading candidate with post-stratified point share, 95% simulation interval, and simulation win frequency. “Candidates” is the number of candidates on that race’s ballot. “Leaders” flags races where the providers’ top-post-stratified-share candidates differ.</p>
+<p>Every race in one table: the <em>descriptive</em> pooled leader (equal-weight average over all six provider × repeat cells — a summary, not a forecast combination), and each provider’s leading candidate with post-stratified point share, 95% simulation interval, and simulation win frequency. “Candidates” is the number of names on that race’s ballot, and “Same leader?” says whether the two providers’ top candidates by post-stratified share match.</p>
 <!-- Generated by website/make_figures.R from committed forecast data. -->
+<div id="tbl-races" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-races-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Leading candidate in all 26 races. Pooled leader is a descriptive equal-weight average of both providers. Each provider cell gives its leader’s post-stratified share, 95% simulation interval, and simulation win frequency. Candidates is the number of names on the ballot.
+</figcaption>
+<div aria-describedby="tbl-races-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <colgroup>
 <col style="width: 16%">
@@ -484,225 +509,228 @@ Figure&nbsp;2
 </colgroup>
 <thead>
 <tr class="header">
-<th>Race</th>
-<th>Candidates</th>
-<th>Pooled leader (desc.)</th>
-<th>Gemini leader (share, 95% interval, win freq.)</th>
-<th>GPT leader (share, 95% interval, win freq.)</th>
-<th>Leaders (by point share)</th>
+<th style="text-align: left;">Race</th>
+<th style="text-align: left;">Candidates</th>
+<th style="text-align: left;">Pooled leader</th>
+<th style="text-align: left;">Gemini leader</th>
+<th style="text-align: left;">GPT leader</th>
+<th style="text-align: left;">Same leader?</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Mayor</td>
-<td>53</td>
-<td>Chow, Olivia 97.3%</td>
-<td>Chow, Olivia 99.9% [95-100%] (100.0%)</td>
-<td>Chow, Olivia 94.7% [54-100%] (99.2%)</td>
-<td>same</td>
+<td style="text-align: left;">Mayor</td>
+<td style="text-align: left;">53</td>
+<td style="text-align: left;">Chow, Olivia<br>97.3%</td>
+<td style="text-align: left;">Chow, Olivia<br><span class="nw">99.9% [95-100%] · win 100.0%</span></td>
+<td style="text-align: left;">Chow, Olivia<br><span class="nw">94.7% [54-100%] · win 99.2%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="even">
-<td>Ward 01</td>
-<td>10</td>
-<td>Crisanti, Vincent 60.4%</td>
-<td>Crisanti, Vincent 58.2% [32-74%] (77.2%)</td>
-<td>Crisanti, Vincent 62.6% [44-77%] (98.6%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 01</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">Crisanti, Vincent<br>60.4%</td>
+<td style="text-align: left;">Crisanti, Vincent<br><span class="nw">58.2% [32-74%] · win 77.2%</span></td>
+<td style="text-align: left;">Crisanti, Vincent<br><span class="nw">62.6% [44-77%] · win 98.6%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="odd">
-<td>Ward 02</td>
-<td>3</td>
-<td>Holyday, Stephen 64.1%</td>
-<td>Holyday, Stephen 67.4% [52-82%] (99.8%)</td>
-<td>Holyday, Stephen 60.7% [42-80%] (87.8%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 02</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Holyday, Stephen<br>64.1%</td>
+<td style="text-align: left;">Holyday, Stephen<br><span class="nw">67.4% [52-82%] · win 99.8%</span></td>
+<td style="text-align: left;">Holyday, Stephen<br><span class="nw">60.7% [42-80%] · win 87.8%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="even">
-<td>Ward 03</td>
-<td>4</td>
-<td>Morley, Amber 43.1%</td>
-<td>Morley, Amber 68.6% [55-80%] (99.8%)</td>
-<td>Internicola, A… 34.7% [15-53%] (64.6%)</td>
-<td><strong>different</strong></td>
+<td style="text-align: left;">Ward 03</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Morley, Amber<br>43.1%</td>
+<td style="text-align: left;">Morley, Amber<br><span class="nw">68.6% [55-80%] · win 99.8%</span></td>
+<td style="text-align: left;">Internicola, Anthony<br><span class="nw">34.7% [15-53%] · win 64.6%</span></td>
+<td style="text-align: left;"><strong>no</strong></td>
 </tr>
 <tr class="odd">
-<td>Ward 04</td>
-<td>10</td>
-<td>Ogundipe, Bridget 23.3%</td>
-<td>Pham, Adam 23.9% [5-57%] (29.2%)</td>
-<td>Corcoran, Michael 26.1% [5-52%] (34.8%)</td>
-<td><strong>different</strong></td>
+<td style="text-align: left;">Ward 04</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">Ogundipe, Bridget<br>23.3%</td>
+<td style="text-align: left;">Pham, Adam<br><span class="nw">23.9% [5-57%] · win 29.2%</span></td>
+<td style="text-align: left;">Corcoran, Michael<br><span class="nw">26.1% [5-52%] · win 34.8%</span></td>
+<td style="text-align: left;"><strong>no</strong></td>
 </tr>
 <tr class="even">
-<td>Ward 05</td>
-<td>9</td>
-<td>Nunziata, Frances 66.6%</td>
-<td>Nunziata, Frances 61.3% [39-76%] (90.0%)</td>
-<td>Nunziata, Frances 71.9% [56-80%] (100.0%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 05</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">Nunziata, Frances<br>66.6%</td>
+<td style="text-align: left;">Nunziata, Frances<br><span class="nw">61.3% [39-76%] · win 90.0%</span></td>
+<td style="text-align: left;">Nunziata, Frances<br><span class="nw">71.9% [56-80%] · win 100.0%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="odd">
-<td>Ward 06</td>
-<td>3</td>
-<td>Pasternak, James 80.1%</td>
-<td>Pasternak, James 80.3% [64-90%] (100.0%)</td>
-<td>Pasternak, James 79.9% [58-91%] (99.8%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 06</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Pasternak, James<br>80.1%</td>
+<td style="text-align: left;">Pasternak, James<br><span class="nw">80.3% [64-90%] · win 100.0%</span></td>
+<td style="text-align: left;">Pasternak, James<br><span class="nw">79.9% [58-91%] · win 99.8%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="even">
-<td>Ward 07</td>
-<td>3</td>
-<td>Perruzza, Anthony 81.5%</td>
-<td>Perruzza, Anthony 82.8% [67-91%] (100.0%)</td>
-<td>Perruzza, Anthony 80.2% [62-92%] (100.0%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 07</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Perruzza, Anthony<br>81.5%</td>
+<td style="text-align: left;">Perruzza, Anthony<br><span class="nw">82.8% [67-91%] · win 100.0%</span></td>
+<td style="text-align: left;">Perruzza, Anthony<br><span class="nw">80.2% [62-92%] · win 100.0%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="odd">
-<td>Ward 08</td>
-<td>6</td>
-<td>Colle, Mike 89.9%</td>
-<td>Colle, Mike 93.6% [74-100%] (100.0%)</td>
-<td>Colle, Mike 86.1% [67-94%] (100.0%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 08</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Colle, Mike<br>89.9%</td>
+<td style="text-align: left;">Colle, Mike<br><span class="nw">93.6% [74-100%] · win 100.0%</span></td>
+<td style="text-align: left;">Colle, Mike<br><span class="nw">86.1% [67-94%] · win 100.0%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="even">
-<td>Ward 09</td>
-<td>4</td>
-<td>Bravo, Alejandra 56.1%</td>
-<td>Martins, Marco 30.1% [6-52%] (28.0%)</td>
-<td>Bravo, Alejandra 82.5% [66-93%] (100.0%)</td>
-<td><strong>different</strong></td>
+<td style="text-align: left;">Ward 09</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Bravo, Alejandra<br>56.1%</td>
+<td style="text-align: left;">Martins, Marco<br><span class="nw">30.1% [6-52%] · win 28.0%</span></td>
+<td style="text-align: left;">Bravo, Alejandra<br><span class="nw">82.5% [66-93%] · win 100.0%</span></td>
+<td style="text-align: left;"><strong>no</strong></td>
 </tr>
 <tr class="odd">
-<td>Ward 10</td>
-<td>8</td>
-<td>Malik, Ausma 68.6%</td>
-<td>Malik, Ausma 45.5% [18-81%] (34.6%)</td>
-<td>Malik, Ausma 91.7% [81-97%] (100.0%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 10</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">Malik, Ausma<br>68.6%</td>
+<td style="text-align: left;">Malik, Ausma<br><span class="nw">45.5% [18-81%] · win 34.6%</span></td>
+<td style="text-align: left;">Malik, Ausma<br><span class="nw">91.7% [81-97%] · win 100.0%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="even">
-<td>Ward 11</td>
-<td>9</td>
-<td>Layton, Mike 62.7%</td>
-<td>Layton, Mike 44.5% [25-61%] (61.6%)</td>
-<td>Layton, Mike 80.9% [55-93%] (100.0%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 11</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">Layton, Mike<br>62.7%</td>
+<td style="text-align: left;">Layton, Mike<br><span class="nw">44.5% [25-61%] · win 61.6%</span></td>
+<td style="text-align: left;">Layton, Mike<br><span class="nw">80.9% [55-93%] · win 100.0%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="odd">
-<td>Ward 12</td>
-<td>6</td>
-<td>Matlow, Josh 72.1%</td>
-<td>Matlow, Josh 78.7% [38-96%] (92.6%)</td>
-<td>Matlow, Josh 65.5% [49-79%] (98.6%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 12</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Matlow, Josh<br>72.1%</td>
+<td style="text-align: left;">Matlow, Josh<br><span class="nw">78.7% [38-96%] · win 92.6%</span></td>
+<td style="text-align: left;">Matlow, Josh<br><span class="nw">65.5% [49-79%] · win 98.6%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="even">
-<td>Ward 13</td>
-<td>11</td>
-<td>Moise, Chris 40.5%</td>
-<td>Moise, Chris 57.0% [35-75%] (97.4%)</td>
-<td>Harris, Morgan 24.7% [2-66%] (32.0%)</td>
-<td><strong>different</strong></td>
+<td style="text-align: left;">Ward 13</td>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">Moise, Chris<br>40.5%</td>
+<td style="text-align: left;">Moise, Chris<br><span class="nw">57.0% [35-75%] · win 97.4%</span></td>
+<td style="text-align: left;">Harris, Morgan<br><span class="nw">24.7% [2-66%] · win 32.0%</span></td>
+<td style="text-align: left;"><strong>no</strong></td>
 </tr>
 <tr class="odd">
-<td>Ward 14</td>
-<td>18</td>
-<td>Fragedakis, Mary 40.1%</td>
-<td>Saxe, Dianne 43.7% [23-60%] (54.0%)</td>
-<td>Fragedakis, Mary 40.4% [1-66%] (57.8%)</td>
-<td><strong>different</strong></td>
+<td style="text-align: left;">Ward 14</td>
+<td style="text-align: left;">18</td>
+<td style="text-align: left;">Fragedakis, Mary<br>40.1%</td>
+<td style="text-align: left;">Saxe, Dianne<br><span class="nw">43.7% [23-60%] · win 54.0%</span></td>
+<td style="text-align: left;">Fragedakis, Mary<br><span class="nw">40.4% [1-66%] · win 57.8%</span></td>
+<td style="text-align: left;"><strong>no</strong></td>
 </tr>
 <tr class="even">
-<td>Ward 15</td>
-<td>3</td>
-<td>Chernos Lin, Rachel 60.9%</td>
-<td>Chernos Lin, R… 48.0% [28-73%] (41.8%)</td>
-<td>Chernos Lin, R… 73.7% [54-92%] (99.4%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 15</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Chernos Lin, Rachel<br>60.9%</td>
+<td style="text-align: left;">Chernos Lin, Rachel<br><span class="nw">48.0% [28-73%] · win 41.8%</span></td>
+<td style="text-align: left;">Chernos Lin, Rachel<br><span class="nw">73.7% [54-92%] · win 99.4%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="odd">
-<td>Ward 16</td>
-<td>4</td>
-<td>Burnside, Jon 56.8%</td>
-<td>Burnside, Jon 33.7% [7-69%] (39.6%)</td>
-<td>Burnside, Jon 79.8% [59-94%] (100.0%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 16</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Burnside, Jon<br>56.8%</td>
+<td style="text-align: left;">Burnside, Jon<br><span class="nw">33.7% [7-69%] · win 39.6%</span></td>
+<td style="text-align: left;">Burnside, Jon<br><span class="nw">79.8% [59-94%] · win 100.0%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="even">
-<td>Ward 17</td>
-<td>7</td>
-<td>Carroll, Shelley 81.2%</td>
-<td>Carroll, Shelley 81.2% [68-89%] (100.0%)</td>
-<td>Carroll, Shelley 81.3% [58-94%] (100.0%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 17</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">Carroll, Shelley<br>81.2%</td>
+<td style="text-align: left;">Carroll, Shelley<br><span class="nw">81.2% [68-89%] · win 100.0%</span></td>
+<td style="text-align: left;">Carroll, Shelley<br><span class="nw">81.3% [58-94%] · win 100.0%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="odd">
-<td>Ward 18</td>
-<td>6</td>
-<td>Cheng, Lily 53.2%</td>
-<td>Cheng, Lily 45.7% [27-64%] (61.0%)</td>
-<td>Cheng, Lily 60.8% [8-94%] (68.0%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 18</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Cheng, Lily<br>53.2%</td>
+<td style="text-align: left;">Cheng, Lily<br><span class="nw">45.7% [27-64%] · win 61.0%</span></td>
+<td style="text-align: left;">Cheng, Lily<br><span class="nw">60.8% [8-94%] · win 68.0%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="even">
-<td>Ward 19</td>
-<td>13</td>
-<td>Erskine Smith, Nate 76.0%</td>
-<td>Erskine Smith,… 95.1% [78-97%] (100.0%)</td>
-<td>Erskine Smith,… 56.9% [32-78%] (93.6%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 19</td>
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">Erskine Smith, Nate<br>76.0%</td>
+<td style="text-align: left;">Erskine Smith, Nate<br><span class="nw">95.1% [78-97%] · win 100.0%</span></td>
+<td style="text-align: left;">Erskine Smith, Nate<br><span class="nw">56.9% [32-78%] · win 93.6%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="odd">
-<td>Ward 20</td>
-<td>8</td>
-<td>Rupasinghe, Kevin 27.1%</td>
-<td>Rupasinghe, Kevin 44.6% [25-68%] (78.0%)</td>
-<td>Choudhury, Laikul 34.3% [1-71%] (34.8%)</td>
-<td><strong>different</strong></td>
+<td style="text-align: left;">Ward 20</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">Rupasinghe, Kevin<br>27.1%</td>
+<td style="text-align: left;">Rupasinghe, Kevin<br><span class="nw">44.6% [25-68%] · win 78.0%</span></td>
+<td style="text-align: left;">Choudhury, Laikul<br><span class="nw">34.3% [1-71%] · win 34.8%</span></td>
+<td style="text-align: left;"><strong>no</strong></td>
 </tr>
 <tr class="even">
-<td>Ward 21</td>
-<td>11</td>
-<td>Thompson, Michael 55.0%</td>
-<td>Thompson, Michael 49.9% [27-71%] (70.6%)</td>
-<td>Thompson, Michael 60.0% [27-82%] (80.8%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 21</td>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">Thompson, Michael<br>55.0%</td>
+<td style="text-align: left;">Thompson, Michael<br><span class="nw">49.9% [27-71%] · win 70.6%</span></td>
+<td style="text-align: left;">Thompson, Michael<br><span class="nw">60.0% [27-82%] · win 80.8%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="odd">
-<td>Ward 22</td>
-<td>10</td>
-<td>Kotecha, Rakhee 23.9%</td>
-<td>Chan, Bill 26.8% [9-52%] (31.6%)</td>
-<td>Morgan, Donny 39.8% [25-52%] (69.4%)</td>
-<td><strong>different</strong></td>
+<td style="text-align: left;">Ward 22</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">Kotecha, Rakhee<br>23.9%</td>
+<td style="text-align: left;">Chan, Bill<br><span class="nw">26.8% [9-52%] · win 31.6%</span></td>
+<td style="text-align: left;">Morgan, Donny<br><span class="nw">39.8% [25-52%] · win 69.4%</span></td>
+<td style="text-align: left;"><strong>no</strong></td>
 </tr>
 <tr class="even">
-<td>Ward 23</td>
-<td>8</td>
-<td>Myers, Jamaal 36.3%</td>
-<td>Dong, Han 34.7% [6-58%] (63.2%)</td>
-<td>Chen, Shaun 55.6% [38-71%] (83.2%)</td>
-<td><strong>different</strong></td>
+<td style="text-align: left;">Ward 23</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">Myers, Jamaal<br>36.3%</td>
+<td style="text-align: left;">Dong, Han<br><span class="nw">34.7% [6-58%] · win 63.2%</span></td>
+<td style="text-align: left;">Chen, Shaun<br><span class="nw">55.6% [38-71%] · win 83.2%</span></td>
+<td style="text-align: left;"><strong>no</strong></td>
 </tr>
 <tr class="odd">
-<td>Ward 24</td>
-<td>6</td>
-<td>Ainslie, Paul 70.6%</td>
-<td>Ainslie, Paul 71.0% [50-83%] (99.0%)</td>
-<td>Ainslie, Paul 70.3% [53-84%] (99.8%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 24</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Ainslie, Paul<br>70.6%</td>
+<td style="text-align: left;">Ainslie, Paul<br><span class="nw">71.0% [50-83%] · win 99.0%</span></td>
+<td style="text-align: left;">Ainslie, Paul<br><span class="nw">70.3% [53-84%] · win 99.8%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 <tr class="even">
-<td>Ward 25</td>
-<td>10</td>
-<td>Shan, Neethan 51.5%</td>
-<td>Shan, Neethan 74.0% [45-89%] (100.0%)</td>
-<td>Shan, Neethan 29.0% [0-56%] (52.8%)</td>
-<td>same</td>
+<td style="text-align: left;">Ward 25</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">Shan, Neethan<br>51.5%</td>
+<td style="text-align: left;">Shan, Neethan<br><span class="nw">74.0% [45-89%] · win 100.0%</span></td>
+<td style="text-align: left;">Shan, Neethan<br><span class="nw">29.0% [0-56%] · win 52.8%</span></td>
+<td style="text-align: left;">yes</td>
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <hr>
 </section>
 </section>
@@ -755,7 +783,16 @@ Figure&nbsp;2
 </div>
 <section id="daily-mayor" class="level3">
 <h3 class="anchored" data-anchor-id="daily-mayor">Mayor</h3>
-<p><img src="figures/daily_mayor.png" class="img-fluid" alt="Line chart of the top mayoral candidates' daily post-stratified shares. Thick lines are the moving average of the cross-model mean; thin lines and points are each model's daily estimate."></p>
+<div id="fig-daily-mayor" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Line chart of the top mayoral candidates' daily post-stratified shares. Thick lines are the moving average of the cross-model mean; thin lines and points are each model's daily estimate.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-daily-mayor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/daily_mayor.png" class="img-fluid figure-img" alt="Line chart of the top mayoral candidates' daily post-stratified shares. Thick lines are the moving average of the cross-model mean; thin lines and points are each model's daily estimate.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daily-mayor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Daily mayoral estimates from the fixed 1,200-persona panel. Thin lines and points are each model’s post-stratified share for one day; thick lines are the trailing moving average of the two models’ mean. Both models give nearly all support to one candidate each day, and which candidate changes with the headlines.
+</figcaption>
+</figure>
+</div>
 <p>Results for October 21, 2026: post-stratified share [95% simulation interval] · simulation win frequency.</p>
 <table class="caption-top table">
 <colgroup>
@@ -798,6 +835,7 @@ Figure&nbsp;2
 </tr>
 </tbody>
 </table>
+<p>The moving average hides how the panel behaves. On 20 October, when the headlines included “Brad Bradford pulls ahead of Olivia Chow for first time”, both models gave Bradford almost every decided vote (Gemini 96.8%, GPT-4o-mini 99.0%). On 21 October the headlines included criticism of Bradford’s water-utility plan and two polls describing a dead heat, and both models gave Chow almost every decided vote (99.9% and 99.0%). The near 50–50 average is the mean of two one-sided days, not a close race inside the panel. Neither day looks like the frozen forecast, in which Bradford, without news, received no votes at all.</p>
 <p><strong>By day</strong> (each model’s post-stratified share of decided first preferences, last 14 days):</p>
 <table class="caption-top table">
 <colgroup>
@@ -836,7 +874,16 @@ Figure&nbsp;2
 </section>
 <section id="daily-wards" class="level3">
 <h3 class="anchored" data-anchor-id="daily-wards">Ward councillor races</h3>
-<p><img src="figures/daily_wards.png" class="img-fluid" alt="Small-multiple line charts, one per ward, showing the top three councillor candidates' moving-average shares over the polling days."></p>
+<div id="fig-daily-wards" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Small-multiple line charts, one per ward, showing the top three councillor candidates' moving-average shares over the polling days.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-daily-wards-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/daily_wards.png" class="img-fluid figure-img" alt="Small-multiple line charts, one per ward, showing the top three councillor candidates' moving-average shares over the polling days.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daily-wards-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Ward councillor races in the daily tracker: moving-average share of each ward’s top three candidates as of the latest poll. About 48 panel personas per ward and model per day, so ward lines move more than the citywide mayoral line.
+</figcaption>
+</figure>
+</div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 14%">
@@ -1210,7 +1257,7 @@ Figure&nbsp;2
 <img src="figures/fig3_disagreement_dotplot.png" class="img-fluid figure-img" alt="Dotplot with 25 rows, one per Toronto ward. Each row has two coloured dots connected by a line showing each provider's simulation win frequency for its leading candidate; the top 8 red rows are wards where providers name different leaders, each labelled with both leaders' names; the other 17 rows are labelled with the shared leader's name.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-disagree-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Each ward’s row connects the two providers’ simulation win frequencies for their own leading candidate (leader = highest post-stratified point share). The top block (red) holds the 8 wards where the providers name different leaders, with both leaders named; in the bottom block the providers share one leader, named once in grey. A single visible point means both providers sit at about 100%. Source: <code>processed/forecast/forecast_summary_centered.parquet</code> — win frequencies are simulation frequencies, not calibrated probabilities.
+Figure&nbsp;5: Each ward’s row connects the two providers’ simulation win frequencies for their own leading candidate (leader = highest post-stratified point share). The top block (red) holds the 8 wards where the providers name different leaders, with both leaders named; in the bottom block the providers share one leader, named once in grey. A single visible point means both providers sit at about 100%. Source: <code>processed/forecast/forecast_summary_centered.parquet</code> — win frequencies are simulation frequencies, not calibrated probabilities.
 </figcaption>
 </figure>
 </div>
@@ -1221,7 +1268,7 @@ Figure&nbsp;3: Each ward’s row connects the two providers’ simulation win fr
 <img src="figures/fig4_disagreement_map.png" class="img-fluid figure-img" alt="Map of Toronto showing all 25 ward polygons, each labelled with ward number and name; 8 wards are shaded red where providers name different leading candidates, with labels giving the Gemini and GPT leaders, and 17 are shaded light blue where they agree.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-disagree-b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Toronto’s 25 wards shaded by whether the two providers name the same leading candidate (highest post-stratified point share): 8 wards red (different leaders, with each provider’s leader labelled), 17 blue (agree). Source: ward geometry <code>raw/geography/wards.geojson</code> (City of Toronto Open Data) and committed forecast summaries.
+Figure&nbsp;6: Toronto’s 25 wards shaded by whether the two providers name the same leading candidate (highest post-stratified point share): 8 wards red (different leaders, with each provider’s leader labelled), 17 blue (agree). Source: ward geometry <code>raw/geography/wards.geojson</code> (City of Toronto Open Data) and committed forecast summaries.
 </figcaption>
 </figure>
 </div>
@@ -1250,7 +1297,7 @@ Figure&nbsp;4: Toronto’s 25 wards shaded by whether the two providers name the
 </tr>
 </tbody>
 </table>
-<p>The website uses the <strong>point-share definition</strong> throughout (Figures 2–4, the race table, and this section). The three definitional edge cases are instructive:</p>
+<p>The website uses the <strong>point-share definition</strong> throughout (<a href="#fig-wards" class="quarto-xref">Figure&nbsp;2</a>, <a href="#fig-disagree-a" class="quarto-xref">Figure&nbsp;5</a>, <a href="#fig-disagree-b" class="quarto-xref">Figure&nbsp;6</a>, <a href="#tbl-races" class="quarto-xref">Table&nbsp;2</a>, and this section). The three definitional edge cases are instructive:</p>
 <ul>
 <li><strong>Ward 09</strong> — Gemini’s point shares are a near three-way tie (Martins, Marco 30.1%; Bravo, Alejandra 29.7%; one other 29.3%), so its top-point candidate is <em>not</em> its top-win-frequency candidate. GPT strongly favours the incumbent <strong>Bravo, Alejandra</strong> (82.5%, win frequency 100%), and by win frequency both providers name Bravo.</li>
 <li><strong>Ward 13</strong> — GPT’s point shares are nearly tied (Harris, Morgan 24.7% vs incumbent <strong>Moise, Chris</strong> 24.0%), so GPT’s top-point candidate is Harris while its top-win-frequency candidate is Moise; Gemini strongly favours Moise (57.0%). By win frequency both providers name Moise.</li>
@@ -1266,7 +1313,7 @@ Figure&nbsp;4: Toronto’s 25 wards shaded by whether the two providers name the
 </section>
 <section id="uncertainty" class="level2">
 <h2 class="anchored" data-anchor-id="uncertainty">Forecast Uncertainty</h2>
-<p>Every number on this site comes from an explicit, layered simulation. The four sources of variation are kept distinct — conflating them would overstate what the data can support [<span class="citation" data-cites="shirani2018disentangling">Shirani-Mehr et al. (<a href="#ref-shirani2018disentangling" role="doc-biblioref">2018</a>)</span> separate bias and variance in real election polls; our setting has no ground truth to separate them against].</p>
+<p>Every number on this site comes from an explicit, layered simulation. The four sources of variation are kept distinct, because conflating them would overstate what the data can support. <span class="citation" data-cites="shirani2018disentangling">Shirani-Mehr et al. (<a href="#ref-shirani2018disentangling" role="doc-biblioref">2018</a>)</span> separate bias from variance in real election polls; our setting has no ground truth against which to make that separation.</p>
 <ol type="1">
 <li><strong>LLM response variability</strong> — each draw resamples one of the provider’s three independent repeat cells (the same persona-race asked three times at temperature 0.7).</li>
 <li><strong>Dirichlet sampling uncertainty</strong> — shares ~ Dirichlet(<span class="math inline">\(n_{\text{eff}} \cdot \hat{s} + 0.5\)</span>), where <span class="math inline">\(n_{\text{eff}} = (\sum_i w_i)^2 / \sum_i w_i^2\)</span> is the Kish effective sample size of the post-stratified cell. This quantifies how much the estimate would move if the same personas were re-queried.</li>
@@ -1288,13 +1335,13 @@ Figure&nbsp;4: Toronto’s 25 wards shaded by whether the two providers name the
 </div>
 <section id="sensitivity-to-the-assumed-perturbation-scale" class="level3">
 <h3 class="anchored" data-anchor-id="sensitivity-to-the-assumed-perturbation-scale">Sensitivity to the assumed perturbation scale</h3>
-<div id="fig-sens" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two panels. Left: leader 95 percent interval widths for all 52 race-by-provider units at target SD 2, 4 and 6 percentage points, shown as thin coloured lines with box plots and a bold black median line rising from 33.6 to 37.3 to 41.0 percentage points. Right: bar chart of the number of units with win frequency exactly 100 percent, falling from 21 to 15 to 12, with the published 4 pp setting highlighted.">
+<div id="fig-sens" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two panels. Left: leader 95 percent interval widths for all 52 race-by-provider units at target SD 2, 4 and 6 percentage points, shown as thin coloured lines with points and a dark median line rising from 33.6 to 37.3 to 41.0 percentage points. Right: bar chart of the number of units with win frequency exactly 100 percent, falling from 21 to 15 to 12, with the published 4 pp setting highlighted.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sens-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/fig5_sensitivity.png" id="fig-sens" class="img-fluid figure-img" alt="Two panels. Left: leader 95 percent interval widths for all 52 race-by-provider units at target SD 2, 4 and 6 percentage points, shown as thin coloured lines with box plots and a bold black median line rising from 33.6 to 37.3 to 41.0 percentage points. Right: bar chart of the number of units with win frequency exactly 100 percent, falling from 21 to 15 to 12, with the published 4 pp setting highlighted.">
+<img src="figures/fig5_sensitivity.png" class="img-fluid figure-img" alt="Two panels. Left: leader 95 percent interval widths for all 52 race-by-provider units at target SD 2, 4 and 6 percentage points, shown as thin coloured lines with points and a dark median line rising from 33.6 to 37.3 to 41.0 percentage points. Right: bar chart of the number of units with win frequency exactly 100 percent, falling from 21 to 15 to 12, with the published 4 pp setting highlighted.">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-sens-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sens-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Sensitivity of the forecast to its one assumed parameter, the forecast-noise SD. (a) Each line joins one race-by-provider leader’s 95% interval width at SD 2, 4 and 6 percentage points; the dark line is the median. (b) Number of the 52 race-by-provider units whose leader wins every simulation draw; the dark bar is the published setting.
 </figcaption>
 </figure>
 </div>
@@ -1309,10 +1356,10 @@ Figure&nbsp;5
 <div id="fig-diag" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three panels. (a) Bar chart of candidate-order invariance: 100 percent for the mayoral race for both providers, 56.3 percent for Gemini and 62.5 percent for GPT-4o-mini on 12 sampled ward races. (b) Bar chart of mayoral response concentration: Chow near 100 percent for Gemini, about 95 percent for GPT, with small bars for minor candidates. (c) Bar chart of provider undecided rates: GPT-4o-mini 19.4 percent mayoral and 3.9 percent ward, Gemini 0.8 and 1.0 percent.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-diag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/fig6_diagnostics.png" id="fig-diag" class="img-fluid figure-img" alt="Three panels. (a) Bar chart of candidate-order invariance: 100 percent for the mayoral race for both providers, 56.3 percent for Gemini and 62.5 percent for GPT-4o-mini on 12 sampled ward races. (b) Bar chart of mayoral response concentration: Chow near 100 percent for Gemini, about 95 percent for GPT, with small bars for minor candidates. (c) Bar chart of provider undecided rates: GPT-4o-mini 19.4 percent mayoral and 3.9 percent ward, Gemini 0.8 and 1.0 percent.">
+<img src="figures/fig6_diagnostics.png" class="img-fluid figure-img" alt="Three panels. (a) Bar chart of candidate-order invariance: 100 percent for the mayoral race for both providers, 56.3 percent for Gemini and 62.5 percent for GPT-4o-mini on 12 sampled ward races. (b) Bar chart of mayoral response concentration: Chow near 100 percent for Gemini, about 95 percent for GPT, with small bars for minor candidates. (c) Bar chart of provider undecided rates: GPT-4o-mini 19.4 percent mayoral and 3.9 percent ward, Gemini 0.8 and 1.0 percent.">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-diag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Silicon-sample diagnostics. (a) Share of persona-race pairs that pick the same candidate under three different candidate orders. (b) Share of valid mayoral choices going to each of the eight most-chosen candidates. (c) Share of all production responses that were “undecided”.
 </figcaption>
 </figure>
 </div>
@@ -1387,8 +1434,34 @@ Figure&nbsp;6
 <li><strong>Providers and repetition.</strong> Two models through OpenRouter — <code>google/gemini-2.5-flash-lite</code> and <code>openai/gpt-4o-mini</code> — each queried <strong>three independent times</strong> per persona-race pair at temperature 0.7, max 256 tokens, prompt version v1: 3,042 × 26 × 2 × 3 = <strong>36,504 requests</strong>.</li>
 <li><strong>Prompt construction.</strong> Each request gives the model only the persona’s ward, age group, and education group, plus that race’s candidate list (ID + ballot name). It never sees weights, other personas, biographies, policy positions, or historical results. Candidate order is randomized per request (seed 20261026) because LLM choices are order-sensitive (see <a href="#diagnostics">Diagnostics</a>; <span class="citation" data-cites="murray2026choices">Murray and Alexander (<a href="#ref-murray2026choices" role="doc-biblioref">2026</a>)</span>).</li>
 <li><strong>Validation and reliability.</strong> Responses are strictly validated JSON; invalid replies are re-sampled (13 in total); technical failures were retried with backoff and the run finished with <strong>0 technical failures</strong>. Responses are disk-cached (SHA-256 over the full request specification), every request is cost-logged, and a hard budget of $3.75 stopped the run if needed (it was not).</li>
+<li><strong>Timing.</strong> The pilot and ballot-order experiments ran on the evening of 17 October 2026 (Toronto time). The production run started at 13:35 on 18 October and finished at 23:13 the same night, roughly ten hours of wall-clock time including one interruption and resume; the median request took under one second.</li>
 <li><strong>Frozen artefact.</strong> The production response file <code>processed/production/llm_responses.parquet</code> (36,504 rows) is frozen with md5 <code>420c3051da6c9a291f5fcf7b587e06bf</code>; the forecast pipeline halts if it ever changes.</li>
 </ul>
+</section>
+<section id="what-the-model-sees" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-model-sees">What the model sees</h3>
+<p>Each request has a fixed system message (prompt version v1, <code>llm/prompts.py</code>) and a short user message. The system message tells the model it is simulating one Toronto resident in a municipal election survey, asks for a JSON reply of the form <code>{"response_status": "valid_choice" | "undecided" | "not_voting", "candidate_id": ...}</code>, and instructs it to base its choice only on the candidate names and the respondent’s demographics. The user message for persona P000446 and the Ward 4 race reads as follows (shown in ballot order; production shuffles the list per request):</p>
+<pre class="text"><code>Respond as the following Toronto resident:
+- Ward: 4
+- Age group: 30-44
+- Education group: High school or less
+
+Race: City Councillor for Ward 4 (you are a resident of Ward 4).
+
+Candidates in this race (candidate_id: name):
+- W04-C01: Corcoran, Michael
+- W04-C02: Guerrera, Nadia
+- W04-C03: King, Debbie
+- W04-C04: McNally, Diana Chan
+- W04-C05: Ogundipe, Bridget
+- W04-C06: Pham, Adam
+- W04-C07: Potega, Andy
+- W04-C08: Raponi, Vanessa
+- W04-C09: Weber, Holly
+- W04-C10: Yuen, Steve
+
+Return only the JSON object.</code></pre>
+<p>The daily tracker (prompt v2) adds the date, the election date, and up to 12 of that day’s Toronto headlines to the system message.</p>
 </section>
 <section id="post-stratification" class="level3">
 <h3 class="anchored" data-anchor-id="post-stratification">Post-stratification</h3>
@@ -1396,6 +1469,30 @@ Figure&nbsp;6
 <p><span class="math display">\[\hat{s}_k \;=\; \frac{\sum_i w_i \,\mathbf{1}[\text{choice}_i = k]}{\sum_i w_i}\]</span></p>
 <p>Undecided and not-voting replies are excluded from numerator <em>and</em> denominator: the estimand is each candidate’s share of <strong>decided first preferences</strong>, not turnout. Ward races sum over that ward’s personas; the mayoral race sums over all personas with citywide weights, so wards enter in proportion to their 20+ population.</p>
 <p>Provider point estimates average the provider’s three repeat cells equally. A separately labelled <em>descriptive</em> pooled estimate averages all six cells equally; it is a summary for readers, never used as “the” forecast.</p>
+</section>
+<section id="software" class="level3">
+<h3 class="anchored" data-anchor-id="software">Software</h3>
+<p>The language models are GPT-4o mini <span class="citation" data-cites="gpt4omini">(<a href="#ref-gpt4omini" role="doc-biblioref">OpenAI 2024</a>)</span> and Gemini 2.5 Flash-Lite <span class="citation" data-cites="geminiflashlite">(<a href="#ref-geminiflashlite" role="doc-biblioref">Google DeepMind 2025</a>)</span>, both reached through OpenRouter <span class="citation" data-cites="openrouter">(<a href="#ref-openrouter" role="doc-biblioref">OpenRouter 2026</a>)</span>. The query pipeline is written in Python <span class="citation" data-cites="python">(<a href="#ref-python" role="doc-biblioref">Python Software Foundation 2025</a>)</span> with requests <span class="citation" data-cites="requests">(<a href="#ref-requests" role="doc-biblioref">Reitz 2025</a>)</span> and PyArrow <span class="citation" data-cites="pyarrow">(<a href="#ref-pyarrow" role="doc-biblioref">Apache Arrow Developers 2026</a>)</span>, and tested with pytest <span class="citation" data-cites="pytest">(<a href="#ref-pytest" role="doc-biblioref"><span class="nocase">Krekel et al.</span> 2026</a>)</span>. Cleaning, post-stratification, simulation, and figures use R <span class="citation" data-cites="rcore">(<a href="#ref-rcore" role="doc-biblioref">R Core Team 2024</a>)</span> with dplyr <span class="citation" data-cites="dplyr">(<a href="#ref-dplyr" role="doc-biblioref">Wickham et al. 2023</a>)</span>, tidyr <span class="citation" data-cites="tidyr">(<a href="#ref-tidyr" role="doc-biblioref">Wickham, Vaughan, et al. 2024</a>)</span>, readr <span class="citation" data-cites="readr">(<a href="#ref-readr" role="doc-biblioref">Wickham, Hester, et al. 2024</a>)</span>, readxl <span class="citation" data-cites="readxl">(<a href="#ref-readxl" role="doc-biblioref">Wickham and Bryan 2023</a>)</span>, jsonlite <span class="citation" data-cites="jsonlite">(<a href="#ref-jsonlite" role="doc-biblioref">Ooms 2014</a>)</span>, digest <span class="citation" data-cites="digest">(<a href="#ref-digest" role="doc-biblioref">Eddelbuettel 2024</a>)</span>, nanoparquet <span class="citation" data-cites="nanoparquet">(<a href="#ref-nanoparquet" role="doc-biblioref">Csárdi and Mühleisen 2025</a>)</span>, sf <span class="citation" data-cites="sf">(<a href="#ref-sf" role="doc-biblioref">Pebesma and Bivand 2023</a>)</span>, ggplot2 <span class="citation" data-cites="ggplot2">(<a href="#ref-ggplot2" role="doc-biblioref">Wickham 2016</a>)</span>, scales <span class="citation" data-cites="scales">(<a href="#ref-scales" role="doc-biblioref">Wickham et al. 2025</a>)</span>, patchwork <span class="citation" data-cites="patchwork">(<a href="#ref-patchwork" role="doc-biblioref">Pedersen 2024</a>)</span>, ggrepel <span class="citation" data-cites="ggrepel">(<a href="#ref-ggrepel" role="doc-biblioref">Slowikowski 2026</a>)</span>, ragg <span class="citation" data-cites="ragg">(<a href="#ref-ragg" role="doc-biblioref">Pedersen and Shemanarev 2026</a>)</span>, and systemfonts <span class="citation" data-cites="systemfonts">(<a href="#ref-systemfonts" role="doc-biblioref">Pedersen et al. 2024</a>)</span>; tests use testthat <span class="citation" data-cites="testthat">(<a href="#ref-testthat" role="doc-biblioref">Wickham 2011</a>)</span> and code is formatted with styler <span class="citation" data-cites="styler">(<a href="#ref-styler" role="doc-biblioref">Müller et al. 2025</a>)</span>. The site is built with Quarto <span class="citation" data-cites="quarto">(<a href="#ref-quarto" role="doc-biblioref">Allaire et al. 2026</a>)</span> and set in IBM Plex Sans <span class="citation" data-cites="plexsans">(<a href="#ref-plexsans" role="doc-biblioref">Abbink and Bold Monday 2018</a>)</span>.</p>
+<hr>
+</section>
+</section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<section id="what-a-silicon-sample-measures-in-a-local-election" class="level3">
+<h3 class="anchored" data-anchor-id="what-a-silicon-sample-measures-in-a-local-election">What a silicon sample measures in a local election</h3>
+<p><span class="citation" data-cites="argyle2023out">Argyle et al. (<a href="#ref-argyle2023out" role="doc-biblioref">2023</a>)</span> showed that a language model conditioned on detailed American demographic and partisan backstories could reproduce the vote-choice patterns of the groups those backstories describe, which they called algorithmic fidelity. That result depended on two things this election lacks: party labels that the model can map from demographics to a vote, and a large volume of text linking the two. Toronto’s municipal elections have no party labels, and our personas carry only a ward, an age band, and an education band. With so little to condition on, the model falls back on what it knows about the candidates’ names. In the frozen run that knowledge is almost entirely about one name: Olivia Chow receives 97.7% of valid mayoral choices and Brad Bradford, whom local coverage describes as her main challenger, receives none of 16,406.</p>
+</section>
+<section id="the-collapse-follows-salience-not-demographics" class="level3">
+<h3 class="anchored" data-anchor-id="the-collapse-follows-salience-not-demographics">The collapse follows salience, not demographics</h3>
+<p><span class="citation" data-cites="bisbee2024synthetic">Bisbee et al. (<a href="#ref-bisbee2024synthetic" role="doc-biblioref">2024</a>)</span> found that synthetic survey answers have far less variance than real ones and shift with prompt wording and with the date of the query. Our daily tracker isolates the second effect. Its 1,200 personas, models, and settings are fixed from day to day; only the headlines change. On 20 October, with headlines reporting Bradford pulling ahead, both models gave Bradford 97–99% of decided votes. On 21 October, with headlines about criticism of his water plan, both gave Chow about 99%. A demographic group did not move; the whole synthetic electorate did, at once and in the same direction. This is the mode collapse that <span class="citation" data-cites="heath2026correcting">Heath and Alexander (<a href="#ref-heath2026correcting" role="doc-biblioref">2026</a>)</span> document, but it is not fixed on the incumbent: it attaches to whichever candidate the context makes salient. It also fits <span class="citation" data-cites="santurkar2023whose">Santurkar et al. (<a href="#ref-santurkar2023whose" role="doc-biblioref">2023</a>)</span>, who found that steering a model toward a demographic group changes its opinion distribution much less than the real gap between groups, and <span class="citation" data-cites="wang2024misportray">Wang et al. (<a href="#ref-wang2024misportray" role="doc-biblioref">2024</a>)</span>, who show that models flatten the variation within identity groups. In our data the persona’s age and education barely matter to the mayoral answer.</p>
+</section>
+<section id="analyst-choices-are-first-order" class="level3">
+<h3 class="anchored" data-anchor-id="analyst-choices-are-first-order">Analyst choices are first-order</h3>
+<p><span class="citation" data-cites="murray2026choices">Murray and Alexander (<a href="#ref-murray2026choices" role="doc-biblioref">2026</a>)</span> show that apparently minor analyst choices change silicon samples substantially. We see the same at every stage we varied. Changing the candidate order changed the ward-race answer for 37–44% of persona-race pairs. Changing the provider changed the leading candidate in 8 of 25 wards. Changing the assumed forecast-noise SD from 2 to 6 points widened the median leader interval by 7 points. Adding a day’s headlines replaced the mayoral leader outright. Each of these is larger than the sampling uncertainty that the Dirichlet layer reports, which is why we publish both providers separately and show every sensitivity rather than one blended number.</p>
+</section>
+<section id="what-post-stratification-can-and-cannot-fix" class="level3">
+<h3 class="anchored" data-anchor-id="what-post-stratification-can-and-cannot-fix">What post-stratification can and cannot fix</h3>
+<p><span class="citation" data-cites="wang2015forecasting">Wang et al. (<a href="#ref-wang2015forecasting" role="doc-biblioref">2015</a>)</span> forecast a US election accurately from a heavily skewed sample of Xbox users, because multilevel regression and post-stratification can reweight a sample that is unrepresentative but still contains real differences between groups. Post-stratification cannot create differences that are not there. When every Census cell gives the same answer, as in the mayoral race, the weights change nothing, and the effective sample is closer to one respondent than to 3,042. Ward races vary more across cells and across providers, so their post-stratified shares carry more information, but that information is about the models. Our conclusion is that, for a low-information local election, a silicon sample is better read as a measurement of what two models find salient than as a survey of voters. Its most useful outputs are diagnostic: where providers disagree, how much the answer depends on ballot order, and how quickly it moves with the news. That is the kind of statement about information sources that <span class="citation" data-cites="gelman2020information">Gelman et al. (<a href="#ref-gelman2020information" role="doc-biblioref">2020</a>)</span> argue a forecast should make explicit.</p>
 <hr>
 </section>
 </section>
@@ -1415,7 +1512,7 @@ Figure&nbsp;6
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion and Future Work</h2>
-<p>Silicon sampling with census post-stratification can produce a complete, reproducible, openly documented forecast for all 26 Toronto municipal races from a $3.16 production run. What it produces is a <em>measurement of two language models</em>, and that measurement says: the mayoral race is not a race in the models’ world (Chow at 97.7% of valid responses, order-invariant), while ward races are genuinely uncertain <em>and</em> the two providers disagree about the leader in 8 of 25 wards — a model-uncertainty signal we surface rather than average away. The uncertainty we report is explicitly layered and its assumptions (target SD) are sensitivity-tested, but it remains conditional on model outputs and uncalibrated to real election error.</p>
+<p>Silicon sampling with census post-stratification can produce a complete, reproducible, openly documented forecast for all 26 Toronto municipal races from a $3.16 production run. What it produces is a measurement of two language models. Without news, the mayoral race is not a race in the models’ world (Chow at 97.7% of valid responses, unchanged by ballot order); with a day’s headlines, the entire synthetic electorate moves to whichever candidate the headlines favour. Ward races are more varied, and the two providers disagree about the leader in 8 of 25 wards, a model-uncertainty signal we report rather than average away. The uncertainty we report is explicitly layered and its assumptions (target SD) are sensitivity-tested, but it remains conditional on model outputs and uncalibrated to real election error.</p>
 <p>Natural next steps, in order of value:</p>
 <ol type="1">
 <li><strong>Calibrate after 26 October.</strong> Score every provider forecast against the official results with Brier and log scores, and measure the real coverage of the simulation intervals — turning the current honest disclaimer into an empirical error estimate.</li>
@@ -1431,35 +1528,31 @@ Figure&nbsp;6
 <p><strong>Repository:</strong> <a href="https://github.com/Sophiaaa12/toronto-election-forecast" class="uri">https://github.com/Sophiaaa12/toronto-election-forecast</a> — everything below runs from a fresh clone. The site is deployed with GitHub Pages from the <code>gh-pages</code> branch (built from <code>website/</code>); rendering makes no API calls and modifies no data.</p>
 <section id="complete-workflow" class="level3">
 <h3 class="anchored" data-anchor-id="complete-workflow">Complete workflow</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Data (official City of Toronto downloads, checksum-verified)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> download_data.R <span class="kw">&amp;&amp;</span> <span class="ex">Rscript</span> prepare_data.R</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Population frame and synthetic personas (seeded)</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> R/run_pipeline.R</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Silicon sampling (Python; requires OPENROUTER_API_KEY — NOT needed to</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    reproduce this site: all responses are committed and frozen)</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> llm.runner run <span class="at">--selection</span> head <span class="at">--repeats</span> 3 <span class="at">--order</span> random <span class="dt">\</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--seed</span> 20261026 <span class="at">--budget-usd</span> 3.75</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Post-stratification and Method C forecast draws (md5-guarded)</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> R/10_llm_poststratify.R processed/production/llm_responses.parquet centered</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Tests (145 R checks, 107 Python checks — no network)</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> tests/run_tests.R</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> pytest tests/python <span class="at">-q</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Website figures, tables, and site</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> website/make_figures.R</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render website</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Data (official City of Toronto downloads, checksum-verified)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> download_data.R <span class="kw">&amp;&amp;</span> <span class="ex">Rscript</span> prepare_data.R</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Population frame and synthetic personas (seeded)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> R/run_pipeline.R</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Silicon sampling (Python; requires OPENROUTER_API_KEY — NOT needed to</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    reproduce this site: all responses are committed and frozen)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> llm.runner run <span class="at">--selection</span> head <span class="at">--repeats</span> 3 <span class="at">--order</span> random <span class="dt">\</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--seed</span> 20261026 <span class="at">--budget-usd</span> 3.75</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Post-stratification and Method C forecast draws (md5-guarded)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> R/10_llm_poststratify.R processed/production/llm_responses.parquet centered</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Tests (164 R expectations, 117 Python tests; no network)</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> tests/run_tests.R</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> pytest tests/python <span class="at">-q</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Website figures, tables, and site</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> website/make_figures.R</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render website</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="configuration-actually-used" class="level3">
 <h3 class="anchored" data-anchor-id="configuration-actually-used">Configuration actually used</h3>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Setting</th>
@@ -1497,11 +1590,11 @@ Figure&nbsp;6
 </tr>
 <tr class="even">
 <td>R packages</td>
-<td>dplyr, tidyr, ggplot2, patchwork, sf, readxl, nanoparquet, testthat</td>
+<td>dplyr, tidyr, readr, readxl, jsonlite, nanoparquet, sf, ggplot2, scales, patchwork, ggrepel, ragg, systemfonts, testthat, styler (see <a href="#software">Software</a>)</td>
 </tr>
 <tr class="odd">
 <td>Python</td>
-<td>3.13; requests, pyarrow, pytest</td>
+<td>3.13 locally, 3.12 in GitHub Actions; requests, pyarrow, pytest</td>
 </tr>
 </tbody>
 </table>
@@ -1538,11 +1631,17 @@ Figure&nbsp;6
 </section>
 <section id="validation" class="level3">
 <h3 class="anchored" data-anchor-id="validation">Validation</h3>
-<p>The committed forecast passed <strong>22/22 automated checks</strong> (md5 preservation, 26 races / 243 candidates / 300 census cells, draw-simplex sums to 1 within <span class="math inline">\(1.4\times10^{-15}\)</span>, win frequencies sum to 1 per race × provider, no NA/NaN, seed replay identity) — see <code>processed/forecast/validation_report.md</code>. Test suites: <strong>R 145/145, Python 107/107</strong>.</p>
+<p>The committed forecast passed <strong>22/22 automated checks</strong> (md5 preservation, 26 races / 243 candidates / 300 census cells, draw-simplex sums to 1 within <span class="math inline">\(1.4\times10^{-15}\)</span>, win frequencies sum to 1 per race × provider, no NA/NaN, seed replay identity) — see <code>processed/forecast/validation_report.md</code>. Test suites: R 164/164 expectations across 7 files (testthat), Python 117/117 (pytest).</p>
 </section>
 <section id="ai-use-declaration" class="level3">
 <h3 class="anchored" data-anchor-id="ai-use-declaration">AI-use declaration</h3>
-<p>An AI coding assistant (Anthropic Claude, via the OpenCode CLI) was used to write and test code, build the pipeline, and draft documentation; the author reviewed, validated, and approved every change, and all statistical methodology was specified and checked by the team. The forecast data themselves were generated by the two declared LLM APIs above — that is the method under study, and every provider output is retained in the committed response file for audit.</p>
+<p>We used three AI tools. All code they produced was read, run, and tested by us before it was committed, and we can explain each script.</p>
+<ul>
+<li><strong>OpenCode with MiMo-V2.6-Flash (Xiaomi, free tier; model identifier <code>mimo-v2.6-flash</code>), 17–19 October 2026.</strong> Jingwen Zhong used it as a coding agent to write and test the OpenRouter query pipeline (<code>llm/</code>), the simulated-data pipeline and its tests (<code>R/07</code>–<code>R/10</code>, <code>R/simulation_helpers.R</code>, <code>tests/testthat/test-07</code> to <code>test-11</code>, <code>tests/python/</code>), the ballot-order diagnostic (<code>scripts/analyze_llm_diagnostic.py</code>, <code>docs/</code>), the uncertainty comparison (<code>experiments/</code>), and the first version of the website and <code>website/make_figures.R</code>.</li>
+<li><strong>Claude Code with Claude Opus 5.5 (Anthropic; model identifier <code>claude-opus-5-5</code>), 19 and 22 October 2026.</strong> Jingwen Zhong used it as a coding agent to fix and redesign the website figures and tables (<code>website/make_figures.R</code>, <code>website/make_daily.R</code>), build the shared design system (<code>website/theme_site.R</code>, <code>website/custom.scss</code>), add the software citations, remove <code>setwd()</code> from scripts and tests, run styler, add the submission-deadline guard to the GitHub Action, and review the project against the rubric. It also drafted website prose: the Discussion section, figure and table captions, the “What the model sees” and Software subsections, and edits to the Overview and Daily Tracker text. We checked every number in that prose against our data and edited it.</li>
+<li><strong>ChatGPT with GPT-5.6 (OpenAI; model identifier <code>gpt-5.6</code>).</strong> Siyi Zhu used it for TODO (Siyi: list the scripts or tasks, e.g.&nbsp;<code>download_data.R</code>, <code>R/01</code>–<code>R/06</code>, <code>R/11</code>–<code>R/12</code>, the daily tracker, the GitHub Action, and the dates).</li>
+</ul>
+<p>The two language models that generate the synthetic responses, <code>openai/gpt-4o-mini</code> and <code>google/gemini-2.5-flash-lite</code> via OpenRouter, are the object of study rather than writing aids; every response they returned is kept in the repository.</p>
 </section>
 <section id="key-artefacts" class="level3">
 <h3 class="anchored" data-anchor-id="key-artefacts">Key artefacts</h3>
@@ -1609,6 +1708,15 @@ Figure&nbsp;6
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-plexsans" class="csl-entry" role="listitem">
+Abbink, Mike, and Bold Monday. 2018. <em><span>IBM Plex Sans</span></em>. <a href="https://github.com/IBM/plex">https://github.com/IBM/plex</a>.
+</div>
+<div id="ref-quarto" class="csl-entry" role="listitem">
+Allaire, J. J., Charles Teague, Carlos Scheidegger, Yihui Xie, and Christophe Dervieux. 2026. <em><span>Quarto</span></em>. <a href="https://quarto.org/">https://quarto.org/</a>.
+</div>
+<div id="ref-pyarrow" class="csl-entry" role="listitem">
+Apache Arrow Developers. 2026. <em><span>PyArrow</span>: <span>Python</span> Bindings for <span>Apache Arrow</span></em>. <a href="https://arrow.apache.org/docs/python/">https://arrow.apache.org/docs/python/</a>.
+</div>
 <div id="ref-argyle2023out" class="csl-entry" role="listitem">
 Argyle, Lisa P., Ethan C. Busby, Nathan Fulda, Joel R. Gubler, Christopher Rytting, and David Wingate. 2023. <span>“Out of One, Many: Using Language Models to Simulate Human Samples.”</span> <em>Political Analysis</em> 31 (3): 337–51. <a href="https://doi.org/10.1017/pan.2023.2">https://doi.org/10.1017/pan.2023.2</a>.
 </div>
@@ -1630,8 +1738,17 @@ City of Toronto. 2026a. <em>Candidate List, <span>2026</span> Municipal Election
 <div id="ref-to2026wards" class="csl-entry" role="listitem">
 City of Toronto. 2026b. <em>Wards and Elected Councillors</em>. Toronto Open Data. <a href="https://open.toronto.ca/dataset/wards-and-elected-councillors/">https://open.toronto.ca/dataset/wards-and-elected-councillors/</a>.
 </div>
+<div id="ref-nanoparquet" class="csl-entry" role="listitem">
+Csárdi, Gábor, and Hannes Mühleisen. 2025. <em><span class="nocase">nanoparquet</span>: Read and Write <span>Parquet</span> Files</em>. <a href="https://CRAN.R-project.org/package=nanoparquet">https://CRAN.R-project.org/package=nanoparquet</a>.
+</div>
+<div id="ref-digest" class="csl-entry" role="listitem">
+Eddelbuettel, Dirk. 2024. <em><span class="nocase">digest</span>: Create Compact Hash Digests of <span>R</span> Objects</em>. <a href="https://CRAN.R-project.org/package=digest">https://CRAN.R-project.org/package=digest</a>.
+</div>
 <div id="ref-gelman2020information" class="csl-entry" role="listitem">
-Gelman, Andrew, Jessica Hullman, Christopher Wlezien, and Gregory Elliott Morris. 2020. <span>“Information, Incentives, and Goals in Election Forecasts.”</span> <em>Judgment and Decision Making</em> 15 (5): 863–80. <a href="https://doi.org/10.1017/S1930297500007981">https://doi.org/10.1017/S1930297500007981</a>.
+Gelman, Andrew, Jessica Hullman, Christopher Wlezien, and George Elliott Morris. 2020. <span>“Information, Incentives, and Goals in Election Forecasts.”</span> <em>Judgment and Decision Making</em> 15 (5): 863–80. <a href="https://doi.org/10.1017/S1930297500007981">https://doi.org/10.1017/S1930297500007981</a>.
+</div>
+<div id="ref-geminiflashlite" class="csl-entry" role="listitem">
+Google DeepMind. 2025. <em><span>Gemini 2.5 Flash-Lite</span></em>. <a href="https://deepmind.google/technologies/gemini/flash-lite/">https://deepmind.google/technologies/gemini/flash-lite/</a>.
 </div>
 <div id="ref-heath2026correcting" class="csl-entry" role="listitem">
 Heath, Oscar, and Rohan Alexander. 2026. <span>“Correcting Mode Collapse in Silicon Sampling with Semantic Similarity Rating.”</span> <em>arXiv Preprint arXiv:2607.28550</em>. <a href="https://arxiv.org/abs/2607.28550">https://arxiv.org/abs/2607.28550</a>.
@@ -1639,14 +1756,80 @@ Heath, Oscar, and Rohan Alexander. 2026. <span>“Correcting Mode Collapse in Si
 <div id="ref-kay2016when" class="csl-entry" role="listitem">
 Kay, Matthew, Tara Kola, Jessica Hullman, and Sarah A. Munson. 2016. <span>“When (Ish) Is My Bus? User-Centered Visualizations of Uncertainty in Everyday, Mobile Predictive Systems.”</span> <em>Proceedings of the 2016 CHI Conference on Human Factors in Computing Systems</em>, 5092–103. <a href="https://doi.org/10.1145/2858036.2858558">https://doi.org/10.1145/2858036.2858558</a>.
 </div>
+<div id="ref-pytest" class="csl-entry" role="listitem">
+<span class="nocase">Krekel, Holger et al.</span> 2026. <em><span class="nocase">pytest</span></em>. <a href="https://pytest.org/">https://pytest.org/</a>.
+</div>
+<div id="ref-styler" class="csl-entry" role="listitem">
+Müller, Kirill, Lorenz Walthert, and Indrajeet Patil. 2025. <em><span class="nocase">styler</span>: Non-Invasive Pretty Printing of r Code</em>. <a href="https://CRAN.R-project.org/package=styler">https://CRAN.R-project.org/package=styler</a>.
+</div>
 <div id="ref-murray2026choices" class="csl-entry" role="listitem">
 Murray, Ellie, and Rohan Alexander. 2026. <em>How Analyst Choices Affect Silicon Samples from the <span>2025</span> <span>CES</span></em>. SocArXiv preprint, posted 10 September 2026. <a href="https://osf.io/preprints/socarxiv/cxrk6_v1">https://osf.io/preprints/socarxiv/cxrk6_v1</a>.
+</div>
+<div id="ref-jsonlite" class="csl-entry" role="listitem">
+Ooms, Jeroen. 2014. <span>“The <span class="nocase">jsonlite</span> Package: A Practical and Consistent Mapping Between <span>JSON</span> Data and <span>R</span> Objects.”</span> <em>arXiv:1403.2805 [Stat.CO]</em>. <a href="https://arxiv.org/abs/1403.2805">https://arxiv.org/abs/1403.2805</a>.
+</div>
+<div id="ref-gpt4omini" class="csl-entry" role="listitem">
+OpenAI. 2024. <em><span class="nocase">GPT-4o mini</span></em>. <a href="https://openai.com/index/gpt-4o-mini-advancing-cost-efficient-intelligence/">https://openai.com/index/gpt-4o-mini-advancing-cost-efficient-intelligence/</a>.
+</div>
+<div id="ref-openrouter" class="csl-entry" role="listitem">
+OpenRouter. 2026. <em><span>OpenRouter</span>: A Unified Interface for Large Language Models</em>. <a href="https://openrouter.ai/">https://openrouter.ai/</a>.
+</div>
+<div id="ref-sf" class="csl-entry" role="listitem">
+Pebesma, Edzer, and Roger Bivand. 2023. <em>Spatial Data Science: With Applications in <span>R</span></em>. <span>Chapman and Hall/CRC</span>. <a href="https://doi.org/10.1201/9780429459016">https://doi.org/10.1201/9780429459016</a>.
+</div>
+<div id="ref-patchwork" class="csl-entry" role="listitem">
+Pedersen, Thomas Lin. 2024. <em><span class="nocase">patchwork</span>: The Composer of Plots</em>. <a href="https://CRAN.R-project.org/package=patchwork">https://CRAN.R-project.org/package=patchwork</a>.
+</div>
+<div id="ref-systemfonts" class="csl-entry" role="listitem">
+Pedersen, Thomas Lin, Jeroen Ooms, and Devon Govett. 2024. <em><span class="nocase">systemfonts</span>: System Native Font Finding</em>. <a href="https://CRAN.R-project.org/package=systemfonts">https://CRAN.R-project.org/package=systemfonts</a>.
+</div>
+<div id="ref-ragg" class="csl-entry" role="listitem">
+Pedersen, Thomas Lin, and Maxim Shemanarev. 2026. <em><span class="nocase">ragg</span>: Graphic Devices Based on <span>AGG</span></em>. <a href="https://CRAN.R-project.org/package=ragg">https://CRAN.R-project.org/package=ragg</a>.
+</div>
+<div id="ref-python" class="csl-entry" role="listitem">
+Python Software Foundation. 2025. <em><span>Python</span>: A Programming Language, Version 3.13</em>. <a href="https://www.python.org/">https://www.python.org/</a>.
+</div>
+<div id="ref-rcore" class="csl-entry" role="listitem">
+R Core Team. 2024. <em><span>R</span>: A Language and Environment for Statistical Computing</em>. R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-requests" class="csl-entry" role="listitem">
+Reitz, Kenneth. 2025. <em><span>Requests</span>: <span>HTTP</span> for Humans</em>. <a href="https://requests.readthedocs.io/">https://requests.readthedocs.io/</a>.
+</div>
+<div id="ref-santurkar2023whose" class="csl-entry" role="listitem">
+Santurkar, Shibani, Esin Durmus, Faisal Ladhak, Cinoo Lee, Percy Liang, and Tatsunori Hashimoto. 2023. <span>“Whose Opinions Do Language Models Reflect?”</span> <em>Proceedings of the 40th International Conference on Machine Learning</em>, Proceedings of machine learning research, vol. 202: 29971–30004. <a href="https://proceedings.mlr.press/v202/santurkar23a.html">https://proceedings.mlr.press/v202/santurkar23a.html</a>.
 </div>
 <div id="ref-shirani2018disentangling" class="csl-entry" role="listitem">
 Shirani-Mehr, Houshmand, David M. Rothschild, Sharad Goel, and Andrew Gelman. 2018. <span>“Disentangling Bias and Variance in Election Polls.”</span> <em>Journal of the American Statistical Association</em> 113 (522): 607–14. <a href="https://doi.org/10.1080/01621459.2018.1448823">https://doi.org/10.1080/01621459.2018.1448823</a>.
 </div>
+<div id="ref-ggrepel" class="csl-entry" role="listitem">
+Slowikowski, Kamil. 2026. <em><span class="nocase">ggrepel</span>: Automatically Position Non-Overlapping Text Labels with <span class="nocase">ggplot2</span></em>. <a href="https://CRAN.R-project.org/package=ggrepel">https://CRAN.R-project.org/package=ggrepel</a>.
+</div>
+<div id="ref-wang2024misportray" class="csl-entry" role="listitem">
+Wang, Angelina, Jamie Morgenstern, and John P. Dickerson. 2024. <em>Large Language Models That Replace Human Participants Can Harmfully Misportray and Flatten Identity Groups</em>. <a href="https://arxiv.org/abs/2402.01908">https://arxiv.org/abs/2402.01908</a>.
+</div>
 <div id="ref-wang2015forecasting" class="csl-entry" role="listitem">
 Wang, Wei, David M. Rothschild, Sharad Goel, and Andrew Gelman. 2015. <span>“Forecasting Elections with Non-Representative Polls.”</span> <em>International Journal of Forecasting</em> 31 (3): 980–91. <a href="https://doi.org/10.1016/j.ijforecast.2014.06.001">https://doi.org/10.1016/j.ijforecast.2014.06.001</a>.
+</div>
+<div id="ref-testthat" class="csl-entry" role="listitem">
+Wickham, Hadley. 2011. <span>“<span class="nocase">testthat</span>: Get Started with Testing.”</span> <em>The R Journal</em> 3: 5–10. <a href="https://journal.r-project.org/articles/RJ-2011-002/">https://journal.r-project.org/articles/RJ-2011-002/</a>.
+</div>
+<div id="ref-ggplot2" class="csl-entry" role="listitem">
+Wickham, Hadley. 2016. <em><span class="nocase">ggplot2</span>: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
+</div>
+<div id="ref-readxl" class="csl-entry" role="listitem">
+Wickham, Hadley, and Jennifer Bryan. 2023. <em><span class="nocase">readxl</span>: Read Excel Files</em>. <a href="https://CRAN.R-project.org/package=readxl">https://CRAN.R-project.org/package=readxl</a>.
+</div>
+<div id="ref-dplyr" class="csl-entry" role="listitem">
+Wickham, Hadley, Romain François, Lionel Henry, Kirill Müller, and Davis Vaughan. 2023. <em><span class="nocase">dplyr</span>: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.
+</div>
+<div id="ref-readr" class="csl-entry" role="listitem">
+Wickham, Hadley, Jim Hester, and Jennifer Bryan. 2024. <em><span class="nocase">readr</span>: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr">https://CRAN.R-project.org/package=readr</a>.
+</div>
+<div id="ref-scales" class="csl-entry" role="listitem">
+Wickham, Hadley, Thomas Lin Pedersen, and Dana Seidel. 2025. <em><span class="nocase">scales</span>: Scale Functions for Visualization</em>. <a href="https://CRAN.R-project.org/package=scales">https://CRAN.R-project.org/package=scales</a>.
+</div>
+<div id="ref-tidyr" class="csl-entry" role="listitem">
+Wickham, Hadley, Davis Vaughan, and Maximilian Girlich. 2024. <em><span class="nocase">tidyr</span>: Tidy Messy Data</em>. <a href="https://CRAN.R-project.org/package=tidyr">https://CRAN.R-project.org/package=tidyr</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -2053,13 +2236,13 @@ Wang, Wei, David M. Rothschild, Sharad Goel, and Andrew Gelman. 2015. <span>“F
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>STA2453 Assignment II — Toronto 2026 Municipal Election Forecast · <a href="https://github.com/Sophiaaa12/toronto-election-forecast">GitHub repository</a></p>
+<p>Jingwen Zhong and Siyi Zhu · STA2453, University of Toronto · <a href="https://github.com/Sophiaaa12/toronto-election-forecast">GitHub repository</a></p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p>All forecasts are LLM-based silicon-sampling simulations; not calibrated election probabilities.</p>
+<p>Every number on this site comes from synthetic LLM responses, not real voters.</p>
 </div>
   </div>
 </footer>
