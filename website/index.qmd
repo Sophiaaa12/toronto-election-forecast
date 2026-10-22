@@ -9,7 +9,9 @@ bibliography: references.bib
 
 ### Research question and objective
 
-Toronto voters elect a mayor and 25 ward councillors on **Monday 26 October 2026**, and almost no published polling exists for the race [@wang2015forecasting discuss the general problem of forecasting from non-representative pools]. This project therefore asks:
+Every number on this page comes from synthetic voters: two large language models answering a ballot question while playing Census-shaped Toronto residents. No real person was surveyed.
+
+Toronto elects a mayor and 25 ward councillors on Monday 26 October 2026, and almost no public polling exists for these races. Forecasting from a sample that does not represent the electorate is an old problem [@wang2015forecasting]; here the sample does not contain voters at all. This project therefore asks:
 
 > **Can a *silicon sample* — simulated voters answered by large language models — post-stratified to Census marginals, produce a transparent, reproducible forecast for all 26 Toronto municipal races, and what uncertainty and model disagreement does it imply?**
 
@@ -25,7 +27,7 @@ LLM ballot responses (committed production sample: 3,042 synthetic personas × 2
 
 Headline results:
 
-- The **mayoral race is degenerate in the source data**: the two providers name the same candidate, **Chow, Olivia** (incumbent), on 97.7% of all valid mayoral responses — a measured *mode collapse* of the silicon sample, reported prominently below rather than smoothed away.
+- The **mayoral forecast collapses onto one name**. In the frozen production run both models pick the incumbent, Olivia Chow, in 97.7% of valid mayoral responses, and her main challenger, Brad Bradford, in 0 of 16,406. When the daily tracker shows the same models that day's headlines, the whole electorate swings to whoever the headlines favour (Bradford at 97–99% on 20 October, Chow at 99% on 21 October). The models answer from salience, not from the personas' demographics; see the [Discussion](#discussion).
 - Ward races vary substantially, and the **two providers name different leading candidates in 8 of 25 wards** (leader defined by post-stratified point share; see [Provider Comparison](#providers) for the full reconciliation with the alternative definition).
 - Forecast uncertainty is **assumption-driven**: widening the assumed perturbation from 2pp to 6pp widens median leader intervals from 33.6pp to 41.0pp — an explicit, documented knob, not an empirical calibration.
 
@@ -46,13 +48,13 @@ A fixed 1,200-persona panel is re-polled every morning with that day's Toronto n
 
 ### The mayoral race
 
-![](figures/fig1_mayoral.png){#fig-mayor fig-alt="Dot-and-interval chart of mayoral vote shares by LLM provider. Chow, Olivia (incumbent) leads at about 99.9 percent post-stratified share for Gemini and 94.7 percent for GPT-4o-mini, with all other candidates near zero. Points are post-stratified point estimates; horizontal bars are 95 percent simulation intervals."}
+![Mayoral vote shares by provider for the eight candidates with the largest pooled shares. Points are census post-stratified estimates of each candidate's share of decided first preferences; bars are 95% simulation intervals. Both providers put almost all support on Olivia Chow.](figures/fig1_mayoral.png){#fig-mayor fig-alt="Dot-and-interval chart of mayoral vote shares by LLM provider. Chow, Olivia (incumbent) leads at about 99.9 percent post-stratified share for Gemini and 94.7 percent for GPT-4o-mini, with all other candidates near zero. Points are post-stratified point estimates; horizontal bars are 95 percent simulation intervals."}
 
 Post-stratified point estimates (points) and 95% simulation intervals (bars), one row per provider, for the eight mayoral candidates with the largest descriptive pooled shares. Gemini places **Chow, Olivia** at a **99.9%** post-stratified share of decided first preferences; GPT-4o-mini places her at **94.7%** with a much wider personal interval (its repeats vary more and it declines far more often). Under our simulation, Chow's win frequency is **100.0%** (Gemini) and **99.2%** (GPT).
 
 ::: {.callout-warning}
 ## Mayoral mode collapse — read this before quoting any mayoral number
-The mayoral forecast is **not** a competitive distribution. In the production silicon sample, Chow absorbs **97.7%** of all valid mayoral choices (99.93% for Gemini, 95.00% for GPT); only 11 of the 53 mayoral candidates are ever chosen. The diagnostic experiment reproduced this under three ballot orders (see [Diagnostics](#diagnostics)), confirming it is a **knowledge-driven property of the models**, not a ballot-position artifact — the same failure mode documented by @heath2026correcting. No uncertainty method can honestly manufacture competitiveness from it, so the mayoral "forecast" should be read as a *measured model output*, not a horse race.
+The mayoral forecast is **not** a competitive distribution. In the production silicon sample, Chow absorbs **97.7%** of all valid mayoral choices (99.93% for Gemini, 95.00% for GPT); only 11 of the 53 mayoral candidates are ever chosen. The diagnostic experiment reproduced this under three ballot orders (see [Diagnostics](#diagnostics)), so it is a property of the models rather than of ballot position, the same failure mode documented by @heath2026correcting. No uncertainty method can honestly manufacture competitiveness from it, so the mayoral "forecast" should be read as a *measured model output*, not a horse race. The daily tracker shows that this output is not stable either: the same collapse moves to Brad Bradford when the day's headlines favour him (see [Daily Tracker](#daily) and [Discussion](#discussion)).
 :::
 
 Full mayoral detail, one row per candidate sorted by descriptive pooled share (candidates with pooled share above 0.1% or any provider share above 0.5%):
@@ -61,7 +63,7 @@ Full mayoral detail, one row per candidate sorted by descriptive pooled share (c
 
 ### Ward councillor races
 
-![](figures/fig2_wards.png){#fig-wards fig-alt="Faceted dot-and-interval chart for all 25 ward councillor races. Each panel lists the candidates in either provider's top two, with each provider's post-stratified point estimate as a dot and its 95 percent simulation interval as a horizontal bar."}
+![All 25 ward councillor races. Each panel lists every candidate in either provider's top two (\* = incumbent), strongest pooled share at the top. Dots are each provider's post-stratified share and bars its 95% simulation interval; when the two providers' highest dots sit on different rows, they disagree about who leads.](figures/fig2_wards.png){#fig-wards fig-alt="Faceted dot-and-interval chart for all 25 ward councillor races. Each panel lists the candidates in either provider's top two, with each provider's post-stratified point estimate as a dot and its 95 percent simulation interval as a horizontal bar."}
 
 One panel per ward. Each panel lists every candidate who is in *either* provider's top two, so both providers' leaders always appear (incumbents marked \*). Rows are ordered by descriptive pooled share, strongest at the top; each provider's point estimate is a dot and its 95% simulation interval a horizontal bar. When a provider's highest dot is on a different row from the other provider's, they disagree about the leader (e.g. Wards 03, 09, 13). Effective sample sizes per ward race and provider are modest (Kish $n_{\text{eff}}$ ≈ 79–165), so ward intervals are wide — typically 30–60 percentage points — reflecting genuine uncertainty *within the LLM response mechanism*. Full per-candidate summaries (all 243 candidates across 26 races) live in `processed/forecast/forecast_summary_centered.parquet`.
 
@@ -86,9 +88,11 @@ These are post-stratified **LLM outputs**, not a poll of real people and not cal
 
 ### Mayor {#daily-mayor}
 
-![](figures/daily_mayor.png){fig-alt="Line chart of the top mayoral candidates' daily post-stratified shares. Thick lines are the moving average of the cross-model mean; thin lines and points are each model's daily estimate."}
+![Daily mayoral estimates from the fixed 1,200-persona panel. Thin lines and points are each model's post-stratified share for one day; thick lines are the trailing moving average of the two models' mean. Both models give nearly all support to one candidate each day, and which candidate changes with the headlines.](figures/daily_mayor.png){#fig-daily-mayor fig-alt="Line chart of the top mayoral candidates' daily post-stratified shares. Thick lines are the moving average of the cross-model mean; thin lines and points are each model's daily estimate."}
 
 {{< include tables/daily_mayor_today.md >}}
+
+The moving average hides how the panel behaves. On 20 October, when the headlines included "Brad Bradford pulls ahead of Olivia Chow for first time", both models gave Bradford almost every decided vote (Gemini 96.8%, GPT-4o-mini 99.0%). On 21 October the headlines included criticism of Bradford's water-utility plan and two polls describing a dead heat, and both models gave Chow almost every decided vote (99.9% and 99.0%). The near 50–50 average is the mean of two one-sided days, not a close race inside the panel. Neither day looks like the frozen forecast, in which Bradford, without news, received no votes at all.
 
 **By day** (each model's post-stratified share of decided first preferences, last 14 days):
 
@@ -96,7 +100,7 @@ These are post-stratified **LLM outputs**, not a poll of real people and not cal
 
 ### Ward councillor races {#daily-wards}
 
-![](figures/daily_wards.png){fig-alt="Small-multiple line charts, one per ward, showing the top three councillor candidates' moving-average shares over the polling days."}
+![Ward councillor races in the daily tracker: moving-average share of each ward's top three candidates as of the latest poll. About 48 panel personas per ward and model per day, so ward lines move more than the citywide mayoral line.](figures/daily_wards.png){#fig-daily-wards fig-alt="Small-multiple line charts, one per ward, showing the top three councillor candidates' moving-average shares over the polling days."}
 
 {{< include tables/daily_ward_table.md >}}
 
@@ -137,7 +141,7 @@ A "leading candidate" can be defined two ways, and they disagree in a few wards 
 | Highest **post-stratified point share** (used on this site) | **8**: W03, W04, W09, W13, W14, W20, W22, W23 |
 | Highest **simulation win frequency** | **7**: W03, W04, W14, W15, W20, W22, W23 |
 
-The website uses the **point-share definition** throughout (Figures 2–4, the race table, and this section). The three definitional edge cases are instructive:
+The website uses the **point-share definition** throughout (@fig-wards, @fig-disagree-a, @fig-disagree-b, @tbl-races, and this section). The three definitional edge cases are instructive:
 
 - **Ward 09** — Gemini's point shares are a near three-way tie (Martins, Marco 30.1%; Bravo, Alejandra 29.7%; one other 29.3%), so its top-point candidate is *not* its top-win-frequency candidate. GPT strongly favours the incumbent **Bravo, Alejandra** (82.5%, win frequency 100%), and by win frequency both providers name Bravo.
 - **Ward 13** — GPT's point shares are nearly tied (Harris, Morgan 24.7% vs incumbent **Moise, Chris** 24.0%), so GPT's top-point candidate is Harris while its top-win-frequency candidate is Moise; Gemini strongly favours Moise (57.0%). By win frequency both providers name Moise.
@@ -152,7 +156,7 @@ Two patterns matter regardless of definition:
 
 ## Forecast Uncertainty {#uncertainty}
 
-Every number on this site comes from an explicit, layered simulation. The four sources of variation are kept distinct — conflating them would overstate what the data can support [@shirani2018disentangling separate bias and variance in real election polls; our setting has no ground truth to separate them against].
+Every number on this site comes from an explicit, layered simulation. The four sources of variation are kept distinct, because conflating them would overstate what the data can support. @shirani2018disentangling separate bias from variance in real election polls; our setting has no ground truth against which to make that separation.
 
 1. **LLM response variability** — each draw resamples one of the provider's three independent repeat cells (the same persona-race asked three times at temperature 0.7).
 2. **Dirichlet sampling uncertainty** — shares ~ Dirichlet($n_{\text{eff}} \cdot \hat{s} + 0.5$), where $n_{\text{eff}} = (\sum_i w_i)^2 / \sum_i w_i^2$ is the Kish effective sample size of the post-stratified cell. This quantifies how much the estimate would move if the same personas were re-queried.
@@ -166,7 +170,7 @@ Throughout this site, **simulation win frequency** means the fraction of 500 mod
 
 ### Sensitivity to the assumed perturbation scale
 
-![](figures/fig5_sensitivity.png){#fig-sens fig-alt="Two panels. Left: leader 95 percent interval widths for all 52 race-by-provider units at target SD 2, 4 and 6 percentage points, shown as thin coloured lines with box plots and a bold black median line rising from 33.6 to 37.3 to 41.0 percentage points. Right: bar chart of the number of units with win frequency exactly 100 percent, falling from 21 to 15 to 12, with the published 4 pp setting highlighted."}
+![Sensitivity of the forecast to its one assumed parameter, the forecast-noise SD. (a) Each line joins one race-by-provider leader's 95% interval width at SD 2, 4 and 6 percentage points; the dark line is the median. (b) Number of the 52 race-by-provider units whose leader wins every simulation draw; the dark bar is the published setting.](figures/fig5_sensitivity.png){#fig-sens fig-alt="Two panels. Left: leader 95 percent interval widths for all 52 race-by-provider units at target SD 2, 4 and 6 percentage points, shown as thin coloured lines with points and a dark median line rising from 33.6 to 37.3 to 41.0 percentage points. Right: bar chart of the number of units with win frequency exactly 100 percent, falling from 21 to 15 to 12, with the published 4 pp setting highlighted."}
 
 **How to read this figure.** We re-ran the forecast draws three times, changing only one assumption: how much extra forecast uncertainty to add (the target SD, 2, 4 or 6 percentage points). Panel (a) tracks each race × provider leader's 95% interval width across the three settings; every line slopes upward, so the intervals depend directly on this assumed knob. Panel (b) counts how many race × provider units still give their leader a 100% win frequency; that count shrinks as more uncertainty is assumed. Together they show that the *width* of our intervals and how many races look like a certain win are partly a modelling choice, not something the data pins down.
 
@@ -178,7 +182,7 @@ Two further documented uncertainty facts: the Dirichlet +0.5 pseudo-count visibl
 
 ## Silicon Sampling Diagnostics {#diagnostics}
 
-![](figures/fig6_diagnostics.png){#fig-diag fig-alt="Three panels. (a) Bar chart of candidate-order invariance: 100 percent for the mayoral race for both providers, 56.3 percent for Gemini and 62.5 percent for GPT-4o-mini on 12 sampled ward races. (b) Bar chart of mayoral response concentration: Chow near 100 percent for Gemini, about 95 percent for GPT, with small bars for minor candidates. (c) Bar chart of provider undecided rates: GPT-4o-mini 19.4 percent mayoral and 3.9 percent ward, Gemini 0.8 and 1.0 percent."}
+![Silicon-sample diagnostics. (a) Share of persona-race pairs that pick the same candidate under three different candidate orders. (b) Share of valid mayoral choices going to each of the eight most-chosen candidates. (c) Share of all production responses that were "undecided".](figures/fig6_diagnostics.png){#fig-diag fig-alt="Three panels. (a) Bar chart of candidate-order invariance: 100 percent for the mayoral race for both providers, 56.3 percent for Gemini and 62.5 percent for GPT-4o-mini on 12 sampled ward races. (b) Bar chart of mayoral response concentration: Chow near 100 percent for Gemini, about 95 percent for GPT, with small bars for minor candidates. (c) Bar chart of provider undecided rates: GPT-4o-mini 19.4 percent mayoral and 3.9 percent ward, Gemini 0.8 and 1.0 percent."}
 
 **(a) Candidate-order invariance.** In the diagnostic experiment each persona-race was asked under three ballot orders (the actual ballot order and two randomized orders). The mayoral choice was **100% order-invariant** for both providers — confirming the collapse is knowledge-driven, not a ballot-position artifact. Ward-race choices were invariant in only **56–63%** of complete valid triples (Gemini 56.3%, GPT 62.5%), i.e., ward preferences are meaningfully order-sensitive, a property of LLM survey responses documented by @murray2026choices. We retain it rather than suppress it by randomizing ballot order in production (seed 20261026).
 
@@ -214,7 +218,37 @@ The Census does not publish an age × education joint distribution, so within ea
 - **Providers and repetition.** Two models through OpenRouter — `google/gemini-2.5-flash-lite` and `openai/gpt-4o-mini` — each queried **three independent times** per persona-race pair at temperature 0.7, max 256 tokens, prompt version v1: 3,042 × 26 × 2 × 3 = **36,504 requests**.
 - **Prompt construction.** Each request gives the model only the persona's ward, age group, and education group, plus that race's candidate list (ID + ballot name). It never sees weights, other personas, biographies, policy positions, or historical results. Candidate order is randomized per request (seed 20261026) because LLM choices are order-sensitive (see [Diagnostics](#diagnostics); @murray2026choices).
 - **Validation and reliability.** Responses are strictly validated JSON; invalid replies are re-sampled (13 in total); technical failures were retried with backoff and the run finished with **0 technical failures**. Responses are disk-cached (SHA-256 over the full request specification), every request is cost-logged, and a hard budget of $3.75 stopped the run if needed (it was not).
+- **Timing.** The pilot and ballot-order experiments ran on the evening of 17 October 2026 (Toronto time). The production run started at 13:35 on 18 October and finished at 23:13 the same night, roughly ten hours of wall-clock time including one interruption and resume; the median request took under one second.
 - **Frozen artefact.** The production response file `processed/production/llm_responses.parquet` (36,504 rows) is frozen with md5 `420c3051da6c9a291f5fcf7b587e06bf`; the forecast pipeline halts if it ever changes.
+
+### What the model sees
+
+Each request has a fixed system message (prompt version v1, `llm/prompts.py`) and a short user message. The system message tells the model it is simulating one Toronto resident in a municipal election survey, asks for a JSON reply of the form `{"response_status": "valid_choice" | "undecided" | "not_voting", "candidate_id": ...}`, and instructs it to base its choice only on the candidate names and the respondent's demographics. The user message for persona P000446 and the Ward 4 race reads as follows (shown in ballot order; production shuffles the list per request):
+
+```text
+Respond as the following Toronto resident:
+- Ward: 4
+- Age group: 30-44
+- Education group: High school or less
+
+Race: City Councillor for Ward 4 (you are a resident of Ward 4).
+
+Candidates in this race (candidate_id: name):
+- W04-C01: Corcoran, Michael
+- W04-C02: Guerrera, Nadia
+- W04-C03: King, Debbie
+- W04-C04: McNally, Diana Chan
+- W04-C05: Ogundipe, Bridget
+- W04-C06: Pham, Adam
+- W04-C07: Potega, Andy
+- W04-C08: Raponi, Vanessa
+- W04-C09: Weber, Holly
+- W04-C10: Yuen, Steve
+
+Return only the JSON object.
+```
+
+The daily tracker (prompt v2) adds the date, the election date, and up to 12 of that day's Toronto headlines to the system message.
 
 ### Post-stratification
 
@@ -225,6 +259,30 @@ $$\hat{s}_k \;=\; \frac{\sum_i w_i \,\mathbf{1}[\text{choice}_i = k]}{\sum_i w_i
 Undecided and not-voting replies are excluded from numerator *and* denominator: the estimand is each candidate's share of **decided first preferences**, not turnout. Ward races sum over that ward's personas; the mayoral race sums over all personas with citywide weights, so wards enter in proportion to their 20+ population.
 
 Provider point estimates average the provider's three repeat cells equally. A separately labelled *descriptive* pooled estimate averages all six cells equally; it is a summary for readers, never used as "the" forecast.
+
+### Software {#software}
+
+The language models are GPT-4o mini [@gpt4omini] and Gemini 2.5 Flash-Lite [@geminiflashlite], both reached through OpenRouter [@openrouter]. The query pipeline is written in Python [@python] with requests [@requests] and PyArrow [@pyarrow], and tested with pytest [@pytest]. Cleaning, post-stratification, simulation, and figures use R [@rcore] with dplyr [@dplyr], tidyr [@tidyr], readr [@readr], readxl [@readxl], jsonlite [@jsonlite], digest [@digest], nanoparquet [@nanoparquet], sf [@sf], ggplot2 [@ggplot2], scales [@scales], patchwork [@patchwork], ggrepel [@ggrepel], ragg [@ragg], and systemfonts [@systemfonts]; tests use testthat [@testthat] and code is formatted with styler [@styler]. The site is built with Quarto [@quarto] and set in IBM Plex Sans [@plexsans].
+
+---
+
+## Discussion {#discussion}
+
+### What a silicon sample measures in a local election
+
+@argyle2023out showed that a language model conditioned on detailed American demographic and partisan backstories could reproduce the vote-choice patterns of the groups those backstories describe, which they called algorithmic fidelity. That result depended on two things this election lacks: party labels that the model can map from demographics to a vote, and a large volume of text linking the two. Toronto's municipal elections have no party labels, and our personas carry only a ward, an age band, and an education band. With so little to condition on, the model falls back on what it knows about the candidates' names. In the frozen run that knowledge is almost entirely about one name: Olivia Chow receives 97.7% of valid mayoral choices and Brad Bradford, whom local coverage describes as her main challenger, receives none of 16,406.
+
+### The collapse follows salience, not demographics
+
+@bisbee2024synthetic found that synthetic survey answers have far less variance than real ones and shift with prompt wording and with the date of the query. Our daily tracker isolates the second effect. Its 1,200 personas, models, and settings are fixed from day to day; only the headlines change. On 20 October, with headlines reporting Bradford pulling ahead, both models gave Bradford 97–99% of decided votes. On 21 October, with headlines about criticism of his water plan, both gave Chow about 99%. A demographic group did not move; the whole synthetic electorate did, at once and in the same direction. This is the mode collapse that @heath2026correcting document, but it is not fixed on the incumbent: it attaches to whichever candidate the context makes salient. It also fits @santurkar2023whose, who found that steering a model toward a demographic group changes its opinion distribution much less than the real gap between groups, and @wang2024misportray, who show that models flatten the variation within identity groups. In our data the persona's age and education barely matter to the mayoral answer.
+
+### Analyst choices are first-order
+
+@murray2026choices show that apparently minor analyst choices change silicon samples substantially. We see the same at every stage we varied. Changing the candidate order changed the ward-race answer for 37–44% of persona-race pairs. Changing the provider changed the leading candidate in 8 of 25 wards. Changing the assumed forecast-noise SD from 2 to 6 points widened the median leader interval by 7 points. Adding a day's headlines replaced the mayoral leader outright. Each of these is larger than the sampling uncertainty that the Dirichlet layer reports, which is why we publish both providers separately and show every sensitivity rather than one blended number.
+
+### What post-stratification can and cannot fix
+
+@wang2015forecasting forecast a US election accurately from a heavily skewed sample of Xbox users, because multilevel regression and post-stratification can reweight a sample that is unrepresentative but still contains real differences between groups. Post-stratification cannot create differences that are not there. When every Census cell gives the same answer, as in the mayoral race, the weights change nothing, and the effective sample is closer to one respondent than to 3,042. Ward races vary more across cells and across providers, so their post-stratified shares carry more information, but that information is about the models. Our conclusion is that, for a low-information local election, a silicon sample is better read as a measurement of what two models find salient than as a survey of voters. Its most useful outputs are diagnostic: where providers disagree, how much the answer depends on ballot order, and how quickly it moves with the news. That is the kind of statement about information sources that @gelman2020information argue a forecast should make explicit.
 
 ---
 
@@ -243,7 +301,7 @@ Provider point estimates average the provider's three repeat cells equally. A se
 
 ## Conclusion and Future Work {#conclusion}
 
-Silicon sampling with census post-stratification can produce a complete, reproducible, openly documented forecast for all 26 Toronto municipal races from a $3.16 production run. What it produces is a *measurement of two language models*, and that measurement says: the mayoral race is not a race in the models' world (Chow at 97.7% of valid responses, order-invariant), while ward races are genuinely uncertain *and* the two providers disagree about the leader in 8 of 25 wards — a model-uncertainty signal we surface rather than average away. The uncertainty we report is explicitly layered and its assumptions (target SD) are sensitivity-tested, but it remains conditional on model outputs and uncalibrated to real election error.
+Silicon sampling with census post-stratification can produce a complete, reproducible, openly documented forecast for all 26 Toronto municipal races from a $3.16 production run. What it produces is a measurement of two language models. Without news, the mayoral race is not a race in the models' world (Chow at 97.7% of valid responses, unchanged by ballot order); with a day's headlines, the entire synthetic electorate moves to whichever candidate the headlines favour. Ward races are more varied, and the two providers disagree about the leader in 8 of 25 wards, a model-uncertainty signal we report rather than average away. The uncertainty we report is explicitly layered and its assumptions (target SD) are sensitivity-tested, but it remains conditional on model outputs and uncalibrated to real election error.
 
 Natural next steps, in order of value:
 
@@ -276,7 +334,7 @@ python3 -m llm.runner run --selection head --repeats 3 --order random \
 # 4. Post-stratification and Method C forecast draws (md5-guarded)
 Rscript R/10_llm_poststratify.R processed/production/llm_responses.parquet centered
 
-# 5. Tests (145 R checks, 107 Python checks — no network)
+# 5. Tests (164 R expectations, 117 Python tests; no network)
 Rscript tests/run_tests.R
 python3 -m pytest tests/python -q
 
@@ -296,8 +354,8 @@ quarto render website
 | Forecast-draw seeds | base 245309; provider $m$ uses base $+ m$ |
 | Draws per race × provider | 500 |
 | Perturbation target SD | 0.04 (grid 0.02 / 0.04 / 0.06) |
-| R packages | dplyr, tidyr, ggplot2, patchwork, sf, readxl, nanoparquet, testthat |
-| Python | 3.13; requests, pyarrow, pytest |
+| R packages | dplyr, tidyr, readr, readxl, jsonlite, nanoparquet, sf, ggplot2, scales, patchwork, ggrepel, ragg, systemfonts, testthat, styler (see [Software](#software)) |
+| Python | 3.13 locally, 3.12 in GitHub Actions; requests, pyarrow, pytest |
 
 ### API costs
 
@@ -310,11 +368,17 @@ Budget was capped at $3.75; spend is enforced per-request from `processed/llm/co
 
 ### Validation
 
-The committed forecast passed **22/22 automated checks** (md5 preservation, 26 races / 243 candidates / 300 census cells, draw-simplex sums to 1 within $1.4\times10^{-15}$, win frequencies sum to 1 per race × provider, no NA/NaN, seed replay identity) — see `processed/forecast/validation_report.md`. Test suites: **R 145/145, Python 107/107**.
+The committed forecast passed **22/22 automated checks** (md5 preservation, 26 races / 243 candidates / 300 census cells, draw-simplex sums to 1 within $1.4\times10^{-15}$, win frequencies sum to 1 per race × provider, no NA/NaN, seed replay identity) — see `processed/forecast/validation_report.md`. Test suites: R 164/164 expectations across 7 files (testthat), Python 117/117 (pytest).
 
 ### AI-use declaration
 
-An AI coding assistant (Anthropic Claude, via the OpenCode CLI) was used to write and test code, build the pipeline, and draft documentation; the author reviewed, validated, and approved every change, and all statistical methodology was specified and checked by the team. The forecast data themselves were generated by the two declared LLM APIs above — that is the method under study, and every provider output is retained in the committed response file for audit.
+We used three AI tools. All code they produced was read, run, and tested by us before it was committed, and we can explain each script.
+
+- **OpenCode with MiMo-V2.6-Flash (Xiaomi, free tier; model identifier `mimo-v2.6-flash`), 17–19 October 2026.** Jingwen Zhong used it as a coding agent to write and test the OpenRouter query pipeline (`llm/`), the simulated-data pipeline and its tests (`R/07`–`R/10`, `R/simulation_helpers.R`, `tests/testthat/test-07` to `test-11`, `tests/python/`), the ballot-order diagnostic (`scripts/analyze_llm_diagnostic.py`, `docs/`), the uncertainty comparison (`experiments/`), and the first version of the website and `website/make_figures.R`.
+- **Claude Code with Claude Opus 5.5 (Anthropic; model identifier `claude-opus-5-5`), 19 and 22 October 2026.** Jingwen Zhong used it as a coding agent to fix and redesign the website figures and tables (`website/make_figures.R`, `website/make_daily.R`), build the shared design system (`website/theme_site.R`, `website/custom.scss`), add the software citations, remove `setwd()` from scripts and tests, run styler, add the submission-deadline guard to the GitHub Action, and review the project against the rubric. It also drafted website prose: the Discussion section, figure and table captions, the "What the model sees" and Software subsections, and edits to the Overview and Daily Tracker text. We checked every number in that prose against our data and edited it.
+- **ChatGPT with GPT-5.6 (OpenAI; model identifier `gpt-5.6`).** Siyi Zhu used it for TODO (Siyi: list the scripts or tasks, e.g. `download_data.R`, `R/01`–`R/06`, `R/11`–`R/12`, the daily tracker, the GitHub Action, and the dates).
+
+The two language models that generate the synthetic responses, `openai/gpt-4o-mini` and `google/gemini-2.5-flash-lite` via OpenRouter, are the object of study rather than writing aids; every response they returned is kept in the repository.
 
 ### Key artefacts
 
