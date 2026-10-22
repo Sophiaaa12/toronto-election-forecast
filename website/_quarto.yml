@@ -9,8 +9,8 @@ website:
   title: "Toronto 2026 Municipal Election Forecast"
   site-url: https://sophiaaa12.github.io/toronto-election-forecast/
   page-footer:
-    left: "STA2453 Assignment II — Toronto 2026 Municipal Election Forecast · [GitHub repository](https://github.com/Sophiaaa12/toronto-election-forecast)"
-    right: "All forecasts are LLM-based silicon-sampling simulations; not calibrated election probabilities."
+    left: "Jingwen Zhong and Siyi Zhu · STA2453, University of Toronto · [GitHub repository](https://github.com/Sophiaaa12/toronto-election-forecast)"
+    right: "Every number on this site comes from synthetic LLM responses, not real voters."
   navbar:
     pinned: false
     left:
@@ -28,10 +28,10 @@ website:
         href: index.qmd#diagnostics
       - text: "Data & Methods"
         href: index.qmd#methods
+      - text: "Discussion"
+        href: index.qmd#discussion
       - text: "Limitations"
         href: index.qmd#limitations
-      - text: "Conclusion"
-        href: index.qmd#conclusion
       - text: "Reproducibility"
         href: index.qmd#reproducibility
       - text: "References"
@@ -39,10 +39,12 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: [cosmo, custom.scss]
     toc: true
     toc-depth: 3
     anchor-sections: true
     code-tools: false
     css:
       - styles.css
+    fig-cap-location: bottom
+    tbl-cap-location: top

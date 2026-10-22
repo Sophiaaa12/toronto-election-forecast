@@ -1,0 +1,93 @@
+/*-- scss:defaults --*/
+// One design grammar for the site, shared with the figures
+// (website/theme_site.R): IBM Plex Sans, warm paper background, ink text,
+// one hue per LLM provider and a crimson reserved for provider disagreement.
+
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap");
+
+$ink:     #1c2430;
+$muted:   #5f6873;
+$rule:    #e3e5e8;
+$paper:   #fbfaf7;
+$gemini:  #1f6fa8;
+$gpt:     #c77d1e;
+$accent:  #a32638;
+
+$font-family-sans-serif: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+$font-family-monospace:  "IBM Plex Mono", Menlo, monospace;
+$font-size-root:         17px;
+$line-height-base:       1.6;
+
+$body-bg:          $paper;
+$body-color:       $ink;
+$link-color:       $gemini;
+$headings-color:   $ink;
+$headings-font-weight: 600;
+
+$navbar-bg:        $ink;
+$navbar-fg:        #e8eaed;
+$navbar-hl:        #ffffff;
+$footer-bg:        $paper;
+$footer-fg:        $muted;
+$toc-color:        $muted;
+$code-color:       $ink;
+$code-bg:          #f1efe9;
+
+/*-- scss:rules --*/
+
+// Headings: a thin rule above each section, small-caps kicker feel.
+h2 {
+  border-top: 2px solid $ink;
+  border-bottom: none;
+  padding-top: 0.6rem;
+  margin-top: 3rem;
+  letter-spacing: -0.01em;
+}
+h3 { margin-top: 2rem; }
+
+.quarto-title .subtitle { color: $muted; font-weight: 400; }
+
+// Tables: one style everywhere. Rules top/bottom, no zebra, right-aligned
+// tabular figures so decimals line up.
+table, .table {
+  font-size: 0.86rem;
+  font-variant-numeric: tabular-nums;
+  border-top: 2px solid $ink;
+  border-bottom: 2px solid $ink;
+  --bs-table-striped-bg: transparent;
+  --bs-table-bg: transparent;
+}
+table thead th {
+  border-bottom: 1px solid $ink !important;
+  color: $muted;
+  font-weight: 500;
+  text-transform: none;
+}
+table td, table th { border-color: $rule !important; padding: 0.35rem 0.6rem; }
+table td:not(:first-child) { white-space: nowrap; }
+
+// Figures and captions.
+.figure-caption, figcaption {
+  color: $muted;
+  font-size: 0.88rem;
+  text-align: left;
+  line-height: 1.5;
+}
+
+// Callouts: flat, ink border, no icons.
+div.callout {
+  border-left-width: 4px !important;
+  border-radius: 0;
+  background: #f4f2ec;
+}
+div.callout.callout-important { border-left-color: $accent !important; }
+div.callout.callout-warning   { border-left-color: $gpt !important; }
+div.callout.callout-note,
+div.callout.callout-tip       { border-left-color: $gemini !important; }
+div.callout .callout-icon-container { display: none; }
+div.callout .callout-header,
+div.callout.callout-titled .callout-header {
+  background: transparent !important;
+  border-bottom: none;
+  font-weight: 600;
+}
