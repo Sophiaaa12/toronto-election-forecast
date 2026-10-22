@@ -29,7 +29,6 @@ $navbar-fg:        #e8eaed;
 $navbar-hl:        #ffffff;
 $footer-bg:        $paper;
 $footer-fg:        $muted;
-$toc-color:        $muted;
 $code-color:       $ink;
 $code-bg:          #f1efe9;
 
@@ -111,3 +110,11 @@ div.callout.callout-titled .callout-header {
   .navbar .navbar-nav { flex-wrap: nowrap; }
 }
 .nw { white-space: nowrap; }
+
+// Table of contents: the current section is dark and bold, the rest muted.
+#TOC a.nav-link { color: $muted !important; }
+#TOC a.nav-link.active {
+  color: $ink !important;
+  font-weight: 600;
+  border-left-color: $ink !important;
+}

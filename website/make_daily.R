@@ -252,7 +252,7 @@ ward_ma <- ma |>
 ward_top <- ward_ma |>
   filter(poll_date == latest) |>
   group_by(ward) |>
-  slice_max(ma_share, n = 3, with_ties = FALSE) |>
+  slice_max(ma_share, n = 2, with_ties = FALSE) |>
   mutate(rank = row_number()) |>
   ungroup()
 ward_plot <- ward_ma |>
@@ -260,10 +260,10 @@ ward_plot <- ward_ma |>
   left_join(ward_names, by = "ward") |>
   mutate(
     panel = sprintf("W%02d %s", ward, ward_name),
-    rank = factor(rank, labels = c("1st", "2nd", "3rd")[seq_along(unique(rank))])
+    rank = factor(rank, labels = c("1st", "2nd")[seq_along(unique(rank))])
   )
 lab_dat <- ward_plot |>
-  filter(poll_date == latest, rank != "3rd") |>
+  filter(poll_date == latest) |>
   mutate(lab = paste0(
     sub(" .*$", "", display_name) |> substr(1, 1), ". ",
     sub("^.* ", "", display_name)
@@ -277,11 +277,11 @@ p_wards <- ggplot(ward_plot, aes(poll_date, ma_share, colour = rank, group = can
     show.legend = FALSE
   ) +
   facet_wrap(~panel, ncol = 5) +
-  scale_colour_manual(values = c("1st" = INK, "2nd" = "#8a929c", "3rd" = NEUTRAL)) +
+  scale_colour_manual(values = c("1st" = INK, "2nd" = "#8a929c")) +
   scale_y_continuous(labels = percent_format(accuracy = 1), limits = c(0, 1)) +
   scale_x_date(date_labels = "%m-%d", breaks = pretty_breaks(3)) +
   labs(
-    title = "Ward councillor races: top three candidates over time",
+    title = "Ward councillor races: top two candidates over time",
     subtitle = paste0(
       MA_DAYS, "-day moving average of the cross-model mean post-stratified share; ",
       "rank as of ", format(latest, "%b %d")
