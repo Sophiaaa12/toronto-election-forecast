@@ -57,29 +57,28 @@ officials <- read_json_raw(
 incumbents <- list()
 
 for (person in officials) {
-  
   role <- person[["Primary role"]]
-  
+
   if (is.null(role)) {
     next
   }
-  
+
   if (!role %in% c("Mayor", "Councillor")) {
     next
   }
-  
+
   office <- if (role == "Mayor") {
     "mayor"
   } else {
     "councillor"
   }
-  
+
   ward <- if (role == "Mayor") {
     0L
   } else {
     as.integer(person[["District ID"]])
   }
-  
+
   full_name <- tolower(
     trimws(
       paste(
@@ -88,7 +87,7 @@ for (person in officials) {
       )
     )
   )
-  
+
   incumbents[[paste(office, ward, sep = ":")]] <- full_name
 }
 
@@ -101,11 +100,10 @@ candidate_files <- c(
 candidate_rows <- list()
 
 for (office in names(candidate_files)) {
-  
   candidate_data <- read_json_raw(
     candidate_files[[office]]
   )
-  
+
   groups <- if (office == "mayor") {
     list(
       list(
@@ -116,24 +114,22 @@ for (office in names(candidate_files)) {
   } else {
     candidate_data$ward
   }
-  
+
   for (group in groups) {
-    
     ward <- as.integer(group$num)
-    
+
     for (candidate in group$candidate) {
-      
       display_name <- trimws(
         paste(
           candidate$firstName,
           candidate$lastName
         )
       )
-      
+
       incumbent_name <- incumbents[[paste(office, ward, sep = ":")]]
-      
+
       websites <- character(0)
-      
+
       if (!is.null(candidate$socialMedias)) {
         websites <- vapply(
           Filter(
@@ -144,7 +140,7 @@ for (office in names(candidate_files)) {
           character(1)
         )
       }
-      
+
       candidate_rows[[length(candidate_rows) + 1]] <-
         data.frame(
           office = office,
@@ -154,10 +150,10 @@ for (office in names(candidate_files)) {
           status = candidate$status,
           incumbent_name_match =
             !is.null(incumbent_name) &&
-            identical(
-              tolower(display_name),
-              incumbent_name
-            ),
+              identical(
+                tolower(display_name),
+                incumbent_name
+              ),
           website = paste(
             websites,
             collapse = " | "
@@ -222,10 +218,8 @@ map_data <- read_json_raw(
 validation <- list(
   mayor_candidates =
     sum(candidates$office == "mayor"),
-  
   councillor_candidates =
     sum(candidates$office == "councillor"),
-  
   councillor_wards =
     sort(
       unique(
@@ -234,13 +228,10 @@ validation <- list(
         ]
       )
     ),
-  
   map_features =
     length(map_data$features),
-  
   census_sheets =
     census_sheets,
-  
   note = paste(
     "Incumbent matches are exact-name",
     "matches only and require manual review."

@@ -37,18 +37,18 @@ councillor_2022_path <- file.path(
 
 # Clean one election worksheet
 clean_election_sheet <- function(
-    path,
-    sheet,
-    year,
-    office,
-    election_type
+  path,
+  sheet,
+  year,
+  office,
+  election_type
 ) {
   data <- read_excel(
     path,
     sheet = sheet,
     col_names = FALSE
   )
-  
+
   # Identify aggregate "Total" columns in the header row (row 2).
   # Every poll-by-poll workbook repeats the ward total as a trailing
   # column after the subdivision columns. Summing it together with
@@ -61,23 +61,23 @@ clean_election_sheet <- function(
       )
     )
   )
-  
+
   total_columns <- which(
     !is.na(header_row) &
       header_row == "Total"
   )
-  
+
   first_column <- trimws(
     as.character(data[[1]])
   )
-  
+
   total_row <- which(
     str_detect(
       first_column,
       regex("^City Ward", ignore_case = TRUE)
     )
   )
-  
+
   if (length(total_row) == 0) {
     stop(
       paste(
@@ -86,19 +86,18 @@ clean_election_sheet <- function(
       )
     )
   }
-  
+
   total_row <- max(total_row)
-  
+
   candidate_data <- data[
-    4:(total_row - 1),
-    ,
+    4:(total_row - 1), ,
     drop = FALSE
   ]
-  
+
   candidate <- trimws(
     as.character(candidate_data[[1]])
   )
-  
+
   # Drop the name column and any aggregate Total columns, keeping
   # only genuine poll/subdivision columns.
   vote_columns <- candidate_data[
@@ -109,7 +108,7 @@ clean_election_sheet <- function(
     ),
     drop = FALSE
   ]
-  
+
   vote_columns <- vote_columns |>
     mutate(
       across(
@@ -117,16 +116,16 @@ clean_election_sheet <- function(
         ~ suppressWarnings(as.numeric(.x))
       )
     )
-  
+
   votes <- rowSums(
     vote_columns,
     na.rm = TRUE
   )
-  
+
   ward <- as.integer(
     str_remove(sheet, "Ward ")
   )
-  
+
   result <- tibble(
     year = year,
     election_type = election_type,
@@ -143,7 +142,7 @@ clean_election_sheet <- function(
       total_valid_votes = sum(votes),
       vote_share = votes / total_valid_votes
     )
-  
+
   result
 }
 

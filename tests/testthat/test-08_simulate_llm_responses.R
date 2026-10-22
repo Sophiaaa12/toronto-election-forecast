@@ -29,20 +29,19 @@ find_project_root <- function(path = getwd()) {
 }
 
 project_root <- find_project_root()
-old_wd <- setwd(project_root)
-on.exit(setwd(old_wd), add = TRUE)
+withr::local_dir(project_root)
 
 # Ensure personas and responses are both rebuilt from source
 source(file.path("R", "07_simulate_personas.R"))
 source(file.path("R", "08_simulate_llm_responses.R"))
 
-personas   <- read_parquet(
+personas <- read_parquet(
   file.path("processed", "simulated", "simulated_personas.parquet")
 )
-responses  <- read_parquet(
+responses <- read_parquet(
   file.path("processed", "simulated", "simulated_responses.parquet")
 )
-crosswalk  <- read_parquet(
+crosswalk <- read_parquet(
   file.path("processed", "simulated", "candidate_crosswalk.parquet")
 )
 
@@ -111,21 +110,25 @@ test_that("no invalid candidate IDs appear in responses", {
 test_that("response statuses are exhaustive and missing rows are retained", {
   # All five statuses are used and every row carries exactly one.
   expect_true(all(responses$response_status %in%
-                    c("valid_choice", "undecided", "not_voting",
-                      "missing", "invalid")))
+    c(
+      "valid_choice", "undecided", "not_voting",
+      "missing", "invalid"
+    )))
   expect_false(any(is.na(responses$response_status)))
 
   # Missing and invalid responses are RETAINED (not silently dropped).
-  n_missing  <- sum(responses$response_status == "missing")
-  n_invalid  <- sum(responses$response_status == "invalid")
+  n_missing <- sum(responses$response_status == "missing")
+  n_invalid <- sum(responses$response_status == "invalid")
   expect_gt(n_missing, 0)
   expect_gt(n_invalid, 0)
 
   # They carry NA candidate_id, and only valid_choice rows have one.
   expect_true(all(is.na(
     responses$candidate_id[responses$response_status %in%
-                             c("missing", "invalid", "undecided",
-                               "not_voting")]
+      c(
+        "missing", "invalid", "undecided",
+        "not_voting"
+      )]
   )))
   expect_false(any(is.na(
     responses$candidate_id[responses$response_status == "valid_choice"]

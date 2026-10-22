@@ -6,12 +6,12 @@
 #
 #   Rscript tests/run_tests.R
 #
-# Requires the testthat package:
-#   install.packages("testthat")
+# Requires the testthat package.
 
 library(testthat)
 
-# Run from the project root regardless of where Rscript was invoked
+# Locate the project root regardless of where Rscript was invoked; each
+# test file resolves its own paths from there (no setwd()).
 project_root <- normalizePath(
   if (file.exists("toronto-election-forecast.Rproj")) {
     "."
@@ -19,8 +19,6 @@ project_root <- normalizePath(
     ".."
   }
 )
-
-setwd(project_root)
 
 results <- test_dir(
   file.path(project_root, "tests", "testthat"),

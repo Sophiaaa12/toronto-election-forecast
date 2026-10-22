@@ -63,7 +63,7 @@ stopifnot(
   nrow(responses) == expected_rows,
   all(responses$response_status %in% RESPONSE_STATUSES),
   all(is.na(responses$candidate_id) ==
-        (responses$response_status != "valid_choice"))
+    (responses$response_status != "valid_choice"))
 )
 
 dir.create(file.path("processed", "simulated"), showWarnings = FALSE)

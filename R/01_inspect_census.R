@@ -27,16 +27,14 @@ dim(two_variable)
 
 # Helper for displaying non-missing values in selected rows
 show_rows <- function(data, start, end) {
-  
   for (i in start:end) {
-    
     values <- unlist(
       data[i, ],
       use.names = FALSE
     )
-    
+
     values <- values[!is.na(values)]
-    
+
     cat(
       "Row", i, ":",
       paste(values, collapse = " | "),
@@ -66,13 +64,12 @@ keywords <- c(
 )
 
 for (word in keywords) {
-  
   cat(
     "\n---",
     toupper(word),
     "---\n"
   )
-  
+
   print(
     which(
       grepl(
@@ -111,7 +108,6 @@ show_rows(
 
 # Helper for searching all columns of the Two Variable worksheet
 search_two_variable <- function(word) {
-  
   matches <- which(
     apply(
       two_variable,
@@ -128,15 +124,15 @@ search_two_variable <- function(word) {
       }
     )
   )
-  
+
   cat(
     "\n---",
     toupper(word),
     "---\n"
   )
-  
+
   print(matches)
-  
+
   if (length(matches) > 0) {
     show_rows(
       two_variable,

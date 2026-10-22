@@ -33,8 +33,7 @@ find_project_root <- function(path = getwd()) {
   }
 }
 project_root <- find_project_root()
-old_wd <- setwd(project_root)
-on.exit(setwd(old_wd), add = TRUE)
+withr::local_dir(project_root)
 
 source(file.path("R", "10_llm_poststratify.R"))
 
@@ -52,29 +51,29 @@ make_cells <- function() {
   rows <- lapply(seq_len(nrow(base)), function(i) {
     b <- base[i, ]
     if (b$race_id == "mayor") {
-      cands  <- c("MAYOR-001", "MAYOR-002", "MAYOR-003")
-      a      <- 0.60 + 0.05 * (b$repeat_id - 1) +
+      cands <- c("MAYOR-001", "MAYOR-002", "MAYOR-003")
+      a <- 0.60 + 0.05 * (b$repeat_id - 1) +
         ifelse(b$model_id == "prov-a/m", 0.05, -0.05)
-      shares <- c(a, 1 - a, 0)     # MAYOR-003 exact zero in every cell
-      n_eff  <- 200
+      shares <- c(a, 1 - a, 0) # MAYOR-003 exact zero in every cell
+      n_eff <- 200
     } else {
-      cands  <- c("W01-C01", "W01-C02")
-      a      <- 0.55 + 0.02 * (b$repeat_id - 1) +
+      cands <- c("W01-C01", "W01-C02")
+      a <- 0.55 + 0.02 * (b$repeat_id - 1) +
         ifelse(b$model_id == "prov-a/m", 0.05, -0.05)
       shares <- c(a, 1 - a)
-      n_eff  <- 100
+      n_eff <- 100
     }
     data.frame(
-      race_id          = b$race_id,
-      model_id         = b$model_id,
-      repeat_id        = b$repeat_id,
-      candidate_id     = cands,
+      race_id = b$race_id,
+      model_id = b$model_id,
+      repeat_id = b$repeat_id,
+      candidate_id = cands,
       weighted_support = shares,
-      n_valid          = 60L,
-      sum_w            = 1,
-      sum_w2           = 0.01,
-      n_eff             = n_eff,
-      share            = shares,
+      n_valid = 60L,
+      sum_w = 1,
+      sum_w2 = 0.01,
+      n_eff = n_eff,
+      share = shares,
       stringsAsFactors = FALSE
     )
   })
@@ -94,14 +93,16 @@ N_DRAWS_SMALL <- 60L
 # ---------------------------------------------------------------------------
 test_that("draw vectors sum to 1 and shares stay in [0, 1] (all methods)", {
   for (m in c("centered", "dirichlet", "existing")) {
-    dr <- switch(
-      m,
-      centered  = generate_forecast_draws_centered(cells, calib_points, "prov-a/m",
-                                                   seed = 11, n_draws = N_DRAWS_SMALL),
+    dr <- switch(m,
+      centered = generate_forecast_draws_centered(cells, calib_points, "prov-a/m",
+        seed = 11, n_draws = N_DRAWS_SMALL
+      ),
       dirichlet = generate_forecast_draws_dirichlet(cells, "prov-a/m",
-                                                    seed = 11, n_draws = N_DRAWS_SMALL),
-      existing  = generate_forecast_draws_existing(cells, "prov-a/m",
-                                                   seed = 11, n_draws = N_DRAWS_SMALL)
+        seed = 11, n_draws = N_DRAWS_SMALL
+      ),
+      existing = generate_forecast_draws_existing(cells, "prov-a/m",
+        seed = 11, n_draws = N_DRAWS_SMALL
+      )
     )
     sums <- dr |>
       group_by(race_id, draw_id) |>
@@ -113,7 +114,8 @@ test_that("draw vectors sum to 1 and shares stay in [0, 1] (all methods)", {
 
 test_that("no NA or NaN appears in draws", {
   dr <- generate_forecast_draws_centered(cells, calib_points, "prov-b/m",
-                                         seed = 22, n_draws = N_DRAWS_SMALL)
+    seed = 22, n_draws = N_DRAWS_SMALL
+  )
   expect_false(anyNA(dr$share))
   expect_false(any(is.nan(dr$share)))
   expect_false(anyNA(dr$source_repeat_id))
@@ -122,11 +124,12 @@ test_that("no NA or NaN appears in draws", {
 test_that("draw candidate IDs are valid members of the race grid", {
   valid <- distinct(cells, race_id, candidate_id)
   dr <- generate_forecast_draws_centered(cells, calib_points, "prov-a/m",
-                                         seed = 33, n_draws = N_DRAWS_SMALL)
+    seed = 33, n_draws = N_DRAWS_SMALL
+  )
   bad <- distinct(dr, race_id, candidate_id) |>
     anti_join(valid, by = c("race_id", "candidate_id"))
   expect_equal(nrow(bad), 0)
-  expect_setequal(unique(dr$model_id), "prov-a/m")  # provider-specific
+  expect_setequal(unique(dr$model_id), "prov-a/m") # provider-specific
 })
 
 # ---------------------------------------------------------------------------
@@ -145,11 +148,19 @@ test_that("multiplicative layer keeps exact zeros exactly zero", {
 
 test_that("zero-support candidate gains far less mass under centered than existing", {
   dr_c <- generate_forecast_draws_centered(cells, calib_points, "prov-a/m",
-                                           seed = 44, n_draws = 400)
+    seed = 44, n_draws = 400
+  )
   dr_e <- generate_forecast_draws_existing(cells, "prov-a/m",
-                                           seed = 44, n_draws = 400)
-  zero_c <- dr_c |> filter(candidate_id == "MAYOR-003") |> summarise(m = mean(share)) |> pull(m)
-  zero_e <- dr_e |> filter(candidate_id == "MAYOR-003") |> summarise(m = mean(share)) |> pull(m)
+    seed = 44, n_draws = 400
+  )
+  zero_c <- dr_c |>
+    filter(candidate_id == "MAYOR-003") |>
+    summarise(m = mean(share)) |>
+    pull(m)
+  zero_e <- dr_e |>
+    filter(candidate_id == "MAYOR-003") |>
+    summarise(m = mean(share)) |>
+    pull(m)
   # Dirichlet pseudocount mass ~ 0.5/(200 + 1.5) ~= 0.25% for centered;
   # the additive 3pp noise injects an order of magnitude more.
   expect_true(zero_c < zero_e)
@@ -161,11 +172,14 @@ test_that("zero-support candidate gains far less mass under centered than existi
 # ---------------------------------------------------------------------------
 test_that("fixed seeds reproduce identical draws; different seeds differ", {
   a1 <- generate_forecast_draws_centered(cells, calib_points, "prov-a/m",
-                                         seed = 55, n_draws = N_DRAWS_SMALL)
+    seed = 55, n_draws = N_DRAWS_SMALL
+  )
   a2 <- generate_forecast_draws_centered(cells, calib_points, "prov-a/m",
-                                         seed = 55, n_draws = N_DRAWS_SMALL)
+    seed = 55, n_draws = N_DRAWS_SMALL
+  )
   a3 <- generate_forecast_draws_centered(cells, calib_points, "prov-a/m",
-                                         seed = 56, n_draws = N_DRAWS_SMALL)
+    seed = 56, n_draws = N_DRAWS_SMALL
+  )
   expect_identical(a1, a2)
   expect_false(isTRUE(all.equal(a1, a3)))
   # calibration itself is independently reproducible (fixed calibration seed)
@@ -176,17 +190,20 @@ test_that("fixed seeds reproduce identical draws; different seeds differ", {
 })
 
 test_that("expected output row counts", {
-  k_total <- n_distinct(cells$candidate_id)          # 5 across 2 races
+  k_total <- n_distinct(cells$candidate_id) # 5 across 2 races
   dr <- generate_forecast_draws_dirichlet(cells, "prov-b/m",
-                                          seed = 66, n_draws = N_DRAWS_SMALL)
-  expect_equal(nrow(dr), k_total * N_DRAWS_SMALL)     # 5 x 60 = 300
+    seed = 66, n_draws = N_DRAWS_SMALL
+  )
+  expect_equal(nrow(dr), k_total * N_DRAWS_SMALL) # 5 x 60 = 300
   sm <- summarise_provider_draws(dr, model_points)
   expect_equal(nrow(sm), k_total)
   # model_points covers BOTH providers:
-  expect_equal(nrow(model_points),
-               k_total * n_distinct(cells$model_id))  # 10
+  expect_equal(
+    nrow(model_points),
+    k_total * n_distinct(cells$model_id)
+  ) # 10
   bias <- forecast_centering_bias(dr, model_points |>
-                                    filter(model_id == "prov-b/m"))
+    filter(model_id == "prov-b/m"))
   expect_equal(nrow(bias), n_distinct(cells$race_id)) # one leader per race x provider
 })
 
@@ -195,7 +212,8 @@ test_that("expected output row counts", {
 # ---------------------------------------------------------------------------
 test_that("provider-specific p_win sums to 1 per race x provider", {
   dr <- generate_forecast_draws_centered(cells, calib_points, "prov-a/m",
-                                         seed = 77, n_draws = N_DRAWS_SMALL)
+    seed = 77, n_draws = N_DRAWS_SMALL
+  )
   sm <- summarise_provider_draws(dr, model_points)
   sums <- sm |>
     group_by(race_id, model_id) |>
@@ -207,9 +225,12 @@ test_that("provider-specific p_win sums to 1 per race x provider", {
 
 test_that("leader-centring bias is reported, finite and never silently zero", {
   dr_c <- generate_forecast_draws_centered(cells, calib_points, "prov-a/m",
-                                           seed = 88, n_draws = 400)
-  bias_c <- forecast_centering_bias(dr_c,
-                                    model_points |> filter(model_id == "prov-a/m"))
+    seed = 88, n_draws = 400
+  )
+  bias_c <- forecast_centering_bias(
+    dr_c,
+    model_points |> filter(model_id == "prov-a/m")
+  )
   expect_true(all(is.finite(bias_c$leader_bias_pp)))
   expect_true(all(bias_c$leader_bias_pp >= -100 & bias_c$leader_bias_pp <= 100))
   # The reported value must match an independent recomputation:
@@ -221,14 +242,19 @@ test_that("leader-centring bias is reported, finite and never silently zero", {
   # reported mean matches an independent recomputation, and the bias
   # column equals the documented formula (both reported, not assumed):
   expect_equal(joined$leader_mean_share, joined$mean_share, tolerance = 1e-12)
-  expect_equal(joined$leader_bias_pp,
-               100 * (joined$mean_share - joined$leader_point_share))
+  expect_equal(
+    joined$leader_bias_pp,
+    100 * (joined$mean_share - joined$leader_point_share)
+  )
   # Method A (additive noise) on a many-candidate race must show a clearly
   # NON-zero reported bias: the artifact is measured, not assumed away.
   dr_e <- generate_forecast_draws_existing(cells, "prov-a/m",
-                                           seed = 88, n_draws = 400)
-  bias_e <- forecast_centering_bias(dr_e,
-                                    model_points |> filter(model_id == "prov-a/m"))
+    seed = 88, n_draws = 400
+  )
+  bias_e <- forecast_centering_bias(
+    dr_e,
+    model_points |> filter(model_id == "prov-a/m")
+  )
   mayor_bias <- abs(bias_e$leader_bias_pp[bias_e$race_id == "mayor"])
   expect_gt(mayor_bias, 1)
 })
@@ -237,10 +263,13 @@ test_that("original generate_forecast_draws is unchanged in schema", {
   # Original function (mock pipeline) still works on its native input and
   # emits its documented columns.
   dr <- generate_forecast_draws(cells, seed = 99, n_draws = 20)
-  expect_true(all(c("race_id", "candidate_id", "draw_id",
-                    "source_model_id", "source_repeat_id", "share") %in%
-                    names(dr)))
-  sums <- dr |> group_by(race_id, draw_id) |>
+  expect_true(all(c(
+    "race_id", "candidate_id", "draw_id",
+    "source_model_id", "source_repeat_id", "share"
+  ) %in%
+    names(dr)))
+  sums <- dr |>
+    group_by(race_id, draw_id) |>
     summarise(s = sum(share), .groups = "drop")
   expect_true(all(abs(sums$s - 1) < 1e-9))
 })

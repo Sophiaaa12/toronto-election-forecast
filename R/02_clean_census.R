@@ -22,14 +22,14 @@ extract_block <- function(data, rows, header_row) {
     data[header_row, ],
     use.names = FALSE
   )
-  
+
   block <- data[rows, ]
-  
+
   names(block) <- c(
     "category",
     header[2:27]
   )
-  
+
   block |>
     pivot_longer(
       cols = -category,
@@ -65,20 +65,17 @@ age <- age_raw |>
         "20 to 24 years",
         "25 to 29 years"
       ) ~ "20-29",
-      
       category %in% c(
         "30 to 34 years",
         "35 to 39 years",
         "40 to 44 years"
       ) ~ "30-44",
-      
       category %in% c(
         "45 to 49 years",
         "50 to 54 years",
         "55 to 59 years",
         "60 to 64 years"
       ) ~ "45-64",
-      
       category %in% c(
         "65 to 69 years",
         "70 to 74 years",
@@ -87,7 +84,6 @@ age <- age_raw |>
         "85 to 89 years",
         "90 years and over"
       ) ~ "65+",
-      
       TRUE ~ NA_character_
     )
   ) |>
@@ -148,15 +144,12 @@ education <- education_raw |>
         "No certificate, diploma or degree",
         "High (secondary) school diploma or equivalency certificate"
       ) ~ "High school or less",
-      
       category ==
         "Postsecondary certificate or diploma below bachelor level" ~
         "Postsecondary below bachelor's",
-      
       category ==
         "Bachelor’s degree or higher" ~
         "Bachelor's degree or higher",
-      
       TRUE ~ NA_character_
     )
   ) |>
