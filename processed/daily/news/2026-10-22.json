@@ -1,0 +1,155 @@
+{
+  "poll_date": "2026-10-22",
+  "fetched_at_utc": "2026-10-22T21:46:12Z",
+  "lookback_hours": 36,
+  "sources": [
+    {
+      "source": "CBC Toronto",
+      "url": "https://www.cbc.ca/webfeed/rss/rss-canada-toronto",
+      "ok": true,
+      "n_items": 20,
+      "error": null
+    },
+    {
+      "source": "Toronto Star",
+      "url": "https://www.thestar.com/search/?f=rss&t=article&c=news/gta&l=50&s=start_time&sd=desc",
+      "ok": false,
+      "n_items": 0,
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://www.thestar.com/search/?f=rss&t=article&c=news/gta&l=50&s=start_time&sd=desc"
+    },
+    {
+      "source": "CityNews Toronto",
+      "url": "https://toronto.citynews.ca/feed/",
+      "ok": true,
+      "n_items": 14,
+      "error": null
+    },
+    {
+      "source": "Global News Toronto",
+      "url": "https://globalnews.ca/toronto/feed/",
+      "ok": true,
+      "n_items": 10,
+      "error": null
+    },
+    {
+      "source": "Toronto Sun",
+      "url": "https://torontosun.com/category/news/local-news/feed",
+      "ok": true,
+      "n_items": 10,
+      "error": null
+    }
+  ],
+  "n_sources_ok": 4,
+  "items": [
+    {
+      "source": "CBC Toronto",
+      "title": "Brad Bradford's pitch for Toronto: Property tax freeze, safer streets",
+      "description": "Brad Bradford is making his pitch to be Toronto’s next mayor, centring his platform on property tax relief and public safety. The mayoral candidate joined…",
+      "published_utc": "2026-10-22T20:13:58Z",
+      "link": "https://www.cbc.ca/player/play/9.7392191?cmp=rss",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Toronto Sun",
+      "title": "WARMINGTON: There are many rats down at city hall and not all of them are elected",
+      "description": "As rats infest Nathan Phillips Square, is Mayor Olivia Chow's imploding campaign using narrative Brad Bradford's \"white\" voters are leaving their \"white…",
+      "published_utc": "2026-10-22T17:53:13Z",
+      "link": "https://torontosun.com/news/local-news/many-rats-city-hall-not-all-are-elected",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "CBC Toronto",
+      "title": "Chow, 15 councillors criticize Bradford’s plan to spin off Toronto Water into public utility",
+      "description": "Mayoral challenger Brad Bradford has pitched creating a company like Toronto Hydro to deal with the city’s water. He says the plan will save money, Olivia…",
+      "published_utc": "2026-10-21T16:08:51Z",
+      "link": "https://www.cbc.ca/news/canada/toronto/brad-bradford-defends-debt-toronto-election-9.7389774?cmp=rss",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Toronto Sun",
+      "title": "Could ward poll be a preview of Progress Toronto collapse?",
+      "description": "New polling numbers suggest there may be trouble ahead for Spadina-Fort York’s Ausma Malik and a broader trend away from Progress Toronto",
+      "published_utc": "2026-10-22T18:50:58Z",
+      "link": "https://torontosun.com/news/local-news/ward-polling-progress-toronto-possible-collapse",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "CityNews Toronto",
+      "title": "Ottawa tells its diplomats not to meet with U.S. midterm candidates",
+      "description": "OTTAWA — Canadian diplomats were directed this week not to meet with or attend events with candidates in the U.S. midterm elections.",
+      "published_utc": "2026-10-22T19:02:51Z",
+      "link": "https://toronto.citynews.ca/2026/10/22/ottawa-tells-its-diplomats-not-to-meet-with-u-s-midterm-candidates/",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "CityNews Toronto",
+      "title": "Crombie leads in Mississauga mayoral race, Tedjo makes most gains since summer: poll",
+      "description": "A new poll finds Bonnie Crombie leading fellow candidates in the Mississauga mayoral race, with Alvin Tedjo making the most gains in voter support since the…",
+      "published_utc": "2026-10-22T15:28:35Z",
+      "link": "https://toronto.citynews.ca/2026/10/22/mississauga-mayoral-race-poll/",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "CityNews Toronto",
+      "title": "Some referendum questions flip to ‘no’ as the count continues in Alberta",
+      "description": "EDMONTON — More of the constitutional questions in Alberta's historic referendum have flipped to \"no\" with votes still being counted.",
+      "published_utc": "2026-10-22T13:08:05Z",
+      "link": "https://toronto.citynews.ca/2026/10/22/some-referendum-questions-flip-to-no-as-the-count-continues-in-alberta/",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "Toronto Sun",
+      "title": "LILLEY: Canada and U.S. trade election meddling charges",
+      "description": "Ottawa cries foul over American complaints, but neither side is innocent when it comes to meddling in a neighbour’s politics",
+      "published_utc": "2026-10-22T21:27:51Z",
+      "link": "https://torontosun.com/opinion/columnists/canada-u-s-trade-election-meddling-charges",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "Toronto Sun",
+      "title": "U.S. embassy accuses Canadian leaders of election interference",
+      "description": "Fact sheet suggests political meddling by Industry Minister Melanie Joly, Ontario Premier Doug Ford",
+      "published_utc": "2026-10-22T21:00:43Z",
+      "link": "https://torontosun.com/news/national/us-embassy-canadian-leaders-election-interference",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "Global News Toronto",
+      "title": "Competition at the heart of Raptors’ defence",
+      "description": "Ja'Kobe Walter made it a personal goal to lead the NBA in steals by the end of the season.",
+      "published_utc": "2026-10-22T18:39:08Z",
+      "link": "https://globalnews.ca/news/12113839/competition-at-the-heart-of-raptors-defence/",
+      "election_related": false,
+      "toronto_related": false
+    },
+    {
+      "source": "Global News Toronto",
+      "title": "Fire crews respond to massive blaze at scrap metal yard in Kingston",
+      "description": "A cloud of dark smoke billowed over Kingston after a structure fire broke out at KIMCO Steel Thursday morning, prompting a large emergency response.",
+      "published_utc": "2026-10-22T17:24:01Z",
+      "link": "https://globalnews.ca/news/12113387/large-structure-fire-kingston/",
+      "election_related": false,
+      "toronto_related": false
+    },
+    {
+      "source": "CBC Toronto",
+      "title": "Here’s how Olivia Chow and Brad Bradford plan to hire more cops",
+      "description": "Despite their contrasting outlooks on the issue of public safety, both Olivia Chow and Brad Bradford are promising to hire more police officers as part of…",
+      "published_utc": "2026-10-22T08:00:00Z",
+      "link": "https://www.cbc.ca/news/canada/toronto/toronto-mayoral-chow-bradford-hire-police-9.7389022?cmp=rss",
+      "election_related": false,
+      "toronto_related": true
+    }
+  ],
+  "news_block": "- [CBC Toronto] Brad Bradford's pitch for Toronto: Property tax freeze, safer streets — Brad Bradford is making his pitch to be Toronto’s next mayor, centring his platform on property tax relief and public safety. The mayoral candidate joined…\n- [Toronto Sun] WARMINGTON: There are many rats down at city hall and not all of them are elected — As rats infest Nathan Phillips Square, is Mayor Olivia Chow's imploding campaign using narrative Brad Bradford's \"white\" voters are leaving their \"white…\n- [CBC Toronto] Chow, 15 councillors criticize Bradford’s plan to spin off Toronto Water into public utility — Mayoral challenger Brad Bradford has pitched creating a company like Toronto Hydro to deal with the city’s water. He says the plan will save money, Olivia…\n- [Toronto Sun] Could ward poll be a preview of Progress Toronto collapse? — New polling numbers suggest there may be trouble ahead for Spadina-Fort York’s Ausma Malik and a broader trend away from Progress Toronto\n- [CityNews Toronto] Ottawa tells its diplomats not to meet with U.S. midterm candidates — OTTAWA — Canadian diplomats were directed this week not to meet with or attend events with candidates in the U.S. midterm elections.\n- [CityNews Toronto] Crombie leads in Mississauga mayoral race, Tedjo makes most gains since summer: poll — A new poll finds Bonnie Crombie leading fellow candidates in the Mississauga mayoral race, with Alvin Tedjo making the most gains in voter support since the…\n- [CityNews Toronto] Some referendum questions flip to ‘no’ as the count continues in Alberta — EDMONTON — More of the constitutional questions in Alberta's historic referendum have flipped to \"no\" with votes still being counted.\n- [Toronto Sun] LILLEY: Canada and U.S. trade election meddling charges — Ottawa cries foul over American complaints, but neither side is innocent when it comes to meddling in a neighbour’s politics\n- [Toronto Sun] U.S. embassy accuses Canadian leaders of election interference — Fact sheet suggests political meddling by Industry Minister Melanie Joly, Ontario Premier Doug Ford\n- [Global News Toronto] Competition at the heart of Raptors’ defence — Ja'Kobe Walter made it a personal goal to lead the NBA in steals by the end of the season.\n- [Global News Toronto] Fire crews respond to massive blaze at scrap metal yard in Kingston — A cloud of dark smoke billowed over Kingston after a structure fire broke out at KIMCO Steel Thursday morning, prompting a large emergency response.\n- [CBC Toronto] Here’s how Olivia Chow and Brad Bradford plan to hire more cops — Despite their contrasting outlooks on the issue of public safety, both Olivia Chow and Brad Bradford are promising to hire more police officers as part of…",
+  "usable": true
+}
