@@ -10,7 +10,7 @@
 #   processed/daily/history.csv        (R/12_daily_forecast.R)
 #   processed/daily/stats_history.csv
 #   processed/daily/news/<date>.json
-#   raw/geography/ward_names.xlsx
+#   data/01-raw_data/geography/ward_names.xlsx
 #
 # Outputs:
 #   website/figures/daily_mayor.png, daily_wards.png

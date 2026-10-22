@@ -3,12 +3,12 @@
 
 library(readxl)
 
-zip_path <- "raw/elections/election_results_2022.zip"
-turnout_path <- "raw/elections/turnout_2022.xlsx"
-mayor_2023_path <- "raw/elections/mayor_by_election_2023.xlsx"
-ward20_path <- "raw/elections/ward20_by_election_2023.xlsx"
-ward15_path <- "raw/elections/ward15_by_election_2024.xlsx"
-ward25_path <- "raw/elections/ward25_by_election_2025.xlsx"
+zip_path <- "data/01-raw_data/elections/election_results_2022.zip"
+turnout_path <- "data/01-raw_data/elections/turnout_2022.xlsx"
+mayor_2023_path <- "data/01-raw_data/elections/mayor_by_election_2023.xlsx"
+ward20_path <- "data/01-raw_data/elections/ward20_by_election_2023.xlsx"
+ward15_path <- "data/01-raw_data/elections/ward15_by_election_2024.xlsx"
+ward25_path <- "data/01-raw_data/elections/ward25_by_election_2025.xlsx"
 
 # Extract the 2022 mayor and councillor files to a temporary directory
 temp_2022 <- tempdir()

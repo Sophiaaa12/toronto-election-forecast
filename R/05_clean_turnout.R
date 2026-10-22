@@ -5,7 +5,7 @@ library(readxl)
 library(dplyr)
 library(readr)
 
-turnout_path <- "raw/elections/turnout_2022.xlsx"
+turnout_path <- "data/01-raw_data/elections/turnout_2022.xlsx"
 
 # Read the 2022 turnout data
 turnout_raw <- read_excel(

@@ -3,7 +3,7 @@
 
 library(readxl)
 
-census_path <- "raw/census/ward_profiles_2021.xlsx"
+census_path <- "data/01-raw_data/census/ward_profiles_2021.xlsx"
 
 # List available worksheets
 excel_sheets(census_path)

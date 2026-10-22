@@ -3,7 +3,7 @@
 # Task 7A: generates every figure and markdown table used by the Quarto
 # website from COMMITTED project data only. No LLM APIs are called; no
 # production or forecast artifact is modified (this script only READS
-# processed/ and raw/ files, and WRITES new files under website/figures
+# processed/ and data/01-raw_data/ files, and WRITES new files under website/figures
 # and website/tables).
 #
 # Run from anywhere inside the project:
@@ -16,7 +16,7 @@
 #   processed/production/llm_responses.parquet             response diagnostics
 #   processed/diagnostic/c{0,1,2}_ballot_responses.parquet order experiment
 #   processed/simulated/candidate_crosswalk.parquet        candidate names
-#   raw/geography/wards.geojson, raw/geography/ward_names.xlsx
+#   data/01-raw_data/geography/wards.geojson, data/01-raw_data/geography/ward_names.xlsx
 #
 # Outputs:
 #   website/figures/fig1..fig6 .png
@@ -81,7 +81,7 @@ summary_c <- summary_c |> left_join(nm, by = c("race_id", "candidate_id"))
 pooled2 <- pooled |> left_join(nm, by = c("race_id", "candidate_id"))
 stopifnot(!anyNA(summary_c$ballot_name), !anyNA(pooled2$ballot_name))
 
-ward_names <- read_excel("raw/geography/ward_names.xlsx") |>
+ward_names <- read_excel("data/01-raw_data/geography/ward_names.xlsx") |>
   transmute(ward = as.integer(`Ward Number`), ward_name = `Ward Name`)
 wlab <- function(w) {
   wn <- ward_names$ward_name[match(w, ward_names$ward)]
@@ -309,7 +309,7 @@ fig3 <- ggplot(f3dat, aes(y = facet)) +
 save_fig("website/figures/fig3_disagreement_dotplot.png", fig3, width = 11, height = 9)
 
 # --- FIGURE 4: Toronto ward disagreement map ---------------------------------
-wards_sf <- st_transform(st_read("raw/geography/wards.geojson", quiet = TRUE), 4326)
+wards_sf <- st_transform(st_read("data/01-raw_data/geography/wards.geojson", quiet = TRUE), 4326)
 wards_sf$ward <- as.integer(wards_sf$WARD_NUMBER)
 split_names <- leaders |>
   filter(race_id != "mayor") |>

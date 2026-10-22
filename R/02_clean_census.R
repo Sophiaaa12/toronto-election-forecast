@@ -7,7 +7,7 @@ library(tidyr)
 library(stringr)
 library(readr)
 
-census_path <- "raw/census/ward_profiles_2021.xlsx"
+census_path <- "data/01-raw_data/census/ward_profiles_2021.xlsx"
 
 # Read the 2021 One Variable worksheet
 census <- read_excel(

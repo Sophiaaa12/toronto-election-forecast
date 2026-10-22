@@ -13,19 +13,19 @@ dir.create(
 
 # Check required raw files
 required_files <- c(
-  "raw/census/ward_profiles_2021.xlsx",
-  "raw/candidates/mayor_candidates_2026.json",
-  "raw/candidates/councillor_candidates_2026.json",
-  "raw/candidates/withdrawn_candidates_2026.json",
-  "raw/elections/election_results_2022.zip",
-  "raw/elections/turnout_2022.xlsx",
-  "raw/elections/mayor_by_election_2023.xlsx",
-  "raw/elections/ward20_by_election_2023.xlsx",
-  "raw/elections/ward15_by_election_2024.xlsx",
-  "raw/elections/ward25_by_election_2025.xlsx",
-  "raw/geography/wards.geojson",
-  "raw/geography/ward_names.xlsx",
-  "raw/incumbency/elected_officials_2022_2026.json"
+  "data/01-raw_data/census/ward_profiles_2021.xlsx",
+  "data/01-raw_data/candidates/mayor_candidates_2026.json",
+  "data/01-raw_data/candidates/councillor_candidates_2026.json",
+  "data/01-raw_data/candidates/withdrawn_candidates_2026.json",
+  "data/01-raw_data/elections/election_results_2022.zip",
+  "data/01-raw_data/elections/turnout_2022.xlsx",
+  "data/01-raw_data/elections/mayor_by_election_2023.xlsx",
+  "data/01-raw_data/elections/ward20_by_election_2023.xlsx",
+  "data/01-raw_data/elections/ward15_by_election_2024.xlsx",
+  "data/01-raw_data/elections/ward25_by_election_2025.xlsx",
+  "data/01-raw_data/geography/wards.geojson",
+  "data/01-raw_data/geography/ward_names.xlsx",
+  "data/01-raw_data/incumbency/elected_officials_2022_2026.json"
 )
 
 missing_files <- required_files[!file.exists(required_files)]
@@ -51,7 +51,7 @@ read_json_raw <- function(path) {
 
 # Read current elected officials
 officials <- read_json_raw(
-  "raw/incumbency/elected_officials_2022_2026.json"
+  "data/01-raw_data/incumbency/elected_officials_2022_2026.json"
 )
 
 incumbents <- list()
@@ -93,8 +93,8 @@ for (person in officials) {
 
 # Prepare 2026 candidate lists
 candidate_files <- c(
-  mayor = "raw/candidates/mayor_candidates_2026.json",
-  councillor = "raw/candidates/councillor_candidates_2026.json"
+  mayor = "data/01-raw_data/candidates/mayor_candidates_2026.json",
+  councillor = "data/01-raw_data/candidates/councillor_candidates_2026.json"
 )
 
 candidate_rows <- list()
@@ -181,7 +181,7 @@ message("Created: processed/candidates_2026.csv")
 
 # Prepare ward lookup
 wards <- read_excel(
-  "raw/geography/ward_names.xlsx"
+  "data/01-raw_data/geography/ward_names.xlsx"
 )
 
 write.csv(
@@ -196,7 +196,7 @@ message("Created: processed/wards.csv")
 
 # Check Census worksheets
 census_sheets <- excel_sheets(
-  "raw/census/ward_profiles_2021.xlsx"
+  "data/01-raw_data/census/ward_profiles_2021.xlsx"
 )
 
 required_census_sheets <- c(
@@ -212,7 +212,7 @@ if (!all(required_census_sheets %in% census_sheets)) {
 
 # Validate candidates and geography
 map_data <- read_json_raw(
-  "raw/geography/wards.geojson"
+  "data/01-raw_data/geography/wards.geojson"
 )
 
 validation <- list(

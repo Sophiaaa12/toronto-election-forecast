@@ -17,11 +17,11 @@ library(digest)
 # ------------------------------------------------------------
 
 dirs <- c(
-  "raw/census",
-  "raw/candidates",
-  "raw/elections",
-  "raw/geography",
-  "raw/incumbency"
+  "data/01-raw_data/census",
+  "data/01-raw_data/candidates",
+  "data/01-raw_data/elections",
+  "data/01-raw_data/geography",
+  "data/01-raw_data/incumbency"
 )
 
 for (dir in dirs) {
@@ -38,7 +38,7 @@ files <- list(
   # Census
   # ------------------------
   list(
-    file = "raw/census/ward_profiles_2021.xlsx",
+    file = "data/01-raw_data/census/ward_profiles_2021.xlsx",
     url = paste0(
       "https://ckan0.cf.opendata.inter.prod-toronto.ca/",
       "dataset/6678e1a6-d25f-4dff-b2b7-aa8f042bc2eb/",
@@ -55,19 +55,19 @@ files <- list(
   # ------------------------
 
   list(
-    file = "raw/candidates/mayor_candidates_2026.json",
+    file = "data/01-raw_data/candidates/mayor_candidates_2026.json",
     url = "https://www.toronto.ca/data/elections/candidate_list/mayorCandidates_2026.json",
     source = "https://www.toronto.ca/city-government/elections/candidate-list/",
     purpose = "Official 2026 mayor candidate list"
   ),
   list(
-    file = "raw/candidates/councillor_candidates_2026.json",
+    file = "data/01-raw_data/candidates/councillor_candidates_2026.json",
     url = "https://www.toronto.ca/data/elections/candidate_list/councilorCandidates_2026.json",
     source = "https://www.toronto.ca/city-government/elections/candidate-list/",
     purpose = "Official 2026 councillor candidate lists by ward"
   ),
   list(
-    file = "raw/candidates/withdrawn_candidates_2026.json",
+    file = "data/01-raw_data/candidates/withdrawn_candidates_2026.json",
     url = "https://www.toronto.ca/data/elections/candidate_list/withdrawnCandidates_2026.json",
     source = "https://www.toronto.ca/city-government/elections/candidate-list/",
     purpose = "Quality check for withdrawn candidates"
@@ -79,7 +79,7 @@ files <- list(
   # ------------------------
 
   list(
-    file = "raw/elections/election_results_2022.zip",
+    file = "data/01-raw_data/elections/election_results_2022.zip",
     url = paste0(
       "https://ckan0.cf.opendata.inter.prod-toronto.ca/",
       "dataset/96d35404-44d9-49d8-95bb-fb1e5489240d/",
@@ -90,7 +90,7 @@ files <- list(
     purpose = "2022 mayor and councillor historical election results"
   ),
   list(
-    file = "raw/elections/turnout_2022.xlsx",
+    file = "data/01-raw_data/elections/turnout_2022.xlsx",
     url = paste0(
       "https://ckan0.cf.opendata.inter.prod-toronto.ca/",
       "dataset/7dc606ab-f042-4d90-99e2-9247cb5953d2/",
@@ -101,7 +101,7 @@ files <- list(
     purpose = "Ward-level electorate and turnout for weighting"
   ),
   list(
-    file = "raw/elections/mayor_by_election_2023.xlsx",
+    file = "data/01-raw_data/elections/mayor_by_election_2023.xlsx",
     url = paste0(
       "https://ckan0.cf.opendata.inter.prod-toronto.ca/",
       "dataset/97d72233-8681-4b3d-828e-4929d40d122c/",
@@ -112,7 +112,7 @@ files <- list(
     purpose = "Most recent citywide mayor election baseline"
   ),
   list(
-    file = "raw/elections/ward20_by_election_2023.xlsx",
+    file = "data/01-raw_data/elections/ward20_by_election_2023.xlsx",
     url = paste0(
       "https://ckan0.cf.opendata.inter.prod-toronto.ca/",
       "dataset/97d72233-8681-4b3d-828e-4929d40d122c/",
@@ -123,7 +123,7 @@ files <- list(
     purpose = "Updated historical councillor result for Ward 20"
   ),
   list(
-    file = "raw/elections/ward15_by_election_2024.xlsx",
+    file = "data/01-raw_data/elections/ward15_by_election_2024.xlsx",
     url = paste0(
       "https://ckan0.cf.opendata.inter.prod-toronto.ca/",
       "dataset/97d72233-8681-4b3d-828e-4929d40d122c/",
@@ -134,7 +134,7 @@ files <- list(
     purpose = "Updated historical councillor result for Ward 15"
   ),
   list(
-    file = "raw/elections/ward25_by_election_2025.xlsx",
+    file = "data/01-raw_data/elections/ward25_by_election_2025.xlsx",
     url = paste0(
       "https://ckan0.cf.opendata.inter.prod-toronto.ca/",
       "dataset/97d72233-8681-4b3d-828e-4929d40d122c/",
@@ -151,7 +151,7 @@ files <- list(
   # ------------------------
 
   list(
-    file = "raw/geography/wards.geojson",
+    file = "data/01-raw_data/geography/wards.geojson",
     url = paste0(
       "https://ckan0.cf.opendata.inter.prod-toronto.ca/",
       "dataset/a2a33cd7-877e-4b68-af54-dfe8a6b53170/",
@@ -162,7 +162,7 @@ files <- list(
     purpose = "Ward boundaries for maps and geographic validation"
   ),
   list(
-    file = "raw/geography/ward_names.xlsx",
+    file = "data/01-raw_data/geography/ward_names.xlsx",
     url = paste0(
       "https://ckan0.cf.opendata.inter.prod-toronto.ca/",
       "dataset/6678e1a6-d25f-4dff-b2b7-aa8f042bc2eb/",
@@ -179,7 +179,7 @@ files <- list(
   # ------------------------
 
   list(
-    file = "raw/incumbency/elected_officials_2022_2026.json",
+    file = "data/01-raw_data/incumbency/elected_officials_2022_2026.json",
     url = paste0(
       "https://ckan0.cf.opendata.inter.prod-toronto.ca/",
       "dataset/27aa4651-4548-4e57-bf00-53a346931251/",
