@@ -198,8 +198,8 @@ All randomness uses the fixed seeds in `R/simulation_helpers.R`; repeated runs p
 ## Real LLM Sampling (completed)
 
 > **Status: production silicon sampling is COMPLETE and committed.**
-> 36,504 production responses (3,042 personas × 26 races × 2 models × 3
-> repeats) live in `processed/production/llm_responses.parquet`
+> 36,504 production responses (3,042 personas × 2 races each [mayor + own
+> ward] × 2 models × 3 repeats) live in `processed/production/llm_responses.parquet`
 > (md5 `420c3051da6c9a291f5fcf7b587e06bf`, protected by an md5 guard in
 > `R/10_llm_poststratify.R`). Production spend was **US$3.1631**;
 > cumulative spend across the pilot, diagnostic and production runs was
