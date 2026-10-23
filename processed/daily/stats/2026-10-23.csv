@@ -1,0 +1,3 @@
+poll_date,model_id,requests,personas,valid_choice,undecided,not_voting,failed,input_tokens,cached_tokens,output_tokens,cost_usd,news_items
+2026-10-23,google/gemini-2.5-flash-lite,2400,1200,1381,1016,0,3,3092469,175539,57660,0.316512,12
+2026-10-23,openai/gpt-4o-mini,2400,1200,1707,693,0,0,2861104,901632,40225,0.385678,12

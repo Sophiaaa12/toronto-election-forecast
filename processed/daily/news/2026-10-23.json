@@ -1,0 +1,155 @@
+{
+  "poll_date": "2026-10-23",
+  "fetched_at_utc": "2026-10-23T15:04:37Z",
+  "lookback_hours": 36,
+  "sources": [
+    {
+      "source": "CBC Toronto",
+      "url": "https://www.cbc.ca/webfeed/rss/rss-canada-toronto",
+      "ok": true,
+      "n_items": 20,
+      "error": null
+    },
+    {
+      "source": "Toronto Star",
+      "url": "https://www.thestar.com/search/?f=rss&t=article&c=news/gta&l=50&s=start_time&sd=desc",
+      "ok": true,
+      "n_items": 50,
+      "error": null
+    },
+    {
+      "source": "CityNews Toronto",
+      "url": "https://toronto.citynews.ca/feed/",
+      "ok": true,
+      "n_items": 13,
+      "error": null
+    },
+    {
+      "source": "Global News Toronto",
+      "url": "https://globalnews.ca/toronto/feed/",
+      "ok": true,
+      "n_items": 10,
+      "error": null
+    },
+    {
+      "source": "Toronto Sun",
+      "url": "https://torontosun.com/category/news/local-news/feed",
+      "ok": true,
+      "n_items": 10,
+      "error": null
+    }
+  ],
+  "n_sources_ok": 5,
+  "items": [
+    {
+      "source": "CBC Toronto",
+      "title": "Olivia Chow, Brad Bradford face off in last debate before election day",
+      "description": "The two top candidates vying to be mayor of Toronto debated one last time before voters head to the polls on election day.",
+      "published_utc": "2026-10-22T23:54:22Z",
+      "link": "https://www.cbc.ca/news/canada/toronto/chow-bradford-last-debate-toronto-mayoral-election-9.7392524?cmp=rss",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Toronto Star",
+      "title": "Toronto kids voted for the city's first 'tree of the year.' This is their sweet choice",
+      "description": "Voters under 18 had five candidates to choose from: basswood, paper birch, red oak, sugar maple and white pine.",
+      "published_utc": "2026-10-23T11:00:00Z",
+      "link": "https://www.thestar.com/news/gta/toronto-kids-voted-for-the-city-s-first-tree-of-the-year-this-is-their-sweet-choice/article_56febc77-cb83-4325-a09b-85b10a8a4136.html",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "CityNews Toronto",
+      "title": "3 days to go: Chow leads Bradford by 5 points in Toronto mayoral race, latest poll finds",
+      "description": "With just three days to go until Toronto votes, a new poll shows incumbent Mayor Olivia Chow has the lead over Brad Bradford by five percentage points, but…",
+      "published_utc": "2026-10-23T10:04:04Z",
+      "link": "https://toronto.citynews.ca/2026/10/23/toronto-olivia-chow-leads-bradford-by-5-points-in-mayoral-race-poll/",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Global News Toronto",
+      "title": "Toronto election: Chow holding decisive lead over Bradford, new poll indicates",
+      "description": "A new poll released Friday suggests Olivia Chow is holding a decisive lead over Brad Bradford in Toronto’s mayoral contest.",
+      "published_utc": "2026-10-23T15:02:52Z",
+      "link": "https://globalnews.ca/news/12118421/olivia-chow-brad-bradford-pollara-poll/",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "CBC Toronto",
+      "title": "Brad Bradford's pitch for Toronto: Property tax freeze, safer streets",
+      "description": "Brad Bradford is making his pitch to be Toronto’s next mayor, centring his platform on property tax relief and public safety. The mayoral candidate joined…",
+      "published_utc": "2026-10-22T20:13:58Z",
+      "link": "https://www.cbc.ca/player/play/9.7392191?cmp=rss",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Toronto Star",
+      "title": "Brad Bradford and Olivia Chow just faced off in their final debate. Here are 4 takeaways",
+      "description": "Candidates clash over taxes, data centres and more — as election day looms",
+      "published_utc": "2026-10-23T09:00:00Z",
+      "link": "https://www.thestar.com/news/brad-bradford-and-olivia-chow-faced-off-in-their-final-debate-here-s-what-happened/article_89bcefec-1bb7-4fd9-ad3c-8cadb39d9255.html",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Toronto Star",
+      "title": "Why Brad Bradford's ward is a wide open race",
+      "description": "In Ward 19 (Beaches-East York), the shadow of the outgoing local councillor looms over the candidates — and voters.",
+      "published_utc": "2026-10-23T09:00:00Z",
+      "link": "https://www.thestar.com/news/gta/a-former-mp-a-seasoned-city-hall-journalist-and-a-beloved-community-activist-why-beaches-east-york-is-wide-open/article_5d72727c-484c-43b6-89ba-dbcd3bc42bb7.html",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Toronto Star",
+      "title": "Why a Brad Bradford victory could have a different look than any other Toronto mayoral race",
+      "description": "Brad Bradford could win the Toronto mayoralty despite losing support in his home ward of Beaches—East York.",
+      "published_utc": "2026-10-23T09:00:00Z",
+      "link": "https://www.thestar.com/news/gta/why-a-brad-bradford-victory-would-be-starkly-different-from-any-other-toronto-mayoral-race/article_a26172da-17d5-4d88-a32d-22b8f2d589e9.html",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Toronto Sun",
+      "title": "Despite PR invoices, city hall denies comms consultant spend",
+      "description": "While the city insists its comms division spent 'zero dollars' on consultants, invoices were addressed to that unit’s seventh-floor offices",
+      "published_utc": "2026-10-23T14:43:49Z",
+      "link": "https://torontosun.com/news/local-news/city-hall-apex-pr-king-ursa",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "Toronto Sun",
+      "title": "LILLEY: Canada and U.S. trade election meddling charges",
+      "description": "Ottawa cries foul over American complaints, but neither side is innocent when it comes to meddling in a neighbour’s politics",
+      "published_utc": "2026-10-22T21:27:51Z",
+      "link": "https://torontosun.com/opinion/columnists/canada-u-s-trade-election-meddling-charges",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "CBC Toronto",
+      "title": "How Oshawa mayoral candidates plan to address homelessness — and what experts think",
+      "description": "Oshawa has the highest homeless population in Durham Region, according to regional data. Here’s how three councillors running for mayor say they would address…",
+      "published_utc": "2026-10-23T09:00:00Z",
+      "link": "https://www.cbc.ca/news/canada/toronto/oshawa-mayoral-candidates-homelessness-experts-9.7392220?cmp=rss",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "Toronto Sun",
+      "title": "U.S. embassy accuses Canadian leaders of election interference",
+      "description": "Fact sheet suggests political meddling by Industry Minister Melanie Joly, Ontario Premier Doug Ford",
+      "published_utc": "2026-10-22T21:00:43Z",
+      "link": "https://torontosun.com/news/national/us-embassy-canadian-leaders-election-interference",
+      "election_related": true,
+      "toronto_related": false
+    }
+  ],
+  "news_block": "- [CBC Toronto] Olivia Chow, Brad Bradford face off in last debate before election day — The two top candidates vying to be mayor of Toronto debated one last time before voters head to the polls on election day.\n- [Toronto Star] Toronto kids voted for the city's first 'tree of the year.' This is their sweet choice — Voters under 18 had five candidates to choose from: basswood, paper birch, red oak, sugar maple and white pine.\n- [CityNews Toronto] 3 days to go: Chow leads Bradford by 5 points in Toronto mayoral race, latest poll finds — With just three days to go until Toronto votes, a new poll shows incumbent Mayor Olivia Chow has the lead over Brad Bradford by five percentage points, but…\n- [Global News Toronto] Toronto election: Chow holding decisive lead over Bradford, new poll indicates — A new poll released Friday suggests Olivia Chow is holding a decisive lead over Brad Bradford in Toronto’s mayoral contest.\n- [CBC Toronto] Brad Bradford's pitch for Toronto: Property tax freeze, safer streets — Brad Bradford is making his pitch to be Toronto’s next mayor, centring his platform on property tax relief and public safety. The mayoral candidate joined…\n- [Toronto Star] Brad Bradford and Olivia Chow just faced off in their final debate. Here are 4 takeaways — Candidates clash over taxes, data centres and more — as election day looms\n- [Toronto Star] Why Brad Bradford's ward is a wide open race — In Ward 19 (Beaches-East York), the shadow of the outgoing local councillor looms over the candidates — and voters.\n- [Toronto Star] Why a Brad Bradford victory could have a different look than any other Toronto mayoral race — Brad Bradford could win the Toronto mayoralty despite losing support in his home ward of Beaches—East York.\n- [Toronto Sun] Despite PR invoices, city hall denies comms consultant spend — While the city insists its comms division spent 'zero dollars' on consultants, invoices were addressed to that unit’s seventh-floor offices\n- [Toronto Sun] LILLEY: Canada and U.S. trade election meddling charges — Ottawa cries foul over American complaints, but neither side is innocent when it comes to meddling in a neighbour’s politics\n- [CBC Toronto] How Oshawa mayoral candidates plan to address homelessness — and what experts think — Oshawa has the highest homeless population in Durham Region, according to regional data. Here’s how three councillors running for mayor say they would address…\n- [Toronto Sun] U.S. embassy accuses Canadian leaders of election interference — Fact sheet suggests political meddling by Industry Minister Melanie Joly, Ontario Premier Doug Ford",
+  "usable": true
+}

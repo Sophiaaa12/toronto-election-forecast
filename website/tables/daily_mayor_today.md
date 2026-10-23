@@ -1,9 +1,9 @@
-Results for October 22, 2026: post-stratified share [95% simulation interval] · simulation win frequency.
+Results for October 23, 2026: post-stratified share [95% simulation interval] · simulation win frequency.
 
 | Candidate | Gemini 2.5 Flash Lite | GPT-4o-mini |
 |---|---|---|
-| Brad Bradford | 81.6% [67.3%, 87.8%] · win 100% | 91.3% [81.2%, 93.4%] · win 100% |
-| Olivia Chow | 18.4% [10.1%, 29.6%] · win 0% | 8.7% [4.8%, 15.4%] · win 0% |
-| Imad Abdulkadir | 0.0% [0.0%, 0.3%] · win 0% | 0.0% [0.0%, 0.3%] · win 0% |
-| Bahira Abdulsalam | 0.0% [0.0%, 0.3%] · win 0% | 0.0% [0.0%, 0.3%] · win 0% |
-| Chris Alexander | 0.0% [0.0%, 0.3%] · win 0% | 0.0% [0.0%, 0.3%] · win 0% |
+| Olivia Chow | 98.5% [61.3%, 99.1%] · win 99% | 100.0% [71.6%, 99.5%] · win 100% |
+| Brad Bradford | 1.5% [0.1%, 20.7%] · win 1% | 0.0% [0.0%, 1.0%] · win 0% |
+| Imad Abdulkadir | 0.0% [0.0%, 0.9%] · win 0% | 0.0% [0.0%, 0.8%] · win 0% |
+| Bahira Abdulsalam | 0.0% [0.0%, 0.7%] · win 0% | 0.0% [0.0%, 1.0%] · win 0% |
+| Chris Alexander | 0.0% [0.0%, 1.1%] · win 0% | 0.0% [0.0%, 1.2%] · win 0% |
