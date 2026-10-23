@@ -50,13 +50,13 @@ Full mayoral detail, one row per candidate sorted by descriptive pooled share (c
 
 ### Ward councillor races
 
-![All 25 ward councillor races. Each panel lists every candidate in either provider's top two (\* = incumbent), strongest pooled share at the top. Dots are each provider's post-stratified share and bars its 95% simulation interval; when the two providers' highest dots sit on different rows, they disagree about who leads.](figures/fig2_wards.png){#fig-wards fig-alt="Faceted dot-and-interval chart for all 25 ward councillor races. Each panel lists the candidates in either provider's top two, with each provider's post-stratified point estimate as a dot and its 95 percent simulation interval as a horizontal bar."}
+![All 25 ward races. Each panel shows either provider's top two candidates (\* = incumbent). Dots are post-stratified shares and bars are 95% simulation intervals.](figures/fig2_wards.png){#fig-wards fig-alt="Faceted dot-and-interval chart for all 25 ward councillor races. Each panel lists the candidates in either provider's top two, with each provider's post-stratified point estimate as a dot and its 95 percent simulation interval as a horizontal bar."}
 
 Each ward will correspond to a single panel, where each panel shows the candidates ranked in the top two by either model to ensure the prediction of the top 1 candidate of each model can be included (incumbents marked \*). Candidates are ordered by the descriptive pooled share from the highest to the lowest. For each model, the dot represents as provider's point estimate and horizontal bar represents as 95% simulation interval. Therefore, if the highest dot appeared in different rows for two providers, it means that their predictions of the first ranking are disparate, such as Ward 03, 09 and 13 shown in the Figure. For each ward and provider, the effective sample sizes are small (Kish $n_{\text{eff}}$ ≈ 79–165) so that the prediction intervals are wide (typically 30–60 percentage points). This reflects the uncertainty within LLM response mechanism. Full per-candidate summaries with all 243 candidates across 26 races are stored in `processed/forecast/forecast_summary_centered.parquet`.
 
 ### All 26 races
 
-Every race in one table: the *descriptive* pooled leader (equal-weight average over all six provider × repeat cells — a summary, not a forecast combination), and each provider's leading candidate with post-stratified point share, 95% simulation interval, and simulation win frequency. "Candidates" is the number of names on that race's ballot, and "Same leader?" says whether the two providers' top candidates by post-stratified share match.
+Each race corresponds to one single row. The pooled leader is an equal-weight average of two providers instead of a combined forecast.
 
 {{< include tables/race_table.md >}}
 
@@ -104,15 +104,20 @@ What that day's requests cost.
 
 ## Provider Comparison {#providers}
 
-![Each ward's row connects the two providers' simulation win frequencies for their own leading candidate (leader = highest post-stratified point share). The top block (red) holds the 8 wards where the providers name different leaders, with both leaders named; in the bottom block the providers share one leader, named once in grey. A single visible point means both providers sit at about 100%. Source: `processed/forecast/forecast_summary_centered.parquet` — win frequencies are simulation frequencies, not calibrated probabilities.](figures/fig3_disagreement_dotplot.png){#fig-disagree-a fig-alt="Dotplot with 25 rows, one per Toronto ward. Each row has two coloured dots connected by a line showing each provider's simulation win frequency for its leading candidate; the top 8 red rows are wards where providers name different leaders, each labelled with both leaders' names; the other 17 rows are labelled with the shared leader's name."}
+![Simulation win frequency of each provider's leading candidate, one row per ward. Red rows are the 8 wards where the providers name different leaders.](figures/fig3_disagreement_dotplot.png){#fig-disagree-a fig-alt="Dotplot with 25 rows, one per Toronto ward. Each row has two coloured dots connected by a line showing each provider's simulation win frequency for its leading candidate; the top 8 red rows are wards where providers name different leaders, each labelled with both leaders' names; the other 17 rows are labelled with the shared leader's name."}
 
 The map below shows the same disagreement geographically: every ward is labelled with its number and name, and each red ward also lists the two providers' different leaders. Disagreement clusters in the old city core (Wards 04, 09, 13, 14), the Etobicoke lakeshore (03), and northern and southwestern Scarborough (20, 22, 23).
 
-![Toronto's 25 wards shaded by whether the two providers name the same leading candidate (highest post-stratified point share): 8 wards red (different leaders, with each provider's leader labelled), 17 blue (agree). Source: ward geometry `data/01-raw_data/geography/wards.geojson` (City of Toronto Open Data) and committed forecast summaries.](figures/fig4_disagreement_map.png){#fig-disagree-b fig-alt="Map of Toronto showing all 25 ward polygons, each labelled with ward number and name; 8 wards are shaded red where providers name different leading candidates, with labels giving the Gemini and GPT leaders, and 17 are shaded light blue where they agree."}
+![Wards where the two providers name different leaders (red, 8 wards) or the same leader (blue, 17 wards).](figures/fig4_disagreement_map.png){#fig-disagree-b fig-alt="Map of Toronto showing all 25 ward polygons, each labelled with ward number and name; 8 wards are shaded red where providers name different leading candidates, with labels giving the Gemini and GPT leaders, and 17 are shaded light blue where they agree."}
 
 ### Reconciling two leader definitions
 
-A "leading candidate" can be defined two ways, and they disagree in a few wards because the point estimates and the draws summarise different things (provider point estimates average three repeat cells; win frequencies average 500 draws that resample cells and add uncertainty layers):
+A leading candidate can be defined in two ways:
+
+- **Provider point estimates:** Average the results from three repeat cells.
+- **Win frequencies:** Average the results from 500 draws that resample cells and add uncertainty layers.
+
+These two methods may identify different leading candidates in some wards.
 
 | Leader definition | Wards where providers disagree |
 |---|---|
@@ -121,14 +126,14 @@ A "leading candidate" can be defined two ways, and they disagree in a few wards 
 
 The website uses the **point-share definition** throughout (@fig-wards, @fig-disagree-a, @fig-disagree-b, @tbl-races, and this section). The three definitional edge cases are instructive:
 
-- **Ward 09** — Gemini's point shares are a near three-way tie (Martins, Marco 30.1%; Bravo, Alejandra 29.7%; one other 29.3%), so its top-point candidate is *not* its top-win-frequency candidate. GPT strongly favours the incumbent **Bravo, Alejandra** (82.5%, win frequency 100%), and by win frequency both providers name Bravo.
-- **Ward 13** — GPT's point shares are nearly tied (Harris, Morgan 24.7% vs incumbent **Moise, Chris** 24.0%), so GPT's top-point candidate is Harris while its top-win-frequency candidate is Moise; Gemini strongly favours Moise (57.0%). By win frequency both providers name Moise.
-- **Ward 15** — both providers' top-point candidate is the incumbent **Chernos Lin, Rachel** (Gemini 48.0%, GPT 73.7%), but across Gemini's three repeat cells the challenger **Sharp, Sheena** leads in the majority of simulation draws (win frequency 58.0% vs 41.8%), so the win-frequency definition flags a split that the point-share definition does not.
+- **Ward 09:** Based on vote-share point estimates, the two providers disagree. Gemini shows that three candidates' vote shares are close (Marco Martins (30.1%), Alejandra Bravo (29.7%), and another candidate (29.3%)), with Marco Martins slightly leading, while GPT mainly supports Alejandra Bravo (82.5%). Conversely, based on win frequencies, both providers agree that Bravo is the leading candidate.
+- **Ward 13:** Based on vote-share point estimates, the two providers disagree. Gemini predicts that Chris Moise gets 57.0%, while GPT shows that Morgan Harris is leading with 24.7%, which is slightly higher than Chris Moise's 24.0% under the same provider. Conversely, based on win frequencies, both providers agree that Moise is leading.
+- **Ward 15:** Based on vote-share point estimates, both providers agree that Rachel Chernos Lin is leading (48.0% from Gemini and 73.7% from GPT). Conversely, based on win frequencies, the two providers disagree. In Gemini's simulation, Sheena Sharp has a higher win frequency (58.0%) than Rachel Chernos Lin (41.8%).
 
 Two patterns matter regardless of definition:
 
-1. **Provider disagreement is first-order.** In several split wards one provider gives its leader a win frequency near 90% while the other gives *its* leader only ~35% — disagreement between models is far larger than the difference between any two uncertainty settings ([Forecast Uncertainty](#uncertainty)).
-2. **Providers answer differently.** GPT-4o-mini declines ("undecided") far more often, especially in the mayoral race (19.4% vs 0.8% — see [Diagnostics](#diagnostics)), so the providers effectively estimate from different subsets of personas. We therefore report **provider-specific forecasts throughout and never average them into a single "model of models"**; the pooled column elsewhere is explicitly descriptive.
+1. **The two providers disagree more than our uncertainty settings do.** Among several wards with different prediction results, one provider gives its leading candidate a win frequency close to 90%, while the other gives its own leading candidate only about 35%. It indicates that the difference between providers is much larger than the change from any uncertainty setting we tested (see [Forecast Uncertainty](#uncertainty)).
+2. **The two providers answer from different groups of personas.** It is much more common for GPT-4o-mini to answer "undecided" compared to Gemini, especially in the mayoral election (19.4% vs. 0.8%; see [Diagnostics](#diagnostics)). Since "undecided" answers are excluded from further predictions, each provider predicts based on different synthetic personas. We will report predictions for the two providers separately, and the pooled column is only for description instead of a pooled forecast.
 
 ---
 
