@@ -254,7 +254,6 @@ window.Quarto = {
   <li><a href="#daily-mayor" id="toc-daily-mayor" class="nav-link" data-scroll-target="#daily-mayor">Mayor</a></li>
   <li><a href="#daily-wards" id="toc-daily-wards" class="nav-link" data-scroll-target="#daily-wards">Ward councillor races</a></li>
   <li><a href="#daily-news" id="toc-daily-news" class="nav-link" data-scroll-target="#daily-news">Today’s news context</a></li>
-  <li><a href="#daily-method" id="toc-daily-method" class="nav-link" data-scroll-target="#daily-method">Method</a></li>
   <li><a href="#daily-costs" id="toc-daily-costs" class="nav-link" data-scroll-target="#daily-costs">API costs</a></li>
   </ul></li>
   <li><a href="#providers" id="toc-providers" class="nav-link" data-scroll-target="#providers">Provider Comparison</a>
@@ -335,12 +334,12 @@ window.Quarto = {
 </blockquote>
 <p>The forecasting objective is a set of candidate-level vote-share distributions and conditional win frequencies for the mayoral race and all 25 ward councillor races, produced by a fully reproducible pipeline and communicated with honest uncertainty. Following the course framing, we are <em>not</em> evaluated on forecast accuracy itself <span class="citation" data-cites="gelman2020information">(<a href="#ref-gelman2020information" role="doc-biblioref">Gelman et al. 2020</a> on the goals of election forecasts)</span>, and nothing on this site should be read as a calibrated prediction of the real election.</p>
 <p>The method is <em>silicon sampling</em> <span class="citation" data-cites="argyle2023out">(<a href="#ref-argyle2023out" role="doc-biblioref">Argyle et al. 2023</a>)</span>, with the documented perils of LLM survey simulation kept front and centre <span class="citation" data-cites="bisbee2024synthetic heath2026correcting">(<a href="#ref-bisbee2024synthetic" role="doc-biblioref">Bisbee et al. 2024</a>; <a href="#ref-heath2026correcting" role="doc-biblioref">Heath and Alexander 2026</a>)</span>.</p>
-<p><strong>Pipeline at a glance:</strong> LLM ballot responses (committed production sample: 3,042 synthetic personas × 26 races × 2 providers × 3 repeats = 36,504 requests, 0 technical failures) → census <strong>post-stratification</strong> (decided first-preference shares per race × provider × repeat) → <strong>Method C</strong> forecast draws (500 per race × provider: Dirichlet sampling uncertainty + centered multiplicative perturbation, target SD 4pp) → provider-specific forecasts, plus a <em>descriptive</em> equal-weight pooled summary.</p>
+<p><strong>Pipeline:</strong> Two large language model providers are responsible to collect the voting intentions for 3,042 synthetic personas with three repeats in total. Since the sample population from synthetic personas may be different from that from Toronto. We applied post-stratification to calculate the vote shares for candidates. To consider uncertainty, we apply Method C which is the combination of Dirichlet sampling and multiplicative adjustment (SD = 4pp) to further simulate different situations and results. Finally, we reported the predictions for each provider separately and presented an aggregated and equally weighted forecast for comparative reference.</p>
 <p>Headline results:</p>
 <ul>
-<li>The <strong>mayoral forecast collapses onto one name</strong>. In the frozen production run both models pick the incumbent, Olivia Chow, in 97.7% of valid mayoral responses, and her main challenger, Brad Bradford, in 0 of 16,406. When the daily tracker shows the same models that day’s headlines, the whole electorate swings to whoever the headlines favour (Bradford at 97–99% on 20 October, Chow at 99% on 21 October). The models answer from salience, not from the personas’ demographics; see the <a href="#discussion">Discussion</a>.</li>
-<li>Ward races vary substantially, and the <strong>two providers name different leading candidates in 8 of 25 wards</strong> (leader defined by post-stratified point share; see <a href="#providers">Provider Comparison</a> for the full reconciliation with the alternative definition).</li>
-<li>Forecast uncertainty is <strong>assumption-driven</strong>: widening the assumed perturbation from 2pp to 6pp widens median leader intervals from 33.6pp to 41.0pp — an explicit, documented knob, not an empirical calibration.</li>
+<li><strong>Mayor:</strong> Olivia Chow received 97.7% of valid responses. However, when headlines were added, the results are unstable. From the result, Bradford receives 97–99% on 20 October, but Chow received 99% on 21 October. So, this illustrates that the models were affected more by the headlines than by the demographic profiles. See <a href="#discussion">Discussion</a>.</li>
+<li><strong>Wards:</strong> The providers disagreed on the leading candidate in 8 of 25 wards, based on post-stratified vote shares. See <a href="#providers">Provider Comparison</a>.</li>
+<li><strong>Uncertainty:</strong> The increase in the assumed perturbation from 2pp to 6pp caused an increase in the median leader interval width from 33.6pp to 41.0pp. However, these intervals are dependent on the assumptions and are not calibrated against the real election results.</li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -388,7 +387,7 @@ Figure&nbsp;1: Mayoral vote shares by provider for the eight candidates with the
 </figcaption>
 </figure>
 </div>
-<p>Post-stratified point estimates (points) and 95% simulation intervals (bars), one row per provider, for the eight mayoral candidates with the largest descriptive pooled shares. Gemini places <strong>Chow, Olivia</strong> at a <strong>99.9%</strong> post-stratified share of decided first preferences; GPT-4o-mini places her at <strong>94.7%</strong> with a much wider personal interval (its repeats vary more and it declines far more often). Under our simulation, Chow’s win frequency is <strong>100.0%</strong> (Gemini) and <strong>99.2%</strong> (GPT).</p>
+<p>In the figure, the points show post-stratified estimates and the bars show 95% simulation intervals. The two providers are shown in separate rows, which aims to show the top eight mayoral candidates that received the highest pooled vote shares. The result of Gemini gives that Olivia Chow gets a <strong>99.9%</strong> share of decided first preferences and GPT-4o-mini gives that of <strong>94.7%</strong> within a wider interval. In our simulation, Gemini predicts <strong>100%</strong> that Chow will win and GPT-4o-mini predicts <strong>99.2%</strong>. This illustrates that GPT-4o-mini has more variation compared to that of Gemini.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -399,7 +398,7 @@ Figure&nbsp;1: Mayoral vote shares by provider for the eight candidates with the
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The mayoral forecast is <strong>not</strong> a competitive distribution. In the production silicon sample, Chow absorbs <strong>97.7%</strong> of all valid mayoral choices (99.93% for Gemini, 95.00% for GPT); only 11 of the 53 mayoral candidates are ever chosen. The diagnostic experiment reproduced this under three ballot orders (see <a href="#diagnostics">Diagnostics</a>), so it is a property of the models rather than of ballot position, the same failure mode documented by <span class="citation" data-cites="heath2026correcting">Heath and Alexander (<a href="#ref-heath2026correcting" role="doc-biblioref">2026</a>)</span>. No uncertainty method can honestly manufacture competitiveness from it, so the mayoral “forecast” should be read as a <em>measured model output</em>, not a horse race. The daily tracker shows that this output is not stable either: the same collapse moves to Brad Bradford when the day’s headlines favour him (see <a href="#daily">Daily Tracker</a> and <a href="#discussion">Discussion</a>).</p>
+<p>There is mode collapse in the production silicon sample. The forecast is <strong>not</strong> a competitive distribution. Both Gemini and GPT select the same candidate in most responses (<strong>97.7%</strong> of all valid mayoral choices), which cannot form a competitive share distribution. In order to know whether this is due to the ballot position, we conduct a diagnostic experiment which reproduced the pipeline under three ballot orders (see <a href="#diagnostics">Diagnostics</a>), but the same failure mode collapse results occurred, which has been documented by <span class="citation" data-cites="heath2026correcting">Heath and Alexander (<a href="#ref-heath2026correcting" role="doc-biblioref">2026</a>)</span>. The daily tracker also shows that this output is not stable since the same collapse will change to Brad Bradford if the day’s headlines favour him. So, there is no uncertainty method that can honestly show the competitiveness from it.</p>
 </div>
 </div>
 <p>Full mayoral detail, one row per candidate sorted by descriptive pooled share (candidates with pooled share above 0.1% or any provider share above 0.5%):</p>
@@ -736,7 +735,7 @@ Table&nbsp;2: Leading candidate in all 26 races. Pooled leader is a descriptive 
 </section>
 <section id="daily" class="level2">
 <h2 class="anchored" data-anchor-id="daily">Daily Tracker</h2>
-<p>Every morning a GitHub Action asks the same panel of synthetic Toronto voters how they would vote, after showing them that day’s Toronto news headlines. The answers are post-stratified to the Census exactly as in the <a href="#forecasts">Election Forecasts</a>, and this section is rebuilt from the accumulated history.</p>
+<p>A scheduled GitHub Action asks the same personas to generate results every day based on that day’s Toronto headlines and updates the figures and tables here.</p>
 <p><strong>Latest estimate</strong> · 3-day average across 2 models · Updated Thursday, October 22, 2026, 05:46 PM EDT · 3 polling days so far</p>
 <table class="caption-top table">
 <thead>
@@ -768,28 +767,16 @@ Table&nbsp;2: Leading candidate in all 26 races. Pooled leader is a descriptive 
 </tr>
 </tbody>
 </table>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>How to read these numbers
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>These are post-stratified <strong>LLM outputs</strong>, not a poll of real people and not calibrated probabilities. Day-to-day movement reflects how two language models react to that day’s headlines. Each persona sees the news fresh each day and has no memory of earlier days. The frozen forecast above does not change when this tracker updates.</p>
-</div>
-</div>
 <section id="daily-mayor" class="level3">
 <h3 class="anchored" data-anchor-id="daily-mayor">Mayor</h3>
-<div id="fig-daily-mayor" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Line chart of the top mayoral candidates' daily post-stratified shares. Thick lines are the moving average of the cross-model mean; thin lines and points are each model's daily estimate.">
+<p>Each point is one model’s share that day. The thick line is a moving average of the two models.</p>
+<div id="fig-daily-mayor" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Line chart of daily mayoral shares. Points are each model's estimate. The thick line is a moving average.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-daily-mayor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/daily_mayor.png" class="img-fluid figure-img" alt="Line chart of the top mayoral candidates' daily post-stratified shares. Thick lines are the moving average of the cross-model mean; thin lines and points are each model's daily estimate.">
+<img src="figures/daily_mayor.png" class="img-fluid figure-img" alt="Line chart of daily mayoral shares. Points are each model's estimate. The thick line is a moving average.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daily-mayor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Daily mayoral estimates from the fixed 1,200-persona panel. Thin lines and points are each model’s post-stratified share for one day; thick lines are the trailing moving average of the two models’ mean. Both models give nearly all support to one candidate each day, and which candidate changes with the headlines.
+Figure&nbsp;3: Daily mayoral shares. Points are each model’s post-stratified share; the thick line is a moving average of the two models.
 </figcaption>
 </figure>
 </div>
@@ -835,8 +822,7 @@ Figure&nbsp;3: Daily mayoral estimates from the fixed 1,200-persona panel. Thin 
 </tr>
 </tbody>
 </table>
-<p>The moving average hides how the panel behaves. On 20 October, when the headlines included “Brad Bradford pulls ahead of Olivia Chow for first time”, both models gave Bradford almost every decided vote (Gemini 96.8%, GPT-4o-mini 99.0%). On 21 October the headlines included criticism of Bradford’s water-utility plan and two polls describing a dead heat, and both models gave Chow almost every decided vote (99.9% and 99.0%). The near 50–50 average is the mean of two one-sided days, not a close race inside the panel. Neither day looks like the frozen forecast, in which Bradford, without news, received no votes at all.</p>
-<p><strong>By day</strong> (each model’s post-stratified share of decided first preferences, last 14 days):</p>
+<p>Shares for the last 14 days:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 20%">
@@ -881,13 +867,14 @@ Figure&nbsp;3: Daily mayoral estimates from the fixed 1,200-persona panel. Thin 
 </section>
 <section id="daily-wards" class="level3">
 <h3 class="anchored" data-anchor-id="daily-wards">Ward councillor races</h3>
-<div id="fig-daily-wards" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Small-multiple line charts, one per ward, showing the top two councillor candidates' moving-average shares over the polling days.">
+<p>Each panel is one ward. Lines are moving-average shares for that ward’s top two candidates.</p>
+<div id="fig-daily-wards" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Small line charts, one per ward, of moving-average shares for the top two councillor candidates.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-daily-wards-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/daily_wards.png" class="img-fluid figure-img" alt="Small-multiple line charts, one per ward, showing the top two councillor candidates' moving-average shares over the polling days.">
+<img src="figures/daily_wards.png" class="img-fluid figure-img" alt="Small line charts, one per ward, of moving-average shares for the top two councillor candidates.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daily-wards-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Ward councillor races in the daily tracker: moving-average share of each ward’s top two candidates as of the latest poll. About 48 panel personas per ward and model per day, so ward lines move more than the citywide mayoral line.
+Figure&nbsp;4: Daily ward shares. One panel per ward, showing a moving average for the top two candidates.
 </figcaption>
 </figure>
 </div>
@@ -1144,6 +1131,7 @@ Figure&nbsp;4: Ward councillor races in the daily tracker: moving-average share 
 </section>
 <section id="daily-news" class="level3">
 <h3 class="anchored" data-anchor-id="daily-news">Today’s news context</h3>
+<p>Headlines shown to the personas that morning.</p>
 <p>Headlines shown to every persona on October 22, 2026 (12 items from 4 feeds):</p>
 <ul>
 <li><strong>CBC Toronto</strong>: <a href="https://www.cbc.ca/player/play/9.7392191?cmp=rss">Brad Bradford’s pitch for Toronto: Property tax freeze, safer streets</a></li>
@@ -1160,20 +1148,9 @@ Figure&nbsp;4: Ward councillor races in the daily tracker: moving-average share 
 <li><strong>CBC Toronto</strong>: <a href="https://www.cbc.ca/news/canada/toronto/toronto-mayoral-chow-bradford-hire-police-9.7389022?cmp=rss">Here’s how Olivia Chow and Brad Bradford plan to hire more cops</a></li>
 </ul>
 </section>
-<section id="daily-method" class="level3">
-<h3 class="anchored" data-anchor-id="daily-method">Method</h3>
-<ul>
-<li><strong>Panel.</strong> A fixed panel of 1,200 personas: 4 drawn (seed 20261020) from each of the 300 ward × age × education census cells of the main forecast’s persona frame. Each panel persona carries its cell’s population share divided by 4, so ward and citywide weights match the full frame exactly (<code>R/11_daily_panel.R</code>). The same personas are asked every day, so changes come from the news context rather than from who is in the sample.</li>
-<li><strong>Questions.</strong> Each persona answers the mayoral race and their own ward’s councillor race, once per model per day: 1,200 × 2 races × 2 models = <strong>4,800 requests a day</strong>.</li>
-<li><strong>Models.</strong> <code>google/gemini-2.5-flash-lite</code> and <code>openai/gpt-4o-mini</code> via OpenRouter, temperature 0.7. These are the same models and settings as the frozen production run.</li>
-<li><strong>News.</strong> Each morning the Action downloads the RSS feeds of CBC Toronto, the Toronto Star (GTA), CityNews Toronto, Global News Toronto, and the Toronto Sun (local news), and keeps up to 12 stories from the last 36 hours. Toronto election stories come first, then other election stories, then everything else, with at most 4 per outlet. Syndicated foreign wire copy is dropped. Headlines and RSS descriptions are used verbatim, with no LLM summary. If fewer than 2 feeds or 5 stories are available, that day is not polled. The day’s news file is committed to <code>processed/daily/news/</code>.</li>
-<li><strong>Prompt (v2).</strong> This is the production v1 prompt plus the date, the election date, and the day’s headlines (<code>llm/prompts.py</code>). As in production, the model only sees the persona’s ward, age group, and education group, and the candidate names for one race.</li>
-<li><strong>Estimates.</strong> Production post-stratification and Method C draws (target SD 4pp, 500 draws per race × model) are run on each day’s responses (<code>R/12_daily_forecast.R</code>). Headline figures are a 5-day trailing moving average of the cross-model mean, following the Synthetic Voter Project’s smoothing choice. Each day has a single repeat per persona and race, so there is more day-to-day noise than in the 3-repeat production run, especially in wards (about 48 panel personas per ward per model).</li>
-<li><strong>Data.</strong> The full history is in <a href="https://github.com/Sophiaaa12/toronto-election-forecast/blob/main/processed/daily/history.csv"><code>processed/daily/history.csv</code></a>, one row per day × race × model × candidate. Raw responses are in <code>processed/daily/responses/&lt;date&gt;/</code>.</li>
-</ul>
-</section>
 <section id="daily-costs" class="level3">
 <h3 class="anchored" data-anchor-id="daily-costs">API costs</h3>
+<p>What that day’s requests cost.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 10%">
