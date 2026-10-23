@@ -92,9 +92,9 @@ Shares for the last 14 days:
 
 ### Ward councillor races {#daily-wards}
 
-Each panel is one ward. Lines are moving-average shares for that ward's top three candidates.
+Each panel is one ward. Lines are moving-average shares for that ward's top two candidates.
 
-![Daily ward shares. One panel per ward, showing a moving average for the top three candidates.](figures/daily_wards.png){#fig-daily-wards fig-alt="Small line charts, one per ward, of moving-average shares for the top three councillor candidates."}
+![Daily ward shares. One panel per ward, showing a moving average for the top two candidates.](figures/daily_wards.png){#fig-daily-wards fig-alt="Small line charts, one per ward, of moving-average shares for the top two councillor candidates."}
 
 {{< include tables/daily_ward_table.md >}}
 
