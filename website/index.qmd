@@ -20,24 +20,14 @@ The forecasting objective is a set of candidate-level vote-share distributions a
 The method is *silicon sampling* [@argyle2023out], with the documented perils of LLM survey simulation kept front and centre [@bisbee2024synthetic; @heath2026correcting].
 
 **Pipeline:**
-Two large language model providers are responsible to collect the voting intentions for 3,042 synthetic personas with three repeats in total. Since the sample population from synthetic personas may be different from that from Toronto. We applied post-stratification to calculate the vote shares for candidates. To consider uncertainty, we apply Method C which is the combination of Dirichlet sampling and multiplicative adjustment (SD = 4pp) to further simulate different situations and results. Finally, we reported the predictions for each provider separately and presented an aggregated and equally weighted forecast for comparative reference.
 
-Headline results:
+We use two Large Language Model (LLM) providers to collect voting intentions from 3,042 synthetic personas, and the whole process is repeated three times. Since the population of synthetic personas may be different from that of Toronto, we decided to use post-stratification to calculate vote shares for each candidate. To include uncertainty, we chose to use Method C, which combines Dirichlet sampling and multiplicative adjustment (SD = 4pp) to further simulate possible results under various situations. Finally, we report the prediction results from each provider and provide an equally weighted aggregated prediction for comparison.
 
-- **Mayor:** Olivia Chow received 97.7% of valid responses. However, when headlines were added, the results are unstable. From the result, Bradford receives 97–99% on 20 October, but Chow received 99% on 21 October. So, this illustrates that the models were affected more by the headlines than by the demographic profiles. See [Discussion](#discussion).
-- **Wards:** The providers disagreed on the leading candidate in 8 of 25 wards, based on post-stratified vote shares. See [Provider Comparison](#providers).
-- **Uncertainty:** The increase in the assumed perturbation from 2pp to 6pp caused an increase in the median leader interval width from 33.6pp to 41.0pp. However, these intervals are dependent on the assumptions and are not calibrated against the real election results.
+**Headline Results:**
 
-::: {.callout-tip}
-## Daily Tracker
-A fixed 1,200-persona panel is re-polled every morning with that day's Toronto news headlines, and the results are published automatically in the [Daily Tracker](#daily). The frozen forecast on this page does not change.
-:::
-
-::: {.callout-important}
-## What this forecast is — and is not
-- **Is:** a post-stratified summary of *what LLMs say* about a Census-shaped synthetic electorate, with model-based uncertainty from repeated sampling.
-- **Is not:** a poll, a survey, or a calibrated prediction of the real election. All win numbers are **conditional simulation frequencies**, not probabilities of winning the actual election. See [Limitations](#limitations).
-:::
+- **Mayor:** Olivia Chow received 97.7% of valid responses. However, after adding headlines, the prediction results became unstable, with Brad Bradford receiving 97–99% of valid responses on 20 October and Olivia Chow receiving 99% on 21 October. This means that the models were more affected by headlines than by the demographic profiles of the synthetic personas.
+- **Wards:** Based on the vote shares after post-stratification, the two providers disagreed on the leading candidate in 8 of 25 wards.
+- **Uncertainty:** When the assumed perturbation increased from 2pp to 6pp, the median leading candidate interval width rose from 33.6pp to 41.0pp. However, those intervals depend on our assumptions and are not calibrated against real election results.
 
 ---
 
@@ -47,11 +37,11 @@ A fixed 1,200-persona panel is re-polled every morning with that day's Toronto n
 
 ![Mayoral vote shares by provider for the eight candidates with the largest pooled shares. Points are census post-stratified estimates of each candidate's share of decided first preferences; bars are 95% simulation intervals. Both providers put almost all support on Olivia Chow.](figures/fig1_mayoral.png){#fig-mayor fig-alt="Dot-and-interval chart of mayoral vote shares by LLM provider. Chow, Olivia (incumbent) leads at about 99.9 percent post-stratified share for Gemini and 94.7 percent for GPT-4o-mini, with all other candidates near zero. Points are post-stratified point estimates; horizontal bars are 95 percent simulation intervals."}
 
-In the figure, the points show post-stratified estimates and the bars show 95% simulation intervals. The two providers are shown in separate rows, which aims to show the top eight mayoral candidates that received the highest pooled vote shares. The result of Gemini gives that Olivia Chow gets a **99.9%** share of decided first preferences and GPT-4o-mini gives that of **94.7%** within a wider interval. In our simulation, Gemini predicts **100%** that Chow will win and GPT-4o-mini predicts **99.2%**. This illustrates that GPT-4o-mini has more variation compared to that of Gemini.
+In the figure, dots represent the estimates after post-stratification, and horizontal bars represent 95% simulation intervals. The two providers are shown separately in different rows, and the figure shows the eight candidates with the highest pooled vote shares. Gemini shows that Olivia Chow receives 99.9% of decided first-preference votes, while GPT-4o-mini gives a result of 94.7%. Meanwhile, GPT-4o-mini has a wider simulation interval, illustrating that GPT-4o-mini has more variation compared to Gemini. In our simulation, Chow's win frequencies are 100% and 99.2% under Gemini and GPT-4o-mini, respectively. Although both providers give Chow very high win frequencies, these do not represent her actual probability of winning the election.
 
 ::: {.callout-warning}
 ## Mayoral mode collapse — read this before quoting any mayoral number
-There is mode collapse in the production silicon sample. The forecast is **not** a competitive distribution. Both Gemini and GPT select the same candidate in most responses (**97.7%** of all valid mayoral choices), which cannot form a competitive share distribution. In order to know whether this is due to the ballot position, we conduct a diagnostic experiment which reproduced the pipeline under three ballot orders (see [Diagnostics](#diagnostics)), but the same failure mode collapse results occurred, which has been documented by @heath2026correcting. The daily tracker also shows that this output is not stable since the same collapse will change to Brad Bradford if the day's headlines favour him. So, there is no uncertainty method that can honestly show the competitiveness from it.
+There is mode collapse in the production silicon sample. The prediction results fail to form a competitive distribution. The responses from both Gemini and GPT are mostly concentrated on the same candidate, Olivia Chow, who received 97.7% of all valid mayoral choices. To distinguish whether this is caused by ballot position, we conduct a diagnostic experiment. We reproduced the pipeline under three ballot orders (see [Diagnostics](#diagnostics)). Nevertheless, the same mode collapse still appeared in the experiment. The same issue has also been documented by @heath2026correcting. Besides, the [Daily Tracker](#daily) indicates instability in the outputs. When the day's headlines favour Brad Bradford, the same mode collapse shifts to him. Hence, no uncertainty method can create a competitive forecast from these results.
 :::
 
 Full mayoral detail, one row per candidate sorted by descriptive pooled share (candidates with pooled share above 0.1% or any provider share above 0.5%):
@@ -62,7 +52,7 @@ Full mayoral detail, one row per candidate sorted by descriptive pooled share (c
 
 ![All 25 ward councillor races. Each panel lists every candidate in either provider's top two (\* = incumbent), strongest pooled share at the top. Dots are each provider's post-stratified share and bars its 95% simulation interval; when the two providers' highest dots sit on different rows, they disagree about who leads.](figures/fig2_wards.png){#fig-wards fig-alt="Faceted dot-and-interval chart for all 25 ward councillor races. Each panel lists the candidates in either provider's top two, with each provider's post-stratified point estimate as a dot and its 95 percent simulation interval as a horizontal bar."}
 
-One panel per ward. Each panel lists every candidate who is in *either* provider's top two, so both providers' leaders always appear (incumbents marked \*). Rows are ordered by descriptive pooled share, strongest at the top; each provider's point estimate is a dot and its 95% simulation interval a horizontal bar. When a provider's highest dot is on a different row from the other provider's, they disagree about the leader (e.g. Wards 03, 09, 13). Effective sample sizes per ward race and provider are modest (Kish $n_{\text{eff}}$ ≈ 79–165), so ward intervals are wide — typically 30–60 percentage points — reflecting genuine uncertainty *within the LLM response mechanism*. Full per-candidate summaries (all 243 candidates across 26 races) live in `processed/forecast/forecast_summary_centered.parquet`.
+Each ward will correspond to a single panel, where each panel shows the candidates ranked in the top two by either model to ensure the prediction of the top 1 candidate of each model can be included (incumbents marked \*). Candidates are ordered by the descriptive pooled share from the highest to the lowest. For each model, the dot represents as provider's point estimate and horizontal bar represents as 95% simulation interval. Therefore, if the highest dot appeared in different rows for two providers, it means that their predictions of the first ranking are disparate, such as Ward 03, 09 and 13 shown in the Figure. For each ward and provider, the effective sample sizes are small (Kish $n_{\text{eff}}$ ≈ 79–165) so that the prediction intervals are wide (typically 30–60 percentage points). This reflects the uncertainty within LLM response mechanism. Full per-candidate summaries with all 243 candidates across 26 races are stored in `processed/forecast/forecast_summary_centered.parquet`.
 
 ### All 26 races
 
