@@ -1,0 +1,155 @@
+{
+  "poll_date": "2026-10-24",
+  "fetched_at_utc": "2026-10-24T14:02:06Z",
+  "lookback_hours": 36,
+  "sources": [
+    {
+      "source": "CBC Toronto",
+      "url": "https://www.cbc.ca/webfeed/rss/rss-canada-toronto",
+      "ok": true,
+      "n_items": 20,
+      "error": null
+    },
+    {
+      "source": "Toronto Star",
+      "url": "https://www.thestar.com/search/?f=rss&t=article&c=news/gta&l=50&s=start_time&sd=desc",
+      "ok": true,
+      "n_items": 50,
+      "error": null
+    },
+    {
+      "source": "CityNews Toronto",
+      "url": "https://toronto.citynews.ca/feed/",
+      "ok": true,
+      "n_items": 11,
+      "error": null
+    },
+    {
+      "source": "Global News Toronto",
+      "url": "https://globalnews.ca/toronto/feed/",
+      "ok": true,
+      "n_items": 10,
+      "error": null
+    },
+    {
+      "source": "Toronto Sun",
+      "url": "https://torontosun.com/category/news/local-news/feed",
+      "ok": true,
+      "n_items": 10,
+      "error": null
+    }
+  ],
+  "n_sources_ok": 5,
+  "items": [
+    {
+      "source": "CBC Toronto",
+      "title": "Toronto's top mayoral candidates ramp up social media ad spend with race down to the wire",
+      "description": "",
+      "published_utc": "2026-10-23T18:26:31Z",
+      "link": "https://www.cbc.ca/news/canada/toronto/toronto-mayoral-race-meta-ad-spend-9.7389078?cmp=rss",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Toronto Star",
+      "title": "Olivia Chow vowed to make Toronto kinder, more affordable and safer. We look at whether she's kept her word",
+      "description": "On the eve of the vote, the Star assesses Olivia Chow's record as mayor of Toronto.",
+      "published_utc": "2026-10-24T11:00:00Z",
+      "link": "https://www.thestar.com/news/gta/city-hall/olivia-chow-vowed-to-make-toronto-kinder-more-affordable-and-safer-we-look-at-whether-she-s-kept-her-word/article_bba93a1e-cb2d-4ca3-8117-0f5a0cb12413.html",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "CityNews Toronto",
+      "title": "Why some Ontario voters are turning to AI chatbots for 2026 municipal elections",
+      "description": "TORONTO — Eric Apps had an inkling of who would get his vote in Toronto’s municipal election, but the lawyer wanted a second opinion before making his final…",
+      "published_utc": "2026-10-24T10:00:12Z",
+      "link": "https://toronto.citynews.ca/2026/10/24/why-some-ontario-voters-are-turning-to-ai-chatbots-for-2026-municipal-elections/",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Global News Toronto",
+      "title": "Toronto election: Chow leads Bradford, new poll indicates",
+      "description": "A new poll released Friday suggests Olivia Chow is holding a decisive lead over Brad Bradford in Toronto’s mayoral contest.",
+      "published_utc": "2026-10-23T15:02:52Z",
+      "link": "https://globalnews.ca/news/12118421/olivia-chow-brad-bradford-pollara-poll/",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "CBC Toronto",
+      "title": "Couples set to marry at Toronto city hall in 2027 in limbo amid construction plans",
+      "description": "Couples looking to get married at Toronto city hall in 2027 are in limbo due to a dispute between the site and its third-party wedding provider.",
+      "published_utc": "2026-10-23T23:16:56Z",
+      "link": "https://www.cbc.ca/news/canada/toronto/toronto-city-hall-weddings-on-hold-renovations-dispute-9.7394054?cmp=rss",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Toronto Star",
+      "title": "Brad Bradford is on the verge of a remarkable comeback. We assess his record — and what his mayoralty might look like",
+      "description": "Beaches—East York councillor Brad Bradford is now in a dead heat with Olivia Chow to be the next mayor of Toronto. The Star takes a look at his record on the…",
+      "published_utc": "2026-10-24T11:00:00Z",
+      "link": "https://www.thestar.com/news/gta/city-hall/brad-bradford-is-on-the-verge-of-a-remarkable-comeback-we-assess-his-record-and-what-his-mayoralty-might-look-like/article_956f1f45-c9dc-405a-b047-f268dbbebf1a.html",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "CBC Toronto",
+      "title": "What is Toronto’s mayor actually responsible for?",
+      "description": "Before hitting the ballot on Monday, Oct. 26, do you know who’s responsible for what? CBC’s Alejandrina Alvarez breaks down what each level of government is…",
+      "published_utc": "2026-10-23T21:22:50Z",
+      "link": "https://www.cbc.ca/player/play/9.7394053?cmp=rss",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Toronto Star",
+      "title": "How do I vote in Toronto? Everything to know about the 2026 municipal election",
+      "description": "If you're a Canadian citizen, Toronto resident and 18 and older, all you need is a piece of ID to cast your vote Oct. 26 from 10 a.m. to 8 p.m.",
+      "published_utc": "2026-10-23T19:00:00Z",
+      "link": "https://www.thestar.com/news/gta/everything-you-need-to-know-about-voting-in-the-2026-municipal-elections/article_c389dfd0-bd2f-41a6-b375-432311599b6d.html",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Toronto Star",
+      "title": "Chow and Bradford are landing more endorsements as the campaign winds down — but do they matter?",
+      "description": "In the week before election day, Chow gained more endorsements from local politicians and prominent figures than Bradford.",
+      "published_utc": "2026-10-23T17:00:00Z",
+      "link": "https://www.thestar.com/news/gta/city-hall/as-olivia-chow-and-brad-bradford-rack-up-support-do-endorsements-matter-in-the-race-for-mayor/article_f7d0f89c-0e2c-4d7d-91f4-53aa7a28ad63.html",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Toronto Sun",
+      "title": "Trump says Canada 'working very hard' on new trade deal, amends tariffs",
+      "description": "U.S. president amends some tariffs on Canadian goods to help boost Republicans ahead of midterm elections",
+      "published_utc": "2026-10-23T21:04:04Z",
+      "link": "https://torontosun.com/news/national/trump-canada-working-very-hard-trade-deal",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "CityNews Toronto",
+      "title": "Infantino says he’s supported by ‘vast, vast majority’ of soccer ahead of FIFA elections",
+      "description": "FIFA’s embattled president Gianni Infantino said he has the backing of the “vast, vast majority” of soccer, despite his failed plan to sell stakes in the…",
+      "published_utc": "2026-10-24T12:04:30Z",
+      "link": "https://toronto.citynews.ca/2026/10/24/infantino-says-hes-supported-by-vast-vast-majority-of-soccer-ahead-of-fifa-elections/",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "CBC Toronto",
+      "title": "Transit a 'glaring oversight' for Durham region candidates, some riders and advocates say",
+      "description": "As municipal election day approaches, some transit riders and advocacy groups in Durham Region say local candidates are treating public transit as a…",
+      "published_utc": "2026-10-24T10:00:00Z",
+      "link": "https://www.cbc.ca/news/canada/toronto/riders-and-advocates-say-transit-is-a-glaring-oversight-for-durham-region-candidates-9.7393864?cmp=rss",
+      "election_related": true,
+      "toronto_related": false
+    }
+  ],
+  "news_block": "- [CBC Toronto] Toronto's top mayoral candidates ramp up social media ad spend with race down to the wire\n- [Toronto Star] Olivia Chow vowed to make Toronto kinder, more affordable and safer. We look at whether she's kept her word — On the eve of the vote, the Star assesses Olivia Chow's record as mayor of Toronto.\n- [CityNews Toronto] Why some Ontario voters are turning to AI chatbots for 2026 municipal elections — TORONTO — Eric Apps had an inkling of who would get his vote in Toronto’s municipal election, but the lawyer wanted a second opinion before making his final…\n- [Global News Toronto] Toronto election: Chow leads Bradford, new poll indicates — A new poll released Friday suggests Olivia Chow is holding a decisive lead over Brad Bradford in Toronto’s mayoral contest.\n- [CBC Toronto] Couples set to marry at Toronto city hall in 2027 in limbo amid construction plans — Couples looking to get married at Toronto city hall in 2027 are in limbo due to a dispute between the site and its third-party wedding provider.\n- [Toronto Star] Brad Bradford is on the verge of a remarkable comeback. We assess his record — and what his mayoralty might look like — Beaches—East York councillor Brad Bradford is now in a dead heat with Olivia Chow to be the next mayor of Toronto. The Star takes a look at his record on the…\n- [CBC Toronto] What is Toronto’s mayor actually responsible for? — Before hitting the ballot on Monday, Oct. 26, do you know who’s responsible for what? CBC’s Alejandrina Alvarez breaks down what each level of government is…\n- [Toronto Star] How do I vote in Toronto? Everything to know about the 2026 municipal election — If you're a Canadian citizen, Toronto resident and 18 and older, all you need is a piece of ID to cast your vote Oct. 26 from 10 a.m. to 8 p.m.\n- [Toronto Star] Chow and Bradford are landing more endorsements as the campaign winds down — but do they matter? — In the week before election day, Chow gained more endorsements from local politicians and prominent figures than Bradford.\n- [Toronto Sun] Trump says Canada 'working very hard' on new trade deal, amends tariffs — U.S. president amends some tariffs on Canadian goods to help boost Republicans ahead of midterm elections\n- [CityNews Toronto] Infantino says he’s supported by ‘vast, vast majority’ of soccer ahead of FIFA elections — FIFA’s embattled president Gianni Infantino said he has the backing of the “vast, vast majority” of soccer, despite his failed plan to sell stakes in the…\n- [CBC Toronto] Transit a 'glaring oversight' for Durham region candidates, some riders and advocates say — As municipal election day approaches, some transit riders and advocacy groups in Durham Region say local candidates are treating public transit as a…",
+  "usable": true
+}
