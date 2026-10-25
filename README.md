@@ -208,10 +208,12 @@ All randomness uses the fixed seeds in `R/simulation_helpers.R`; repeated runs p
 > pass — see `processed/forecast/validation_report.md`). Reproducing the
 > published figures and website does **not** require any API access.
 
-The `llm/` Python package implements the OpenRouter integration that will
-replace the mock providers in `R/08_simulate_llm_responses.R`. It reuses the
-existing persona dataset, candidate crosswalk, and post-stratification
-statistics unchanged; only the response *source* differs.
+The `llm/` Python package implements the OpenRouter integration used to collect
+the production LLM responses. It uses the existing persona dataset and
+candidate crosswalk, then passes validated responses to
+`R/10_llm_poststratify.R` to generate the published forecasts. The mock-response
+pipeline in `R/08_simulate_llm_responses.R` remains available for offline
+testing.
 
 ### API setup
 
@@ -384,18 +386,15 @@ Install the required packages:
 
 ```r
 install.packages(c(
-  "jsonlite",
-  "digest",
-  "readxl",
-  "dplyr",
-  "tidyr",
-  "stringr",
-  "readr",
-  "purrr",
-  "testthat",
-  "nanoparquet"
+  "jsonlite", "digest", "readxl",
+  "dplyr", "tidyr", "stringr", "readr", "purrr",
+  "testthat", "nanoparquet",
+  "sf", "ggplot2", "scales", "patchwork",
+  "ggrepel", "ragg", "systemfonts", "styler"
 ))
 ```
+
+Quarto must be installed separately to render the website.
 
 Download the raw data:
 
@@ -456,7 +455,8 @@ reported in `docs/llm_diagnostic_report.md`.
 ## Website and GitHub Pages deployment
 
 The assignment website lives in `website/` and renders to `website/_site/`.
-The planned GitHub Pages deployment (not yet executed) is:
+The website is published through GitHub Pages from the `gh-pages` branch. To
+republish it after making changes, run:
 
 ```sh
 # one-time: push the project branch to GitHub, then
@@ -518,11 +518,12 @@ already has responses is not re-polled unless `force_poll` is ticked. Locally:
 
 ## AI-use declaration
 
-We used three AI tools. All code they produced was read, run, and tested by us before it was committed, and we can explain each script.
+We used the AI tools listed below for coding assistance, analysis, and editorial review. We reviewed and verified any AI-generated material before incorporating it into the project.
 
 - **OpenCode with MiMo-V2.6-Flash (Xiaomi, free tier; model identifier `mimo-v2.6-flash`), 17–19 October 2026.** Jingwen Zhong used it as a coding agent to write and test the OpenRouter query pipeline (`llm/`), the simulated-data pipeline and its tests (`R/07`–`R/10`, `R/simulation_helpers.R`, `tests/testthat/test-07` to `test-11`, `tests/python/`), the ballot-order diagnostic (`scripts/analyze_llm_diagnostic.py`, `docs/`), the uncertainty comparison (`experiments/`), and the first version of the website and `website/make_figures.R`.
 - **Claude Code with Claude Opus 5.5 (Anthropic; model identifier `claude-opus-5-5`), 19 and 22 October 2026.** Jingwen Zhong used it as a coding agent to fix and redesign the website figures and tables (`website/make_figures.R`, `website/make_daily.R`), build the shared design system (`website/theme_site.R`, `website/custom.scss`), add the software citations, remove `setwd()` from scripts and tests, run styler, add the submission-deadline guard to the GitHub Action, and review the project against the rubric. It also drafted website prose: the Discussion section, figure and table captions, the "What the model sees" and Software subsections, and edits to the Overview and Daily Tracker text. We checked every number in that prose against our data and edited it.
 - **Cursor as a coding agent, 20–22 October 2026.** Siyi Zhu used it for the daily tracker and its GitHub Action. On 20 October the model was Claude Opus 5.5 (Anthropic; model identifier `claude-opus-5-5`). It wrote `.github/workflows/daily-forecast.yml` and `scripts/run_daily.sh`, added the Daily Tracker to the website, and set the workflow to stop after 25 October 2026. On 21 October the model was Grok 4.7 (xAI; model identifier `grok-4.7`). It moved the Daily Tracker onto the single page (`website/index.qmd`, removing `website/daily.qmd`) and added backup schedule times after a scheduled run did not start. On 22 October the model was again Grok 4.7 (`grok-4.7`). It compared the repo to the assignment rubric, moved downloaded files from `raw/` to `data/01-raw_data/`, updated the scripts that read them, and removed the phrase "kind of" from the discussion. Siyi checked the diffs and ran the git commit and push. These Cursor sessions are separate from the Claude Code session listed above.
+- **ChatGPT (OpenAI; GPT-6), 25 October 2026.** Jingwen Zhong used ChatGPT to review the published website and README against the assignment rubric, identify grammatical errors, suggest more concise wording, and check whether the documentation accurately describes the implemented workflow. The authors reviewed suggested changes before incorporating them. ChatGPT was not used to generate the synthetic voting responses.
 
 The two language models that generate the synthetic responses, `openai/gpt-4o-mini` and `google/gemini-2.5-flash-lite` via OpenRouter, are the object of study rather than writing aids; every response they returned is kept in the repository.
 
