@@ -1,0 +1,155 @@
+{
+  "poll_date": "2026-10-25",
+  "fetched_at_utc": "2026-10-25T14:23:47Z",
+  "lookback_hours": 36,
+  "sources": [
+    {
+      "source": "CBC Toronto",
+      "url": "https://www.cbc.ca/webfeed/rss/rss-canada-toronto",
+      "ok": true,
+      "n_items": 20,
+      "error": null
+    },
+    {
+      "source": "Toronto Star",
+      "url": "https://www.thestar.com/search/?f=rss&t=article&c=news/gta&l=50&s=start_time&sd=desc",
+      "ok": false,
+      "n_items": 0,
+      "error": "HTTPError: 429 Client Error: Too Many Requests for url: https://www.thestar.com/search/?f=rss&t=article&c=news/gta&l=50&s=start_time&sd=desc"
+    },
+    {
+      "source": "CityNews Toronto",
+      "url": "https://toronto.citynews.ca/feed/",
+      "ok": true,
+      "n_items": 12,
+      "error": null
+    },
+    {
+      "source": "Global News Toronto",
+      "url": "https://globalnews.ca/toronto/feed/",
+      "ok": true,
+      "n_items": 10,
+      "error": null
+    },
+    {
+      "source": "Toronto Sun",
+      "url": "https://torontosun.com/category/news/local-news/feed",
+      "ok": true,
+      "n_items": 10,
+      "error": null
+    }
+  ],
+  "n_sources_ok": 4,
+  "items": [
+    {
+      "source": "CBC Toronto",
+      "title": "Sticky note mosaic honours fallen soldier in Toronto",
+      "description": "A 30-foot mosaic made from 4,784 handwritten sticky notes is on display at Toronto’s Union Station to mark the launch of the National Poppy Campaign on…",
+      "published_utc": "2026-10-24T21:55:31Z",
+      "link": "https://www.cbc.ca/player/play/9.7394815?cmp=rss",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "Toronto Sun",
+      "title": "Brad Bradford and Olivia Chow trade parting shots on eve of Toronto mayoral election",
+      "description": "The latest Canada Pulse Insights poll found Chow has the support of 51% of decided voters and Brad Bradford has 46%",
+      "published_utc": "2026-10-24T21:43:11Z",
+      "link": "https://torontosun.com/news/local-news/bradford-chow-trade-parting-shots-on-eve-of-toronto-mayoral-election",
+      "election_related": true,
+      "toronto_related": true
+    },
+    {
+      "source": "CityNews Toronto",
+      "title": "The Latest: Brazilians choose between Lula and Flávio Bolsonaro in presidential runoff",
+      "description": "Brazilians are voting Sunday in a presidential runoff that pits leftist incumbent Luiz Inácio Lula da Silva against Sen. Flávio Bolsonaro, a far-right ally of…",
+      "published_utc": "2026-10-25T11:35:24Z",
+      "link": "https://toronto.citynews.ca/2026/10/25/brazilians-choose-between-lula-and-flavio-bolsonaro-in-presidential-runoff/",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "Global News Toronto",
+      "title": "Why some Ontario voters are turning to AI chatbots for 2026 municipal elections",
+      "description": "During Quebec's provincial election, an estimated 40 per cent of voters turned to AI chatbots and received false and outdated information about the election…",
+      "published_utc": "2026-10-24T11:29:10Z",
+      "link": "https://globalnews.ca/news/12119797/voters-ask-ai-who-to-vote-for/",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "CBC Toronto",
+      "title": "Voter turnout in Peel region tends to be low. Meet the students trying to change that",
+      "description": "Voice the Vote, a student-led community initiative is working to address barriers to voting and civic engagement in hopes of reversing the trend of low voter…",
+      "published_utc": "2026-10-25T09:00:00Z",
+      "link": "https://www.cbc.ca/news/canada/toronto/voter-turnout-in-peel-region-tends-to-be-low-meet-the-students-trying-to-change-that-9.7394743?cmp=rss",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "CityNews Toronto",
+      "title": "Americans in Canada urge fellow expats to vote in high-stakes midterm elections",
+      "description": "OTTAWA — American Democrats living in Canada are prepared to shout their political choices from the rooftops ahead of next month's midterm elections — while…",
+      "published_utc": "2026-10-25T10:00:06Z",
+      "link": "https://toronto.citynews.ca/2026/10/25/americans-in-canada-urge-fellow-expats-to-vote-in-high-stakes-midterm-elections/",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "Toronto Sun",
+      "title": "TEDJO: We owe voters our respect – and a plan",
+      "description": "Change doesn't start when you win – it starts with how you ask to lead",
+      "published_utc": "2026-10-24T21:26:32Z",
+      "link": "https://torontosun.com/opinion/columnists/tedjo-we-owe-voters-our-respect-and-a-plan",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "CBC Toronto",
+      "title": "Transit a 'glaring oversight' for Durham region candidates, some riders and advocates say",
+      "description": "As municipal election day approaches, some transit riders and advocacy groups in Durham Region say local candidates are treating public transit as a…",
+      "published_utc": "2026-10-24T10:00:00Z",
+      "link": "https://www.cbc.ca/news/canada/toronto/riders-and-advocates-say-transit-is-a-glaring-oversight-for-durham-region-candidates-9.7393864?cmp=rss",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "Toronto Sun",
+      "title": "LILLEY: Extortion accused and ex-con enter Brampton political fray",
+      "description": "The mayor, police chief and rival campaigns are all raising concerns about who is trying to influence the city’s election",
+      "published_utc": "2026-10-24T20:31:34Z",
+      "link": "https://torontosun.com/opinion/columnists/extortion-accused-ex-con-enter-brampton-political-fray",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "CBC Toronto",
+      "title": "Oshawa Votes 2026: Where mayoral candidates stand on key issues",
+      "description": "With the municipal election just days away on Oct. 26, three sitting councillors are vying to replace outgoing Oshawa Mayor Dan Carter. Here’s a breakdown of…",
+      "published_utc": "2026-10-24T09:00:00Z",
+      "link": "https://www.cbc.ca/news/canada/toronto/oshawa-votes-2026-candidates-key-issues-9.7394088?cmp=rss",
+      "election_related": true,
+      "toronto_related": false
+    },
+    {
+      "source": "Global News Toronto",
+      "title": "Energized Leafs continue hot roll with 7-2 win",
+      "description": "Picking the Toronto Maple Leafs to win in Edmonton has become a safe bet in recent years.",
+      "published_utc": "2026-10-25T03:14:14Z",
+      "link": "https://globalnews.ca/news/12120248/energized-leafs-continue-hot-roll-with-7-2-win/",
+      "election_related": false,
+      "toronto_related": true
+    },
+    {
+      "source": "CityNews Toronto",
+      "title": "61-year-old killed in Hwy. 404 car crash",
+      "description": "A 61-year-old driver was killed during a two-vehicle car crash on Highway 404 early Saturday morning. Emergency crews were called to a section of the highway…",
+      "published_utc": "2026-10-25T13:50:03Z",
+      "link": "https://toronto.citynews.ca/2026/10/25/61-year-old-killed-in-hwy-404-car-crash/",
+      "election_related": false,
+      "toronto_related": false
+    }
+  ],
+  "news_block": "- [CBC Toronto] Sticky note mosaic honours fallen soldier in Toronto — A 30-foot mosaic made from 4,784 handwritten sticky notes is on display at Toronto’s Union Station to mark the launch of the National Poppy Campaign on…\n- [Toronto Sun] Brad Bradford and Olivia Chow trade parting shots on eve of Toronto mayoral election — The latest Canada Pulse Insights poll found Chow has the support of 51% of decided voters and Brad Bradford has 46%\n- [CityNews Toronto] The Latest: Brazilians choose between Lula and Flávio Bolsonaro in presidential runoff — Brazilians are voting Sunday in a presidential runoff that pits leftist incumbent Luiz Inácio Lula da Silva against Sen. Flávio Bolsonaro, a far-right ally of…\n- [Global News Toronto] Why some Ontario voters are turning to AI chatbots for 2026 municipal elections — During Quebec's provincial election, an estimated 40 per cent of voters turned to AI chatbots and received false and outdated information about the election…\n- [CBC Toronto] Voter turnout in Peel region tends to be low. Meet the students trying to change that — Voice the Vote, a student-led community initiative is working to address barriers to voting and civic engagement in hopes of reversing the trend of low voter…\n- [CityNews Toronto] Americans in Canada urge fellow expats to vote in high-stakes midterm elections — OTTAWA — American Democrats living in Canada are prepared to shout their political choices from the rooftops ahead of next month's midterm elections — while…\n- [Toronto Sun] TEDJO: We owe voters our respect – and a plan — Change doesn't start when you win – it starts with how you ask to lead\n- [CBC Toronto] Transit a 'glaring oversight' for Durham region candidates, some riders and advocates say — As municipal election day approaches, some transit riders and advocacy groups in Durham Region say local candidates are treating public transit as a…\n- [Toronto Sun] LILLEY: Extortion accused and ex-con enter Brampton political fray — The mayor, police chief and rival campaigns are all raising concerns about who is trying to influence the city’s election\n- [CBC Toronto] Oshawa Votes 2026: Where mayoral candidates stand on key issues — With the municipal election just days away on Oct. 26, three sitting councillors are vying to replace outgoing Oshawa Mayor Dan Carter. Here’s a breakdown of…\n- [Global News Toronto] Energized Leafs continue hot roll with 7-2 win — Picking the Toronto Maple Leafs to win in Edmonton has become a safe bet in recent years.\n- [CityNews Toronto] 61-year-old killed in Hwy. 404 car crash — A 61-year-old driver was killed during a two-vehicle car crash on Highway 404 early Saturday morning. Emergency crews were called to a section of the highway…",
+  "usable": true
+}
