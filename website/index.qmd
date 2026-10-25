@@ -9,7 +9,7 @@ bibliography: references.bib
 
 ### Research question and objective
 
-All the data on this page comes from synthetic voters. We use two Large Language Models (LLMs) to act as Census-based Toronto residents and answer ballot questions. No real people were surveyed.
+All the data on this page come from synthetic voters. We use two large language models (LLMs) to act as Census-based Toronto residents and answer ballot questions. No real people were surveyed.
 
 Toronto will elect a mayor and 25 ward councillors on Monday 26 October 2026. However, there are almost no public polling results for these races. Previous research has discussed the problem of forecasting with samples that do not represent actual voters [@wang2015forecasting]. In this project, we aim to investigate:
 
@@ -21,7 +21,7 @@ We use silicon sampling [@argyle2023out] in this project, while also considering
 
 **Pipeline:**
 
-We use two Large Language Model (LLM) providers to collect voting intentions from 3,042 synthetic personas, and the whole process is repeated three times. Since the population of synthetic personas may be different from that of Toronto, we decided to use post-stratification to calculate vote shares for each candidate. To include uncertainty, we chose to use Method C, which combines Dirichlet sampling and multiplicative adjustment (SD = 4pp) to further simulate possible results under various situations. Finally, we report the prediction results from each provider and provide an equally weighted aggregated prediction for comparison.
+We use two large language model (LLM) providers to collect voting intentions from 3,042 synthetic personas, and we repeat the whole process three times. Since the synthetic sample may differ from Toronto's population, we use post-stratification to calculate vote shares for each candidate. To include uncertainty, we use Method C, which combines Dirichlet sampling and multiplicative adjustment (SD = 4pp) to simulate possible results under various conditions. Finally, we report the prediction results from each provider and provide an equally weighted aggregate for comparison.
 
 **Headline Results:**
 
@@ -37,11 +37,11 @@ We use two Large Language Model (LLM) providers to collect voting intentions fro
 
 ![Mayoral vote shares by provider for the eight candidates with the largest pooled shares. Points are census post-stratified estimates of each candidate's share of decided first preferences; bars are 95% simulation intervals. Both providers put almost all support on Olivia Chow.](figures/fig1_mayoral.png){#fig-mayor fig-alt="Dot-and-interval chart of mayoral vote shares by LLM provider. Chow, Olivia (incumbent) leads at about 99.9 percent post-stratified share for Gemini and 94.7 percent for GPT-4o-mini, with all other candidates near zero. Points are post-stratified point estimates; horizontal bars are 95 percent simulation intervals."}
 
-In the figure, dots represent the estimates after post-stratification, and horizontal bars represent 95% simulation intervals. The two providers are shown separately in different rows, and the figure shows the eight candidates with the highest pooled vote shares. Gemini shows that Olivia Chow receives 99.9% of decided first-preference votes, while GPT-4o-mini gives a result of 94.7%. Meanwhile, GPT-4o-mini has a wider simulation interval, illustrating that GPT-4o-mini has more variation compared to Gemini. In our simulation, Chow's win frequencies are 100% and 99.2% under Gemini and GPT-4o-mini, respectively. Although both providers give Chow very high win frequencies, these do not represent her actual probability of winning the election.
+In the figure, dots represent the estimates after post-stratification, and horizontal bars represent 95% simulation intervals. The two providers are shown in separate rows, and the figure shows the eight candidates with the highest pooled vote shares. Gemini gives Olivia Chow 99.9% of decided first-preference votes, while GPT-4o-mini gives her 94.7%. GPT-4o-mini also has a wider simulation interval, indicating more variation than Gemini. In our simulation, Chow's win frequencies are 100% and 99.2% under Gemini and GPT-4o-mini, respectively. Although both providers give Chow very high win frequencies, these do not represent her actual probability of winning the election.
 
 ::: {.callout-warning}
 ## Mayoral mode collapse — read this before quoting any mayoral number
-There is mode collapse in the production silicon sample. The prediction results fail to form a competitive distribution. The responses from both Gemini and GPT are mostly concentrated on the same candidate, Olivia Chow, who received 97.7% of all valid mayoral choices. To distinguish whether this is caused by ballot position, we conduct a diagnostic experiment. We reproduced the pipeline under three ballot orders (see [Diagnostics](#diagnostics)). Nevertheless, the same mode collapse still appeared in the experiment. The same issue has also been documented by @heath2026correcting. Besides, the [Daily Tracker](#daily) indicates instability in the outputs. When the day's headlines favour Brad Bradford, the same mode collapse shifts to him. Hence, no uncertainty method can create a competitive forecast from these results.
+There is mode collapse in the production silicon sample. The prediction results fail to form a competitive distribution. The responses from both Gemini and GPT are mostly concentrated on the same candidate, Olivia Chow, who received 97.7% of all valid mayoral choices. To determine whether this was caused by ballot position, we conducted a diagnostic experiment and reproduced the pipeline under three ballot orders (see [Diagnostics](#diagnostics)). Nevertheless, the same mode collapse appeared in the experiment. The issue has also been documented by @heath2026correcting. In addition, the [Daily Tracker](#daily) indicates instability in the outputs. When the day's headlines favour Brad Bradford, the same mode collapse shifts to him. Hence, no uncertainty method can create a competitive forecast from these results.
 :::
 
 Full mayoral detail, one row per candidate sorted by descriptive pooled share (candidates with pooled share above 0.1% or any provider share above 0.5%):
@@ -52,11 +52,11 @@ Full mayoral detail, one row per candidate sorted by descriptive pooled share (c
 
 ![All 25 ward races. Each panel shows either provider's top two candidates (\* = incumbent). Dots are post-stratified shares and bars are 95% simulation intervals.](figures/fig2_wards.png){#fig-wards fig-alt="Faceted dot-and-interval chart for all 25 ward councillor races. Each panel lists the candidates in either provider's top two, with each provider's post-stratified point estimate as a dot and its 95 percent simulation interval as a horizontal bar."}
 
-Each ward will correspond to a single panel, where each panel shows the candidates ranked in the top two by either model to ensure the prediction of the top 1 candidate of each model can be included (incumbents marked \*). Candidates are ordered by the descriptive pooled share from the highest to the lowest. Each dot represents a provider's point estimate and horizontal bar represents as 95% simulation interval. Therefore, if the highest dot appeared in different rows for two providers, it means that their predictions of the first ranking are disparate, such as Ward 03, 09 and 13 shown in the Figure. For each ward and provider, the effective sample sizes are small (Kish $n_{\text{eff}}$ ≈ 79–165) so that the prediction intervals are wide (typically 30–60 percentage points). This reflects the uncertainty within LLM response mechanism. Full per-candidate summaries with all 243 candidates across 26 races are stored in `processed/forecast/forecast_summary_centered.parquet`.
+Each ward corresponds to one panel showing every candidate ranked in the top two by either model, ensuring that each model's leading candidate is included (incumbents are marked \*). Candidates are ordered from highest to lowest descriptive pooled share. Each dot represents a provider's point estimate, and each horizontal bar represents a 95% simulation interval. If the two providers' highest dots appear in different rows, they predict different leading candidates, as in Wards 03, 09, and 13. For each ward and provider, the effective sample sizes are small (Kish $n_{\text{eff}}$ ≈ 79–165), so the prediction intervals are wide (typically 30–60 percentage points). This reflects uncertainty in the LLM response mechanism. Full per-candidate summaries for all 243 candidates across 26 races are stored in `processed/forecast/forecast_summary_centered.parquet`.
 
 ### All 26 races
 
-Each race corresponds to one single row. The pooled leader is an equal-weight average of two providers instead of a combined forecast.
+Each race corresponds to a single row. The pooled leader is based on an equal-weight average of the two providers rather than a combined forecast.
 
 {{< include tables/race_table.md >}}
 
@@ -132,33 +132,31 @@ The website uses the **point-share definition** throughout (@fig-wards, @fig-dis
 
 Two patterns matter regardless of definition:
 
-1. **The two providers disagree more than our uncertainty settings do.** Among several wards with different prediction results, one provider gives its leading candidate a win frequency close to 90%, while the other gives its own leading candidate only about 35%. It indicates that the difference between providers is much larger than the change from any uncertainty setting we tested (see [Forecast Uncertainty](#uncertainty)).
-2. **The two providers answer from different groups of personas.** It is much more common for GPT-4o-mini to answer "undecided" compared to Gemini, especially in the mayoral election (19.4% vs. 0.8%; see [Diagnostics](#diagnostics)). Since "undecided" answers are excluded from further predictions, each provider predicts based on different synthetic personas. We will report predictions for the two providers separately, and the pooled column is only for description instead of a pooled forecast.
+1. **The two providers disagree more than our uncertainty settings do.** Among several wards with different prediction results, one provider gives its leading candidate a win frequency close to 90%, while the other gives its own leading candidate only about 35%. This indicates that the difference between providers is much larger than the change under any uncertainty setting we tested (see [Forecast Uncertainty](#uncertainty)).
+2. **The two providers answer for different groups of personas.** GPT-4o-mini answers "undecided" much more often than Gemini, especially in the mayoral election (19.4% vs. 0.8%; see [Diagnostics](#diagnostics)). Since "undecided" answers are excluded from further predictions, each provider's prediction is based on a different set of synthetic personas. We report predictions for the two providers separately, and the pooled column is only descriptive rather than a pooled forecast.
 
 ---
 
 ## Forecast Uncertainty {#uncertainty}
 
-Our forecast uncertainty comes from several sources. We used a Dirichlet model to simulate the prediction sampling uncertainty, 
-and we also add a 4-percentage-point standard deviation in Method C to try to capture the random changes in a real election. 
-However, changes in the turnout, unexpected campaign events, or systematic biases shared by the LLMs still remain unaccounted. 
-@shirani2018disentangling show that bias and variance are the two most common error generated by real election poll,
+Our forecast uncertainty comes from several sources. We used a Dirichlet model to simulate sampling uncertainty and added a 4-percentage-point standard deviation in Method C to approximate random changes in a real election.
+However, changes in turnout, unexpected campaign events, and systematic biases shared by the LLMs remain unaccounted for.
+@shirani2018disentangling show that bias and variance are two common sources of error in real election polls.
 Since the election has not yet taken place, we cannot measure these biases against actual results.
-Our uncertainty intervals may therefore be narrower than the true uncertainty on the election outcomes.
+Our uncertainty intervals may therefore be narrower than the true uncertainty in the election outcomes.
 
-Below describes four sources of uncertainty, along with how we handle each of them in our simulations.
+Below, we describe four sources of uncertainty and how we handle each one in our simulations.
 
-
-1. **LLM response variability**: when collecting responses from synthetic voters, we asked LLM three times and got different voting result (since temperature was set to 0.7). When performing forecast simulations later on, we will select random one from the three previous response.
+1. **LLM response variability**: When collecting responses from synthetic voters, we asked each LLM three times and obtained different voting results because the temperature was set to 0.7. When performing the forecast simulations, we randomly select one of the three responses.
 2. **Dirichlet sampling uncertainty**: shares ~ Dirichlet($n_{\text{eff}} \cdot \hat{s} + 0.5$), where $n_{\text{eff}} = (\sum_i w_i)^2 / \sum_i w_i^2$ is the Kish effective sample size of the post-stratified cell. This approximates how much the estimated vote shares could vary because they are based on a limited, unequally weighted synthetic sample.
-3. **Assumed forecast perturbation (Method C)**: a centered multiplicative perturbation $s_k \propto s_k \cdot e^{\sigma \varepsilon_k}$, $\varepsilon \sim N(0,1)$, with $\sigma$ calibrated per race so this layer alone gives the leader a standard deviation of the target standard deviation (SD), with 4pp as default. It keeps the sum of all candidates' support rate adds to one, does not change 0% supported candidates, and is preserving the mean.
-4. **Real election uncertainty**: We cannot model this uncertainty since we cannot accounts for turnout swings, campaign events, polling house effects, or systematic model errors.
+3. **Assumed forecast perturbation (Method C)**: We use a centred multiplicative perturbation $s_k \propto s_k \cdot e^{\sigma \varepsilon_k}$, $\varepsilon \sim N(0,1)$, with $\sigma$ calibrated per race so that this layer alone gives the leader the target standard deviation (SD), with 4pp as the default. This keeps the candidates' support rates summing to one, leaves candidates with 0% support unchanged, and approximately preserves the mean.
+4. **Real election uncertainty**: We cannot model this uncertainty because we cannot account for turnout swings, campaign events, polling house effects, or systematic model errors.
 
 ::: {.callout-note}
 ## "Win frequency" ≠ "probability of winning"
-Throughout this site, **simulation win frequency** is the fraction of the candidate getting highest support rate among all 500 simulations.
-It is not equal to the actual probability of that candidate wins the real 2026 election, we have no ground truth to calibrate against, and LLMs have systematic bias that cannot be corrected.
-This was mentioned in @gelman2020information and @kay2016when that communicating the gap between uncertainty in simulation and uncertainty in real world is important, a 100% support rate in graph does not mean the election result is set. 
+Throughout this site, **simulation win frequency** is the fraction of the 500 simulations in which a candidate has the highest support rate.
+It is not the candidate's actual probability of winning the 2026 election: we have no ground truth against which to calibrate it, and LLMs have systematic biases that cannot be corrected.
+As discussed by @gelman2020information and @kay2016when, it is important to communicate the gap between uncertainty in a simulation and uncertainty in the real world. A 100% win frequency in a graph does not mean that the election result is certain.
 Currently 15 of 52 race × provider units show a win frequency of exactly 100%, and 18 of 52 sit at or below 70%.
 :::
 
@@ -166,13 +164,13 @@ Currently 15 of 52 race × provider units show a win frequency of exactly 100%, 
 
 ![Sensitivity of the forecast to its one assumed parameter, the forecast-noise SD. (a) Each line joins one race-by-provider leader's 95% interval width at SD 2, 4 and 6 percentage points; the dark line is the median. (b) Number of the 52 race-by-provider units whose leader wins every simulation draw; the dark bar is the published setting.](figures/fig5_sensitivity.png){#fig-sens fig-alt="Two panels. Left: leader 95 percent interval widths for all 52 race-by-provider units at target SD 2, 4 and 6 percentage points, shown as thin coloured lines with points and a dark median line rising from 33.6 to 37.3 to 41.0 percentage points. Right: bar chart of the number of units with win frequency exactly 100 percent, falling from 21 to 15 to 12, with the published 4 pp setting highlighted."}
 
-We want to know if changing the 4pp SD in Method C to 2pp or 6pp, how would it affects the prediction result. So we re-ran the forecast simulation three times, changing only the standard deviations. Panel (a) tracks each race × provider leader's 95% interval width across the three simulations, the graph shows a linear upward trend when standard deviation increased, supporting that adding more standard deviation leads to wider interval.
-Panel (b) counts how many race × provider units still give their leader a 100% win frequency, as the standard deviation increased, more noise included, model become more uncertain and the number of units at 100% win kept dropping. 
+We wanted to know how changing the 4pp SD in Method C to 2pp or 6pp would affect the predictions. We therefore reran the forecast simulation three times, changing only the standard deviation. Panel (a) tracks each race × provider leader's 95% interval width across the three simulations. The graph shows a linear upward trend as the standard deviation increases, confirming that more variation produces wider intervals.
+Panel (b) counts how many race × provider units still give their leader a 100% win frequency. As the standard deviation increases and more noise is included, the model becomes more uncertain, and the number of units with a 100% win frequency falls.
 Together they show that the width of our intervals and how many races look like a certain win are partly a modelling choice, not something the data pins down.
 
-Other than the perturbation scale, adding 0.5 to Dirichlet will shrink the overall supporting rate towards uniform, causing support rate for leader to decrease. 
-We saw our worst case in Ward 19, where pseudo-count takes 5.4% of the total Dirichlet parameters, and average leader support rate decreased by 4.7pp.
-On the other hand, Method C can only approximately preserve the center.
+Beyond the perturbation scale, adding 0.5 to the Dirichlet parameters shrinks the overall support rates toward a uniform distribution, causing the leader's support rate to decrease.
+The largest effect occurred in Ward 19, where the pseudocount accounts for 5.4% of the total Dirichlet parameters and the average leader support rate decreased by 4.7pp.
+Method C can also preserve the centre only approximately.
 
 ---
 
@@ -180,26 +178,26 @@ On the other hand, Method C can only approximately preserve the center.
 
 ![Silicon-sample diagnostics. (a) Share of persona-race pairs that pick the same candidate under three different candidate orders. (b) Share of valid mayoral choices going to each of the eight most-chosen candidates. (c) Share of all production responses that were "undecided".](figures/fig6_diagnostics.png){#fig-diag fig-alt="Three panels. (a) Bar chart of candidate-order invariance: 100 percent for the mayoral race for both providers, 56.3 percent for Gemini and 62.5 percent for GPT-4o-mini on 12 sampled ward races. (b) Bar chart of mayoral response concentration: Chow near 100 percent for Gemini, about 95 percent for GPT, with small bars for minor candidates. (c) Bar chart of provider undecided rates: GPT-4o-mini 19.4 percent mayoral and 3.9 percent ward, Gemini 0.8 and 1.0 percent."}
 
-In the previous section, we measured how uncertain the simulation results are. Now we want to explore on whether the synthetic voter responses generated by LLMs are reliable.
+In the previous section, we measured how uncertain the simulation results are. We now explore whether the synthetic voter responses generated by LLMs are reliable.
 
-**Candidate-order invariance.** We first want to understand if the sequence of candidates affect LLM's decision. 
-In this diagnostic, we asked each persona-race under three ballot orders: original ballot order, and two randomized orders. 
-The mayoral choice was 100% order-invariant for both LLMs, which confirms that the collapse is knowledge-driven, instead of affecting by the ballot position. 
-Ward-race choices, whereas, were invariant in only 56–63% among all three ballot orders, meaning 37-44% persona-race combination changed their selection when order changed.
-For example, Ward 10, using same persona, changed their voting when ballot order is different, this shows ward-level LLM responses are unstable and are meaningfully order-sensitive, which @murray2026choices also documented.
-We decided to retain original ballot order rather than randomizing.
+**Candidate-order invariance.** We first wanted to understand whether the sequence of candidates affected the LLMs' decisions.
+In this diagnostic, we asked each persona about each race using three ballot orders: the original ballot order and two randomized orders.
+The mayoral choice was 100% order-invariant for both LLMs, confirming that the collapse was knowledge-driven rather than caused by ballot position.
+Ward-race choices, however, were invariant across all three ballot orders in only 56–63% of persona-race combinations, meaning that 37–44% changed their selection when the order changed.
+For example, in Ward 10, the same persona changed its vote when the ballot order changed. This shows that ward-level LLM responses are unstable and meaningfully order-sensitive, as @murray2026choices also documented.
+We decided to retain the original ballot order rather than randomizing it.
 
-**Mayoral response concentration.** From the result ran on first day (2026-10-17), 99.9% (Gemini) and 95.0% (GPT) voted for Chow, and the remaining mass is spread over other minor candidates.
+**Mayoral response concentration.** In the results from the first day (2026-10-17), 99.9% of Gemini's responses and 95.0% of GPT's responses selected Chow; the remaining mass was spread across other minor candidates.
 
-**Provider undecided rates.** We allow synthetic voters to not select any candidate, and instead respond "undecided". 
-During mayoral race, GPT-4o-mini answers "undecided" on 19.4% of the time while Gemini 2.5 Flash Lite gives 0.8%.
-During ward races, GPT-4o-mini gives "undecided" 3.9% of the times and Gemini 2.5 Flash Lite is 1.0%.
-We excluded undecided responses from estimation and only count those who decided the candidate they want to vote for.
+**Provider undecided rates.** We allow synthetic voters to select no candidate and instead respond "undecided".
+In the mayoral race, GPT-4o-mini answered "undecided" 19.4% of the time, while Gemini 2.5 Flash Lite did so 0.8% of the time.
+In the ward races, GPT-4o-mini answered "undecided" 3.9% of the time, compared with 1.0% for Gemini 2.5 Flash Lite.
+We excluded undecided responses from estimation and counted only responses that selected a candidate.
 
 
-To summarise, LLMs are sensitive to ordering of the candidates, they might not be able to show preferences from all voters, and different LLMs have different response rate.
+To summarise, LLMs are sensitive to candidate order, may not represent the preferences of all voters, and have different response rates.
 
-Full diagnostic design and report is available at: `docs/llm_diagnostic_experiment.md` and `docs/llm_diagnostic_report.md`.
+The full diagnostic design and report are available in `docs/llm_diagnostic_experiment.md` and `docs/llm_diagnostic_report.md`.
 
 ---
 
@@ -230,13 +228,13 @@ This assumes that age and education are independent within each ward, which may 
 
 ### Silicon sampling
 
-Using 2021 Census data, we split Toronto population into 25 wards * 4 age groups * 3 education groups = 300 cells. We then generated 3,042 synthetic voter among the 300 cells based on each cell's population with age above 20.
+Using 2021 Census data, we split Toronto's population into 25 wards × 4 age groups × 3 education groups = 300 cells. We then generated 3,042 synthetic voters across the 300 cells based on each cell's population aged 20 and older.
 We defined at least five personas per cell, so the final synthetic sample population may not reflect the true census population.
-Therefore, we assign each persona a weight to let it be able to represent the population during post-stratification.
+Therefore, we assigned each persona a weight so that the sample represents the population during post-stratification.
 
 In the experiment, we used two LLMs through OpenRouter: Gemini 2.5 Flash Lite and GPT-4o-mini. 
-For every persona in each model, they were asked three times independently, and we used a temperature of 0.7. 
-With 3,042 personas, each run 2 races (mayoral and ward), two models, and three repetitions, this produced **36,504 requests**.
+Each model was asked about every persona three times independently, using a temperature of 0.7.
+With 3,042 personas, two races per persona (mayoral and ward), two models, and three repetitions, this produced **36,504 requests**.
 
 In each prompt, we included the persona's ward, age group, education level, and the candidates running in that race. 
 The models were not given other personas' responses, Census weights, candidate biographies, policy positions, or historical election results. 
@@ -275,17 +273,16 @@ The daily tracker (prompt v2) adds the date, the election date, and up to 12 of 
 
 ### Post-stratification
 
-To adjust synthetic responses to the real population, inspired by @wang2015forecasting and @little1993post, we used post-stratification to weight each persona according to the population share for each ward they based on. 
-For each race, LLM provider, and repeat, we estimate candidate vote share to be weighted proportion of the decided responses.
+Inspired by @wang2015forecasting and @little1993post, we used post-stratification to adjust the synthetic responses to the real population by weighting each persona according to the population share of its ward and demographic cell.
+For each race, LLM provider, and repeat, we estimate each candidate's vote share as a weighted proportion of the decided responses.
 $$\hat{s}_k \;=\; \frac{\sum_i w_i \,\mathbf{1}[\text{choice}_i = k]}{\sum_i w_i}$$
 
-Undecided and not-voting replies are excluded from both numerator and denominator since we want the candidate share among decided synthetic responses only,
-it is not turnout, nor the voting rate for entire population. 
+Undecided and not-voting replies are excluded from both the numerator and denominator because we want the candidate share among decided synthetic responses only. This is neither turnout nor the voting rate for the entire population.
 
 For ward races, we sum over that ward's personas only, while the mayoral race sums over all personas with citywide weights.
 
-Since we repeated three times per persona, we take their average as the point estimates. 
-A descriptive pooled estimate is averages the response from all repetitions and LLM providers, we used it as a simple summary for readers, and it's never used as "the" forecast.
+Since we repeated each query three times per persona, we take the average across repetitions as the point estimate.
+A descriptive pooled estimate averages the responses across all repetitions and LLM providers. We use it as a simple summary for readers, but never as "the" forecast.
 
 ### Software {#software}
 
@@ -297,59 +294,59 @@ The language models are GPT-4o mini [@gpt4omini] and Gemini 2.5 Flash-Lite [@gem
 
 ### What a silicon sample measures in a local election
 
-@argyle2023out showed LLMs conditioned on detailed personal background such as demographic and partisan, could reproduce the vote-choice patterns similar to those groups in reality, which they called algorithmic fidelity. 
-However, in our simulation, information like party labels are absent since Toronto's municipal elections have no party labels.
-Thus, our persona only contained ward, age band, and education band. The model has a hard time distinguishing voters purely from those demographic features, and relied more on their existing knowledge of the candidates.
-In our frozen run, Olivia Chow wins 97.7% valid votes, and Brad wasn't selected even once, meaning LLMs are leaning to vote their most familiar candidates.
+@argyle2023out showed that LLMs conditioned on detailed personal backgrounds, such as demographic and partisan characteristics, could reproduce vote-choice patterns similar to those of real groups, a property they called algorithmic fidelity.
+However, our simulation lacks information such as party labels because Toronto's municipal elections have no party labels.
+Thus, our personas contained only a ward, age band, and education band. The models had difficulty distinguishing voters based solely on those demographic features and relied more on their existing knowledge of the candidates.
+In our frozen run, Olivia Chow received 97.7% of valid votes, and Brad Bradford was not selected once, suggesting that the LLMs tended to vote for the candidates most familiar to them.
 
 ### The collapse follows salience, not demographics
 
-Our model observed that almost all synthetic voters vote for same candidate at the same timestamp, which was mode collapse mentioned by @heath2026correcting. In the beginning, with almost all synthetic voters voting for Olivia Chow, whereas this trend begin to change around Oct.20 according to our daily tracker. This observation supported that LLMs may not learn from our synthetic persona's background, but instead reflecting the news we feed into the model. 
-With only the headlines of news change, on 20 October, headlines reported Bradford pulling ahead, both models gave Bradford 97–99% of decided votes; later on 21 October, with headlines about criticism of Bradford's water plan, both model chose to give Chow about 99% voting share.
+We observed almost all synthetic voters selecting the same candidate at the same time, an example of the mode collapse described by @heath2026correcting. Initially, almost all synthetic voters selected Olivia Chow, but this trend began to change around 20 October according to our daily tracker. This observation suggests that the LLMs may not learn from the synthetic personas' backgrounds and may instead reflect the news supplied to the models.
+After only the news headlines changed, both models gave Bradford 97–99% of decided votes on 20 October, when headlines reported that he was pulling ahead. On 21 October, when headlines criticized Bradford's water plan, both models gave Chow about 99% of decided votes.
 
 @bisbee2024synthetic found that synthetic answers have far less variance than real ones and can shift with wording of the prompts as well as the date of the query. 
-This is also supported by @santurkar2023whose, who found that simulating a group's opinion using LLMs could not recover the true difference between different group population. @wang2024misportray also showed that LLMs can suppress the different opinion within the group. 
+This is also supported by @santurkar2023whose, who found that simulating group opinions with LLMs could not recover the true differences between population groups. @wang2024misportray also showed that LLMs can suppress differences of opinion within a group.
 
 ### Analyst choices are first-order
 
-According to @murray2026choices, minor changes in some parameters can change the silicon samples significantly. We see the same at every stage we varied. 
-Changing the candidate order changed 37–44% of the voting response for ward race, and changing the provider changed the leading candidate in 8 of 25 wards. 
-On the other hand, changing the forecast-noise standard deviation from 2pp to 6pp will increase the median 95% interval width by 7pp. 
-Adding a day's news headlines will also change the response as mentioned in previous chunk. 
-Each of these is large enough and cannot be just concluded as sampling uncertainty, which is why we publish both LLMs' results separately and show every sensitivity rather than one blended number.
+According to @murray2026choices, minor changes in some parameters can change silicon samples significantly. We saw the same pattern at every stage we varied.
+Changing the candidate order changed 37–44% of ward-race voting responses, and changing the provider changed the leading candidate in 8 of 25 wards.
+Changing the forecast-noise standard deviation from 2pp to 6pp increased the median 95% interval width by 7pp.
+Adding a day's news headlines also changed the responses, as described in the previous section.
+Each effect is too large to attribute solely to sampling uncertainty, which is why we publish the two LLMs' results separately and show each sensitivity rather than one blended number.
 
 ### What post-stratification can and cannot fix
 
 @wang2015forecasting forecast a US election accurately from a heavily skewed sample of Xbox users, 
 using multilevel regression and post-stratification to reweight a sample that is unrepresentative but still contains real differences between groups. 
 Post-stratification cannot create differences that are not there, so even though we have 3,042 personas, if everyone gave almost the same answer, adding more personas does not mean adding more unique preference information.
-Thus, our current silicon sample result is more suitable to measure how two LLMs perform differently, rather than being used directly as voter poll.
+Thus, our current silicon-sample results are more suitable for measuring how the two LLMs perform differently than for use as a voter poll.
 
 ---
 
 ## Limitations {#limitations}
 
 1. **No external calibration.** 
-Since Toronto 2026 has no published polling and we did not calibrate against historical election errors, 
+Since no polling has been published for Toronto's 2026 election and we did not calibrate against historical election errors,
 our simulation win frequencies should and must not be quoted as real winning probabilities [@gelman2020information].
 2. **Mayoral mode collapse.**
-In our mayoral race, 97.7% valid synthetic votes concentrated on a single candidate, invariant to ballot order. 
+In our mayoral race, 97.7% of valid synthetic votes concentrated on a single candidate, regardless of ballot order.
 3. **No turnout model.** 
-Only 2 of 36,504 replies were "not voting", which does not mimic the real voting engagement.
-For example, even though young population in a ward is large, but there could be small portion of them that actually voted.
-So ignoring the turnout rate, and purely used Cencus population weights instead of likely-voter weights will biased the result.
+Only 2 of 36,504 replies were "not voting", which does not reflect real-world voter participation.
+For example, even if a ward has a large young population, only a small proportion of that group may actually vote.
+Ignoring turnout and using only Census population weights rather than likely-voter weights will therefore bias the results.
 4. **Informative undecided responses.** 
-GPT-4o-mini declines 19.4% of mayoral queries, and we excluded all those "undecided" when doing post-stratification.
-If we assume young people are more likely to respond "undecided" compared to older people, then excluding those answer will removing some impact from young population, making our synthetic result no longer representative. [@bisbee2024synthetic].
+GPT-4o-mini returned "undecided" for 19.4% of mayoral queries, and we excluded all those responses during post-stratification.
+If young people are more likely than older people to respond "undecided", excluding those answers will reduce the influence of the young population and make our synthetic results less representative [@bisbee2024synthetic].
 5. **Census independence approximation.** 
-Currently we assumed Age and Education are independent when given Ward, whereas they could be correlated in reality.
+We assumed that age and education are independent within each ward, although they could be correlated in reality.
 6. **Provider disagreement dominates method choices.** 
-We used two LLMs to predict same 25 ward councillor elections, and in 8 of them, the LLMs actually chosen different leading candidates.
-If we just do a simple average of the voting share among the two LLMs, it will hide this difference. Thus, we choose to include each model's selection in our report.
-7. **Small effective samples** 
-Even we have 3,042 in total, but each ward only owns a small portion of it. The Kish effective sample size $n_{\text{eff}}$ in ward elections will only be around 79–165, leading to more sparse distribution for the Dirichlet sampling as well as wider uncertainty intervals.
-Also when adding 0.5 to the Dirichlet pseudo-count, it might shrink the original leading candidates to approach uniform prior, in the most significant ward, this shrinkage to leader is approximately -4.7pp.
-Another limitation is when applying Method C, we hope the predicted center to remain the same and only adds uncertainty. However, we need to apply normalization after multiplicative perturbation, which might cause the mean response to shift.
+We used two LLMs to predict the same 25 ward councillor elections, and they chose different leading candidates in 8 of them.
+A simple average of the vote shares from the two LLMs would hide this difference. We therefore include each model's selection in our report.
+7. **Small effective samples.**
+Although we have 3,042 personas in total, each ward contains only a small portion of them. The Kish effective sample size $n_{\text{eff}}$ in ward elections is only about 79–165, leading to sparser Dirichlet samples and wider uncertainty intervals.
+Adding 0.5 as a Dirichlet pseudocount can also shrink the leading candidate's support toward a uniform prior. In the ward with the largest effect, this shrinkage is approximately 4.7pp.
+When applying Method C, we want the predicted centre to remain the same while adding uncertainty. However, normalization after the multiplicative perturbation may cause the mean response to shift.
 8. **Simulated voters are not voters.** The entire electorate is synthetic; the forecast measures what two LLMs say about a Census-shaped persona frame [@bisbee2024synthetic].
 
 ---
@@ -358,10 +355,10 @@ Another limitation is when applying Method C, we hope the predicted center to re
 
 To summarise, we've run silicon sampling with census post-stratification and produced a complete, reproducible forecast for the upcoming Toronto mayoral and city councillor election.
 
-Our results show that without news, model collapsed to select a single candidate, where in our initial frozen experiment, 97.7% valid synthetic votes vote for Chow, unchanged by ballot order.
+Our results show that without news, the models collapsed onto a single candidate: in our initial frozen experiment, 97.7% of valid synthetic votes selected Chow, regardless of ballot order.
 With a day's news headlines, the entire synthetic preference moves to whichever candidate the headlines favour. 
 Ward races are more varied, and the two providers disagree about the leading candidates in 8 of 25 wards. 
-Our uncertainty has not yet been calibrated to the real election error, but we did repeat LLM votings, Dirichlet sampling, extra perturbation in Method C, as well as sensitivity analysis on target standard deviations based to understand the possible uncertainities.
+Our uncertainty has not yet been calibrated to errors in real elections, but we used repeated LLM responses, Dirichlet sampling, an extra perturbation in Method C, and sensitivity analysis across target standard deviations to understand the possible uncertainties.
 
 Natural next steps, in order of value:
 
